@@ -1,26 +1,5 @@
 var canvas = $('#drawing-area')[0];
 var ctx = canvas.getContext('2d');
-console.log(ctx);
-
-var Batman = function(ctx, options){
-    ctx.save();
-    var left = (options && options.left) ? options.left : 0;
-    var top = (options && options.top) ? options.top : 0;
-    var height = (options && options.height) ? options.height : 300;
-    var width = (options && options.height )? options.width : 150;
-    ctx.translate(left,top);
-    ctx.fillStyle = "black";
-    ctx.beginPath();
-    ctx.moveTo(0,0);
-    ctx.lineTo(width*0.2,height/4);
-    ctx.lineTo(width - width*0.2,height/4);
-    ctx.lineTo(width,0);
-    ctx.lineTo(width,height);
-    ctx.lineTo(0,height);
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
-};
 
 var cog = function(ctx, options){
     ctx.save();
