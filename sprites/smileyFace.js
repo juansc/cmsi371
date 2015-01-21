@@ -10,6 +10,7 @@ var smileyFace = function (ctx, options) {
     var rightEyeAttributes = (options && options.rightEyeProperties) ? options.rightEyeProperties : {
         side: "right"
     };
+    var mouthAttributes = (options && options.mouthProperties) ? options.mouthProperties : {};
 
     ctx.translate(xPos, yPos);
 
@@ -30,12 +31,10 @@ var smileyFace = function (ctx, options) {
         var side = (options && options.side) ? ((options.side.toLowerCase() === "left") ? -1 : 1) : 1;
 
         // Expects number from 0 to 1.
-        // 0 means pupil is gone, 1 means pupil is as large as eye.
         var pupilSize = (options && options.pupilSize) ? options.pupilSize : 0.25;
 
         // Angle must be in degrees.
-        // Distance must be 0 to 1. 0 means pupil is centered, 1 means that 
-        // pupil is at edge of eye. 
+        // Distance must be 0 to 1.
         var pAngle = (options && options.pAngle) ? options.pAngle : 0;
         var pDist = (options && options.pDist) ? options.pDist : 0;
 
@@ -83,24 +82,59 @@ var smileyFace = function (ctx, options) {
 
     };
 
+    var drawMouth = function (ctx, options) {
+
+        var MOUTH_SCALE = 0.5;
+
+        //Goes from 0 to 1.
+        var mouthSize = (options && options.size) ? options.size : 0.2;
+
+        var isOpen = (options && options.isOpen) ? options.isOpen : false;
+        var isHappy = (options && options.isHappy) ? options.isHappy : false;
+
+        if (!isHappy) {
+            ctx.rotate(Math.PI);
+            ctx.translate(0, -radius * MOUTH_SCALE);
+        }
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(0, 0, radius * MOUTH_SCALE, Math.PI / 2 * (1 - mouthSize), Math.PI / 2 * (1 + mouthSize), false);
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = "2";
+        ctx.stroke();
+        ctx.closePath();
+        if (isOpen) {
+            ctx.fillStyle = "black";
+            ctx.fill();
+        }
+        ctx.restore();
+
+    };
+
     drawFace(ctx);
     drawEye(ctx, leftEyeAttributes);
     drawEye(ctx, rightEyeAttributes);
-
+    drawMouth(ctx, mouthAttributes);
     ctx.restore();
 };
 
 smileyFace(ctx, {
     radius: 50,
-    color: "red",
+    color: "blue",
     leftEyeProperties: {
         side: "left",
-        pAngle: -45,
-        pDist: 0.5
+        pAngle: 90,
+        pDist: 1
     },
     rightEyeProperties: {
         side: "right",
         pDist: 1,
         pAngle: 90
+    },
+    mouthProperties: {
+        size: 0.5,
+        isHappy: true,
+        isOpen: false
     }
 });
