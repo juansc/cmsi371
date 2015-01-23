@@ -1,4 +1,3 @@
-//
 (function () {
     var smileyFace = function (ctx, options) {
         ctx.save();
@@ -6,6 +5,10 @@
         var radius = (options && options.radius) ? options.radius : 50;
         var xPos = (options && options.xPos) ? options.xPos : 300;
         var yPos = (options && options.yPos) ? options.yPos : 100;
+        var isBlushing = (options && options.isBlushing) ? true : false;
+        // Expects number from 0 to 1.
+        var blush = (isBlushing && options && options.blush) ? options.blush : 0;
+
         // Angle is in degrees.
         var angle = (options && options.angle) ? options.angle : 0;
         var leftEyeAttributes = (options && options.leftEyeProperties) ? options.leftEyeProperties : {
@@ -17,7 +20,7 @@
         var mouthAttributes = (options && options.mouthProperties) ? options.mouthProperties : {};
 
         ctx.translate(xPos, yPos);
-        ctx.rotate(Math.PI/180*angle);
+        ctx.rotate(Math.PI / 180 * angle);
 
         var drawFace = function (ctx, options) {
             ctx.save();
@@ -26,6 +29,29 @@
             ctx.arc(0, 0, radius, 0, Math.PI * 2, true);
             ctx.closePath();
             ctx.fill();
+
+            var drawBlush = function (ctx) {
+                ctx.save();
+                ctx.scale(2,1);
+                ctx.translate(radius/6,0);
+                var blushGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, radius/8);
+                blushGradient.addColorStop(0, 'rgba(255,0,20,' + (0.6 * blush) + ')');
+                blushGradient.addColorStop(0.8, 'rgba(255,0,20,' + (0.4 * blush) + ')');
+                blushGradient.addColorStop(1, 'rgba(255,0,20,0)');
+                ctx.fillStyle = blushGradient;
+                ctx.beginPath();
+                ctx.arc(0,0, radius / 3, 0, Math.PI * 2, true);
+                ctx.closePath();
+                ctx.fill();
+                ctx.translate(-radius/3,0);
+                ctx.beginPath();
+                ctx.arc(0, 0, radius / 3, 0, Math.PI * 2, true);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            };
+
+            drawBlush(ctx);
             ctx.restore();
         };
 
@@ -73,7 +99,7 @@
                 ctx.save();
                 ctx.beginPath();
                 ctx.fillStyle = color;
-                ctx.strokeStyle = color;            
+                ctx.strokeStyle = color;
                 ctx.arc(0, 0, eyeSize, eyeLidSide * Math.PI / 2 * (1 - lidSize), eyeLidSide * Math.PI / 2 * (1 + lidSize), isTop);
                 ctx.fill();
                 ctx.stroke();
@@ -126,3 +152,27 @@
 
     window.smileyFace = smileyFace;
 }());
+
+smileyFace(ctx, {
+    radius: 50,
+    color: "yellow",
+    isBlushing: true,
+    blush:0.8,
+    leftEyeProperties: {
+        side: "left",
+        pAngle: 90,
+        pDist: 1,
+        lowerLid: 0.5,
+        upperLid: 0
+    },
+    rightEyeProperties: {
+        side: "right",
+        pDist: 1,
+        pAngle: 180
+    },
+    mouthProperties: {
+        size: 0.9,
+        isHappy: true,
+        isOpen: true
+    }
+});
