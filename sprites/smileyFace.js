@@ -5,9 +5,8 @@
         var radius = (options && options.radius) ? options.radius : 50;
         var xPos = (options && options.xPos) ? options.xPos : 300;
         var yPos = (options && options.yPos) ? options.yPos : 100;
-        var isBlushing = (options && options.isBlushing) ? true : false;
         // Expects number from 0 to 1.
-        var blush = (isBlushing && options && options.blush) ? options.blush : 0;
+        var blush = ( options && options.blush) ? options.blush : 0;
 
         // Angle is in degrees.
         var angle = (options && options.angle) ? options.angle : 0;
@@ -50,8 +49,7 @@
                 ctx.fill();
                 ctx.restore();
             };
-
-            drawBlush(ctx);
+            if( blush > 0) drawBlush(ctx);
             ctx.restore();
         };
 
