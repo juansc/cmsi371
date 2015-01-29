@@ -33,7 +33,7 @@
             var drawBlush = function (ctx) {
                 ctx.save();
                 ctx.scale(2,1);
-                ctx.translate(radius/6,0);
+                ctx.translate(radius/3,0);
                 var blushGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, radius/8);
                 blushGradient.addColorStop(0, 'rgba(255,0,20,' + (0.6 * blush) + ')');
                 blushGradient.addColorStop(0.8, 'rgba(255,0,20,' + (0.4 * blush) + ')');
@@ -43,7 +43,7 @@
                 ctx.arc(0,0, radius / 3, 0, Math.PI * 2, true);
                 ctx.closePath();
                 ctx.fill();
-                ctx.translate(-radius/3,0);
+                ctx.translate(-2/3*radius,0);
                 ctx.beginPath();
                 ctx.arc(0, 0, radius / 3, 0, Math.PI * 2, true);
                 ctx.closePath();
