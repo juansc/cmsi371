@@ -4,8 +4,8 @@
         ctx.save();
         var color = (options && options.color) ? options.color : "yellow";
         var radius = (options && options.radius) ? options.radius : 50;
-        var xPos = (options && options.xPos) ? options.xPos : 300;
-        var yPos = (options && options.yPos) ? options.yPos : 100;
+        var xPos = (options && options.xPos) ? options.xPos : 0;
+        var yPos = (options && options.yPos) ? options.yPos : 0;
         // Expects number from 0 to 1.
         var blush = ( options && options.blush) ? options.blush : 0;
 
