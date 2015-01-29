@@ -13,7 +13,7 @@
     <script>
         var canvas = document.getElementById('examples');
         var ctx = canvas.getContext('2d');
-        smileyFace(ctx, {
+        JuanSprites.smileyFace(ctx, {
             xPos:50,
             yPos:50,
             angle:90,
@@ -39,7 +39,7 @@
                 isOpen: true
             }
         });
-        smileyFace(ctx, {
+        JuanSprites.smileyFace(ctx, {
             xPos:160,
             yPos:50,
             radius:30,
@@ -56,7 +56,7 @@
                 isHappy: false
             }
         });
-        smileyFace(ctx,{
+        JuanSprites.smileyFace(ctx,{
             xPos: 50,
             yPos: 150,
             radius:40,
@@ -78,7 +78,7 @@
                 width:0.5
             }
         });
-        smileyFace(ctx, {
+        JuanSprites.smileyFace(ctx, {
             xPos: 160,
             yPos: 150,
             color: "cyan",
@@ -86,13 +86,15 @@
                 side: "left",
                 angle: 90,
                 dist: 1,
-                size: 0.6
+                size: 0.6,
+                color: "green"
             },
             rightEyeProperties: {
                 side: "right",
                 angle: -90,
                 dist: 1,
-                size: 0.6
+                size: 0.6,
+                color: "red"
             },
             mouthProperties: {
                 isOpen: true,

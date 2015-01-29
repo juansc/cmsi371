@@ -1,5 +1,6 @@
 (function () {
-    var smileyFace = function (ctx, options) {
+    window.JuanSprites = window.JuanSprites || { };
+    window.JuanSprites.smileyFace = function (ctx, options) {
         ctx.save();
         var color = (options && options.color) ? options.color : "yellow";
         var radius = (options && options.radius) ? options.radius : 50;
