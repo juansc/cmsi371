@@ -3,20 +3,22 @@
   <head>
     <meta charset = "UTF-8">
     <title>Smiley Face Sprite</title>
-    <link rel="stylesheet" type="text/css" href="smiley.css">
+    <link rel="stylesheet" type="text/css" href="sprites.css">
   </head>
   <body>
     <h1>Smiley Face</h1>
-    <p>The smiley face has programmable eyes, mouth, and color. Each eye has a programmable pupil position, pupil size, and eyelids. The mouth has three parameters which determine the width of the mouth, whether it's open or closed, and whether it's smiling or frowning.</p>
+    <p>The smiley face has programmable eyes, mouth, and color. Each eye has a programmable pupil position, pupil size, and eyelids. The mouth has three parameters which determine the width of the mouth, whether it's open or closed, and whether it's smiling or frowning. The cheeks can blush.</p>
     <canvas id="examples" width="450" height="450"></canvas>
     <script type="text/javascript" src="smileyFace.js"></script>
     <script>
         var canvas = document.getElementById('examples');
         var ctx = canvas.getContext('2d');
+        ctx.scale(2,2);
         JuanSprites.smileyFace(ctx, {
             xPos:50,
             yPos:50,
             angle:90,
+            blush: 0.4,
             radius: 50,
             color: "yellow",
             leftEyeProperties: {
@@ -43,7 +45,8 @@
             xPos:160,
             yPos:50,
             radius:30,
-            color: "red",
+            color: "pink",
+            blush: 1,
             leftEyeProperties: {
                 side: "left",
                 size: 0.80
