@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset = "UTF-8">
+    <title>Snake Sprite</title>
+    <link rel="stylesheet" type="text/css" href="sprites.css">
+  </head>
+  <body>
+    <h1>Snake</h1>
+    <p>The snake has a mouth which can open. The shape of the snake's body is described by an array of angles. An angle describes the angle of the joint between a particular segment and the segment right before it. Both the skin and eye color are also customizable.</p>
+    <canvas id="examples" width="450" height="450"></canvas>
+    <script type="text/javascript" src="snake.js"></script>
+    <script>
+        var canvas = document.getElementById('examples');
+        var ctx = canvas.getContext('2d');
+        JuanSprites.snake(ctx,{
+            angles: [30,30,30,30,30,30],
+            xPos: 90,
+            yPos: 200,
+            mouthAngle: -45
+        });
+
+        JuanSprites.snake(ctx,{
+            color: "yellow",
+            eyeColor: "blue",
+            angles: [20,-30,-40,10,40,10,30,45,45,30],
+            segmentLength: 35,
+            facingLeft: true,
+            xPos: 150,
+            yPos: 100,
+            mouthAngle: -15
+        });
+
+        JuanSprites.snake(ctx,{
+            color: "white",
+            eyeColor: "purple",
+            headAngle: -45,
+            angles: [50,-40,-10,-60,-50,10,50,90,0,30,30,30,30],
+            segmentLength: 35,
+            facingLeft: false,
+            xPos: 150,
+            yPos: 250,
+            mouthAngle: -15
+        });
+
+        JuanSprites.snake(ctx,{
+            color: "black",
+            eyeColor: "yellow",
+            headAngle: -45,
+            angles: [50,-40,-10,-60,-50,10,50,90,0,30,30,30,30],
+            segmentLength: 35,
+            facingLeft: true,
+            xPos: 240,
+            yPos: 250,
+            mouthAngle: -65
+        });
+    </script>
+  </body>
+</html>    

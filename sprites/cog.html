@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset = "UTF-8">
+    <title>Cog Sprite</title>
+    <link rel="stylesheet" type="text/css" href="sprites.css">
+  </head>
+  <body>
+    <h1>Cog</h1>
+    <p>The cog has a few customizable attributes: its color, angle of rotation, number of teeth, and radius. The teeth themselves can be changed to be longer or wider.</p>
+    <canvas id="examples" width="450" height="450"></canvas>
+    <script type="text/javascript" src="cog.js"></script>
+    <script>
+        var canvas = document.getElementById('examples');
+        var ctx = canvas.getContext('2d');
+        JuanSprites.cog(ctx,{
+            numOfTeeth: 35,
+            radius: 96,
+            color: "#666666",
+            xPos:150,
+            yPos:350
+        });
+
+        JuanSprites.cog(ctx, {
+            numOfTeeth: 50,
+            xPos: 225,
+            yPos: 112,
+            angle:135,
+        });
+        JuanSprites.cog(ctx,{
+            numOfTeeth: 25,
+            radius: 70,
+            color: "#222222",
+            xPos:60,
+            yPos:4
+        });
+        JuanSprites.cog(ctx, {
+            color:"blue",
+            numOfTeeth: 2,
+            xPos: 55,
+            yPos: 103,
+            angle:-15,
+            teethLength: 20
+        });
+        JuanSprites.cog(ctx, {
+            numOfTeeth: 20,
+            xPos: 100,
+            yPos: 200,
+            color: "red"
+        });
+        JuanSprites.cog(ctx, {
+            numOfTeeth: 5,
+            xPos: 207,
+            yPos: 180,
+            color: "black",
+            angle: 79
+        });
+        JuanSprites.cog(ctx, {
+            numOfTeeth: 16,
+            xPos: 300,
+            yPos: 180,
+            color: "#F07712",
+            angle: 92
+        });
+        JuanSprites.cog(ctx, {
+            numOfTeeth: 46,
+            xPos: 560,
+            yPos: 180,
+            color: "#307712",
+            angle: 92
+        });
+        JuanSprites.cog(ctx, {
+            numOfTeeth: 24,
+            xPos: 226,
+            yPos: 335,
+            color: "#3047C2",
+            angle: 4
+        });
+        JuanSprites.cog(ctx, {
+            numOfTeeth: 12,
+            radius:60,
+            xPos: 270,
+            yPos: 53,
+            color: "pink",
+            angle: 45
+        });
+        JuanSprites.cog(ctx, {
+            numOfTeeth: 6,
+            radius: 50,
+            xPos: 380,
+            yPos: 355,
+            color: "#304742",
+            angle: 27,
+            teethWidth: 24
+        });
+        JuanSprites.cog(ctx, {
+            numOfTeeth: 34,
+            radius:80,
+            teethWidth: 5,
+            xPos: 30,
+            yPos: 355,
+            color: "#300042",
+            angle: 27
+        });
+    </script>
+  </body>
+</html>    
