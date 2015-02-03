@@ -17,7 +17,7 @@
         var snakeSkin = new Image();
         snakeSkin.src = 'snake_skin.jpg';
 
-        snakeSkin.onload = function (){
+        snakeSkin.onload = function () {
             var pattern = ctx.createPattern(snakeSkin, 'repeat');
 
             JuanSprites.snake(ctx, {
@@ -33,8 +33,8 @@
             });
         };
 
-        JuanSprites.snake(ctx,{ // JD: 1
-            angles: [30,30,30,30,30,30], // JD: 1
+        JuanSprites.snake(ctx, { 
+            angles: [30, 30, 30, 30, 30, 30],
             xPos: 90,
             yPos: 200,
             mouthAngle: -45
@@ -43,7 +43,7 @@
         JuanSprites.snake(ctx,{
             color: "yellow",
             eyeColor: "blue",
-            angles: [20,-30,-40,10,40,10,30,45,45,30],
+            angles: [20, -30, -40, 10, 40, 10, 30, 45, 45, 30],
             segmentLength: 35,
             facingLeft: true,
             xPos: 150,
@@ -51,23 +51,11 @@
             mouthAngle: -15
         });
 
-        /*JuanSprites.snake(ctx,{
-            color: "white",
-            eyeColor: "purple",
-            headAngle: -45,
-            angles: [50,-40,-10,-60,-50,10,50,90,0,30,30,30,30],
-            segmentLength: 35,
-            facingLeft: false,
-            xPos: 150,
-            yPos: 250,
-            mouthAngle: -15
-        });*/
-
         JuanSprites.snake(ctx,{
             color: "black",
             eyeColor: "yellow",
             headAngle: -45,
-            angles: [50,-40,-10,-60,-50,10,50,90,0,30,30,30,30],
+            angles: [50, -40, -10, -60, -50, 10, 50, 90, 0, 30, 30, 30, 30],
             segmentLength: 35,
             facingLeft: true,
             xPos: 240,

@@ -16,8 +16,8 @@
         var canvas = document.getElementById('examples');
         var ctx = canvas.getContext('2d');
         JuanSprites.smileyFace(ctx, {
-            xPos:350,
-            yPos:300,
+            xPos: 350,
+            yPos: 300,
             blush: 0.4,
             radius: 50,
             color: "yellow",
@@ -32,7 +32,7 @@
                 side: "right",
                 dist: 1,
                 angle: 190,
-                lowerLid:1
+                lowerLid: 1
             },
             mouthProperties: {
                 scale: 0.8,
@@ -42,11 +42,11 @@
             }
         });
 
-        JuanSprites.snake(ctx,{ // JD: 1
+        JuanSprites.snake(ctx, { 
             color: "orange",
             eyeColor: "purple",
             headAngle: 30,
-            angles: [-30,-40,-10,-60,-50,10,50,90,0,30,30,30,-25], // JD: 1
+            angles: [-30, -40, -10, -60, -50, 10, 50, 90, 0, 30, 30, 30, -25], 
             segmentLength: 35,
             facingLeft: false,
             xPos: 170,
@@ -54,62 +54,62 @@
             mouthAngle: -15
         });
 
-        JuanSprites.cog(ctx,{ // JD: 1
-            xPos:150, // JD: 1
-            yPos:250, // JD: 1 ...etc.
-            numOfTeeth:14,
+        JuanSprites.cog(ctx, { 
+            xPos: 150, 
+            yPos: 250, 
+            numOfTeeth: 14,
             radius: 35,
             angle: 12
         });
 
-        JuanSprites.cog(ctx,{
-            xPos:120,
+        JuanSprites.cog(ctx, {
+            xPos: 120,
             teethWidth: 4,
             teethLength: 5,
-            yPos:320,
+            yPos: 320,
             color: "red",
-            numOfTeeth:12,
+            numOfTeeth: 12,
             radius: 20,
             angle: 12
         });
 
-        JuanSprites.cog(ctx,{
-            xPos:60,
-            yPos:200,
+        JuanSprites.cog(ctx, {
+            xPos: 60,
+            yPos: 200,
             color: "black",
-            numOfTeeth:12,
+            numOfTeeth: 12,
             radius: 35,
             angle: 12
         });
 
-        JuanSprites.cog(ctx,{
-            xPos:70,
-            yPos:290,
+        JuanSprites.cog(ctx, {
+            xPos: 70,
+            yPos: 290,
             teethWidth: 8,
             teethLength: 5,
             color: "green",
-            numOfTeeth:12,
+            numOfTeeth: 12,
             radius: 20,
             angle: 12
         });
 
-        JuanSprites.cog(ctx,{
-            xPos:0,
-            yPos:290,
+        JuanSprites.cog(ctx, {
+            xPos: 0,
+            yPos: 290,
             radius: 25,
             color: "blue",
-            numOfTeeth:12,
+            numOfTeeth: 12,
             angle: 12
         });
 
-        JuanSprites.cog(ctx,{
-            xPos:25,
-            yPos:340,
+        JuanSprites.cog(ctx, {
+            xPos: 25,
+            yPos: 340,
             radius: 15,
             teethLength: 4,
             teethWidth: 5,
             color: "brown",
-            numOfTeeth:6,
+            numOfTeeth: 6,
             angle: 12
         });
     </script>

@@ -33,24 +33,27 @@
             var drawBlush = function (ctx) {
                 ctx.save();
                 ctx.scale(2,1);
-                ctx.translate(radius/3,0); // JD: 3
-                var blushGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, radius/8);
+                var blushPosition = radius/3;
+                ctx.translate(blushPosition, 0);
+                var blushGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, radius / 8);
                 blushGradient.addColorStop(0, 'rgba(255,0,20,' + (0.6 * blush) + ')');
                 blushGradient.addColorStop(0.8, 'rgba(255,0,20,' + (0.4 * blush) + ')');
                 blushGradient.addColorStop(1, 'rgba(255,0,20,0)');
                 ctx.fillStyle = blushGradient;
                 ctx.beginPath();
-                ctx.arc(0,0, radius / 3, 0, Math.PI * 2, true);
+                ctx.arc(0, 0, blushPosition, 0, Math.PI * 2, true);
                 ctx.closePath();
                 ctx.fill();
-                ctx.translate(-2/3*radius,0); // JD: Note, radius / 3 is in here too!
+                ctx.translate(-2 * blushPosition,0);
                 ctx.beginPath();
-                ctx.arc(0, 0, radius / 3, 0, Math.PI * 2, true);
+                ctx.arc(0, 0, blushPosition, 0, Math.PI * 2, true);
                 ctx.closePath();
                 ctx.fill();
                 ctx.restore();
             };
-            if( blush > 0) drawBlush(ctx); // JD: 4
+            if( blush > 0) { 
+                drawBlush(ctx); 
+            }
             ctx.restore();
         };
 
@@ -156,7 +159,7 @@ smileyFace(ctx, {
     radius: 50,
     color: "yellow",
     isBlushing: true,
-    blush:0.8, // JD: 1
+    blush: 0.8, 
     leftEyeProperties: {
         side: "left",
         pAngle: 90,
