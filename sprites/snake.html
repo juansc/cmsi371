@@ -13,6 +13,26 @@
     <script>
         var canvas = document.getElementById('examples');
         var ctx = canvas.getContext('2d');
+
+        var snakeSkin = new Image();
+        snakeSkin.src = 'snake_skin.jpg';
+
+        snakeSkin.onload = function (){
+            var pattern = ctx.createPattern(snakeSkin, 'repeat');
+
+            JuanSprites.snake(ctx, {
+                color: pattern,
+                eyeColor: "black",
+                headAngle: -45,
+                angles: [50, -40, -10, -60, -50, 10, 50, 90, 0, 30, 30, 30, 30],
+                segmentLength: 35,
+                facingLeft: false,
+                xPos: 150,
+                yPos: 250,
+                mouthAngle: -15
+            });
+        };
+
         JuanSprites.snake(ctx,{
             angles: [30,30,30,30,30,30],
             xPos: 90,
@@ -31,7 +51,7 @@
             mouthAngle: -15
         });
 
-        JuanSprites.snake(ctx,{
+        /*JuanSprites.snake(ctx,{
             color: "white",
             eyeColor: "purple",
             headAngle: -45,
@@ -41,7 +61,7 @@
             xPos: 150,
             yPos: 250,
             mouthAngle: -15
-        });
+        });*/
 
         JuanSprites.snake(ctx,{
             color: "black",
