@@ -14,9 +14,11 @@
         var leftEyeAttributes = (options && options.leftEyeProperties) ? options.leftEyeProperties : {
             side: "left"
         };
+        leftEyeAttributes.side = "left";
         var rightEyeAttributes = (options && options.rightEyeProperties) ? options.rightEyeProperties : {
             side: "right"
         };
+        rightEyeAttributes.side = "right";
         var mouthAttributes = (options && options.mouthProperties) ? options.mouthProperties : {};
 
         ctx.translate(xPos, yPos);
@@ -151,30 +153,4 @@
         drawMouth(ctx, mouthAttributes);
         ctx.restore();
     };
-
-    window.smileyFace = smileyFace;
 }());
-
-smileyFace(ctx, {
-    radius: 50,
-    color: "yellow",
-    isBlushing: true,
-    blush: 0.8, 
-    leftEyeProperties: {
-        side: "left",
-        pAngle: 90,
-        pDist: 1,
-        lowerLid: 0.5,
-        upperLid: 0
-    },
-    rightEyeProperties: {
-        side: "right",
-        pDist: 1,
-        pAngle: 180
-    },
-    mouthProperties: {
-        size: 0.9,
-        isHappy: true,
-        isOpen: true
-    }
-});
