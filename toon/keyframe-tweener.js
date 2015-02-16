@@ -186,11 +186,27 @@ var KeyframeTweener = {
     //
     // Initialization primarily calls setInterval on a custom-built
     // frame-drawing (and updating) function.
-    /*tweenSnake: function(startOptions, endOptions){
 
-    }*/
     initialize: function (settings) {
         // We need to keep track of the current frame.
+
+        var tweenScalar = function(currentFrame, initialValue, finalValue, duration, ease){
+            return ease(currentFrame,initialValue, finalValue - initialValue, duration);
+        }
+
+        var tweenArray = function(currentFrame, initialArray, finalArray, duration, ease){
+            var distanceArray = new Array(finalArray.length);
+            for(var i = 0; i < distanceArray.length; i++){
+                distanceArray[i] = finalArray[i] - initialArray[i];
+                ease(currentFrame, initialArray[i], distanceArray[i], duration);
+            }
+            return distanceArray;
+        }
+
+        var tweenObject = function(){
+
+        };
+        
         var currentFrame = 0,
 
             // Avoid having to go through settings to get to the
