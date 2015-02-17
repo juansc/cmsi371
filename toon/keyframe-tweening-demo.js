@@ -16,24 +16,28 @@
                 keyframes: [
                     {
                         frame: 0,
-                        tx: 20,
-                        ty: 20,
-                        ease: KeyframeTweener.linear
+                        tx: 500,
+                        ty: 500,
+                        angles: [0,0,0,0,0,0],
+                        ease: KeyframeTweener.quadEaseInOut
                     },
 
                     {
                         frame: 30,
-                        tx: 70,
-                        ty: 20,
+                        tx: 500,
+                        ty: 500,
+                        angles: [30,30,30,30,30,30],
                         ease: KeyframeTweener.quadEaseInOut
                     },
 
                     // The last keyframe does not need an easing function.
                     {
-                        frame: 80,
-                        tx: 80,
+                        frame: 100,
+                        tx: 500,
                         ty: 500,
-                        rotate: 60 // Keyframe.rotate uses degrees.
+                        angles: [25,25,25,25,20,0],
+                        ease: KeyframeTweener.quadEaseInOut
+                        //rotate: 60 // Keyframe.rotate uses degrees.
                     }
                 ]
             },

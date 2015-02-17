@@ -29,7 +29,6 @@ var KeyframeTweener = {
     // These tweening functions are from
     // Robert Penner. Check out his work at 
     // http://www.robertpenner.com/easing/
-
     easeInQuad: function (t, b, c, d) {
         return c*(t/=d)*t + b;
     },
@@ -192,21 +191,22 @@ var KeyframeTweener = {
 
         var tweenScalar = function(currentFrame, initialValue, finalValue, duration, ease){
             return ease(currentFrame,initialValue, finalValue - initialValue, duration);
-        }
+        };
 
         var tweenArray = function(currentFrame, initialArray, finalArray, duration, ease){
-            var distanceArray = new Array(finalArray.length);
-            for(var i = 0; i < distanceArray.length; i++){
-                distanceArray[i] = finalArray[i] - initialArray[i];
-                ease(currentFrame, initialArray[i], distanceArray[i], duration);
+            var tweenedArray = new Array(finalArray.length);
+            for(var i = 0; i < tweenedArray.length; i++){
+                tweenedArray[i] = ease(currentFrame, initialArray[i], finalArray[i] - initialArray[i], duration);
             }
-            return distanceArray;
-        }
-
-        var tweenObject = function(){
-
+            return tweenedArray;
         };
-        
+
+        /*var tweenObject = function(propArr){
+            for(var i = 0; i < propArr; i++){
+
+            }
+        };*/
+
         var currentFrame = 0,
 
             // Avoid having to go through settings to get to the
@@ -272,6 +272,11 @@ var KeyframeTweener = {
                             currentTweenFrame = currentFrame - startKeyframe.frame,
                             duration = endKeyframe.frame - startKeyframe.frame + 1;
 
+                        var initialAngles = startKeyframe.angles,
+                            finalAngles = endKeyframe.angles;
+
+                        var tweenedAngles = tweenArray(currentFrame, initialAngles, finalAngles, duration, ease);
+                            
                         // Build our transform according to where we should be.
                         renderingContext.translate(
                             ease(currentTweenFrame, txStart, txDistance, duration),
@@ -288,7 +293,7 @@ var KeyframeTweener = {
                         //sprite.options = tweenSnake(startKeyframe.options, endKeyframe.options );
 
                         // Draw the sprite.
-                        sprites[i].draw(renderingContext, sprites[i].draw.defaults);
+                        sprites[i].draw(renderingContext,{angles: tweenedAngles});
 
                         // Clean up.
                         renderingContext.restore();
