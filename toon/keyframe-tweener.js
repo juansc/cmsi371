@@ -275,8 +275,7 @@ var KeyframeTweener = {
                         var initialAngles = startKeyframe.angles,
                             finalAngles = endKeyframe.angles;
 
-                        var tweenedAngles = tweenArray(currentFrame, initialAngles, finalAngles, duration, ease);
-                            
+                        var tweenedAngles = tweenArray(currentTweenFrame, initialAngles, finalAngles, duration, ease);
                         // Build our transform according to where we should be.
                         renderingContext.translate(
                             ease(currentTweenFrame, txStart, txDistance, duration),
@@ -293,7 +292,7 @@ var KeyframeTweener = {
                         //sprite.options = tweenSnake(startKeyframe.options, endKeyframe.options );
 
                         // Draw the sprite.
-                        sprites[i].draw(renderingContext,{angles: tweenedAngles});
+                        sprites[i].draw(renderingContext,{angles: tweenedAngles, color:"pink"});
 
                         // Clean up.
                         renderingContext.restore();
@@ -303,7 +302,7 @@ var KeyframeTweener = {
 
             // Move to the next frame.
             currentFrame += 1;
-            if(currentFrame > 150) currentFrame = 0;
+            if(currentFrame > 100) currentFrame = 0;
         }, 1000 / (settings.frameRate || 24));
     }
 };

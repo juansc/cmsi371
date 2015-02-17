@@ -19,24 +19,32 @@
                         tx: 500,
                         ty: 500,
                         angles: [0,0,0,0,0,0],
-                        ease: KeyframeTweener.quadEaseInOut
+                        ease: KeyframeTweener.easeOutBounce
                     },
 
                     {
                         frame: 30,
                         tx: 500,
-                        ty: 500,
+                        ty: 300,
                         angles: [30,30,30,30,30,30],
-                        ease: KeyframeTweener.quadEaseInOut
+                        ease: KeyframeTweener.easeOutBounce
                     },
+
+                    {
+                        frame: 50,
+                        tx: 500,
+                        ty: 500,
+                        angles: [-50,60,-20,-20,45,-30],
+                        ease: KeyframeTweener.easeOutBounce
+                    },                    
 
                     // The last keyframe does not need an easing function.
                     {
                         frame: 100,
                         tx: 500,
-                        ty: 500,
-                        angles: [25,25,25,25,20,0],
-                        ease: KeyframeTweener.quadEaseInOut
+                        ty: 0,
+                        angles: [30,-45,-45,45,30,-45],
+                        ease: KeyframeTweener.linear
                         //rotate: 60 // Keyframe.rotate uses degrees.
                     }
                 ]
