@@ -189,23 +189,46 @@ var KeyframeTweener = {
     initialize: function (settings) {
         // We need to keep track of the current frame.
 
-        var tweenScalar = function(currentFrame, initialValue, finalValue, duration, ease){
-            return ease(currentFrame,initialValue, finalValue - initialValue, duration);
+        var propType = {
+            leftEyeProperties: "object",
+            rightEyeProperties: "object",
+            mouthProperties: "object",
+            color: "string",
+            side: "string",
+            eyeColor: "string",
+            angles: "array"
+        }
+
+        var tweenScalar = function(currentTweenFrame, initialValue, finalValue, duration, ease){
+            return ease(currentTweenFrame,initialValue, finalValue - initialValue, duration);
         };
 
-        var tweenArray = function(currentFrame, initialArray, finalArray, duration, ease){
+        var tweenArray = function(currentTweenFrame, initialArray, finalArray, duration, ease){
             var tweenedArray = new Array(finalArray.length);
             for(var i = 0; i < tweenedArray.length; i++){
-                tweenedArray[i] = ease(currentFrame, initialArray[i], finalArray[i] - initialArray[i], duration);
+                tweenedArray[i] = ease(currentTweenFrame, initialArray[i], finalArray[i] - initialArray[i], duration);
             }
             return tweenedArray;
         };
 
-        /*var tweenObject = function(propArr){
-            for(var i = 0; i < propArr; i++){
-
+        var tweenObject = function(currentTweenFrame, propArr, duration, ease){
+            var tweenedObject = {};
+            for(var i = 0; i < propArr.length; i++){
+                var prop = propArr[i],
+                    type = propType[prop["name"]] || "scalar";
+                if(type === "object"){
+                    //console.log("Tweening the property " + prop["name"] + " and its an object");
+                    tweenedObject[prop["name"]] = tweenObject(currentTweenFrame, prop["properties"], duration, ease);
+                }else if(type === "array"){
+                    //console.log("Tweening the property " + prop["name"] + " and its an array");
+                    tweenedObject[prop["name"]] = tweenArray(currentTweenFrame, prop["initialValue"], prop["finalValue"], duration, ease);
+                }else if(type === "scalar"){
+                    //console.log("Tweening the property " + prop["name"] + " and its an scalar");
+                    tweenedObject[prop["name"]] = tweenScalar(currentTweenFrame, prop["initialValue"], prop["finalValue"], duration, ease);
+                }
             }
-        };*/
+            return tweenedObject;
+        };
 
         var currentFrame = 0,
 
@@ -271,6 +294,21 @@ var KeyframeTweener = {
                             rotateDistance = (endKeyframe.rotate || 0) * Math.PI / 180 - rotateStart,
                             currentTweenFrame = currentFrame - startKeyframe.frame,
                             duration = endKeyframe.frame - startKeyframe.frame + 1;
+
+                        var propArrayForTest = [
+                            {name: "blush", initialValue: 0, finalValue: 1},
+                            {name:"xPos", initialValue: 100, finalValue:200},
+                            {name:"yPos", initialValue: 200, finalValue:300},
+                            {name: "angles", initialValue:[0,0,0,0,0], finalValue: [10,10,10,10,10]},
+                            {name: "leftEyeProperties", properties: [
+                                    {name: "angle", initialValue: 0, finalValue: 90},
+                                    {name: "dist", initialValue:0, finalValue:1}
+                                ]
+                            }
+                        ]
+                        var x = tweenObject(currentTweenFrame, propArrayForTest, duration, KeyframeTweener.linear);
+                        console.log(JSON.stringify(x));
+                        JuanSprites.smileyFace(renderingContext, x);
 
                         var initialAngles = startKeyframe.angles,
                             finalAngles = endKeyframe.angles;
