@@ -217,13 +217,10 @@ var KeyframeTweener = {
                 var prop = propArr[i],
                     type = propType[prop["name"]] || "scalar";
                 if(type === "object"){
-                    //console.log("Tweening the property " + prop["name"] + " and its an object");
                     tweenedObject[prop["name"]] = tweenObject(currentTweenFrame, prop["properties"], duration, ease);
                 }else if(type === "array"){
-                    //console.log("Tweening the property " + prop["name"] + " and its an array");
                     tweenedObject[prop["name"]] = tweenArray(currentTweenFrame, prop["initialValue"], prop["finalValue"], duration, ease);
                 }else if(type === "scalar"){
-                    //console.log("Tweening the property " + prop["name"] + " and its an scalar");
                     tweenedObject[prop["name"]] = tweenScalar(currentTweenFrame, prop["initialValue"], prop["finalValue"], duration, ease);
                 }
             }
@@ -240,6 +237,47 @@ var KeyframeTweener = {
             sprites = settings.sprites;
 
         setInterval(function () {
+
+            var createPropertyArray = function(){
+                var propertyArray = [];
+                var initialObject = sprites[i].draw.defaultValues();
+                var finalObject = sprites[i].draw.defaultValues();
+
+                for(prop in startKeyframe.properties){
+                    initialObject[prop] = startKeyframe.properties[prop]; 
+                }
+                for(prop in endKeyframe.properties){
+                    finalObject[prop] = endKeyframe.properties[prop];
+                }
+
+                for(prop in finalObject){
+                    // We handle subcases
+                    if(["leftEyeProperties","rightEyeProperties", "mouthProperties"].indexOf(prop) !== -1){
+                        var subpropArray = createSubpropertyArray(prop, initialObject[prop], finalObject[prop]);
+                        propertyArray.push({name:prop, properties: subpropArray});
+                        continue;
+                    }
+                    propertyArray.push({name:prop, initialValue: initialObject[prop], finalValue: finalObject[prop]})
+                }
+
+                return propertyArray;
+            };
+
+            var createSubpropertyArray = function (prop, initialState, finalState){
+                var propertyArray = [];
+                var initialObject = (sprites[i].draw.defaultValues())[prop];
+                var finalObject = (sprites[i].draw.defaultValues())[prop];
+                for(prop in initialState){
+                    initialObject[prop] = initialState[prop]; 
+                }
+                for(prop in finalState){
+                    finalObject[prop] = finalState[prop]
+                }
+                for(prop in finalObject){
+                    propertyArray.push({name:prop, initialValue: initialObject[prop], finalValue: finalObject[prop]})                
+                }
+                return propertyArray;
+            };            
             // Some reusable loop variables.
             var i,
                 j,
@@ -295,25 +333,8 @@ var KeyframeTweener = {
                             currentTweenFrame = currentFrame - startKeyframe.frame,
                             duration = endKeyframe.frame - startKeyframe.frame + 1;
 
-                        var propArrayForTest = [
-                            {name: "blush", initialValue: 0, finalValue: 1},
-                            {name:"xPos", initialValue: 100, finalValue:200},
-                            {name:"yPos", initialValue: 200, finalValue:300},
-                            {name: "angles", initialValue:[0,0,0,0,0], finalValue: [10,10,10,10,10]},
-                            {name: "leftEyeProperties", properties: [
-                                    {name: "angle", initialValue: 0, finalValue: 90},
-                                    {name: "dist", initialValue:0, finalValue:1}
-                                ]
-                            }
-                        ]
-                        var x = tweenObject(currentTweenFrame, propArrayForTest, duration, KeyframeTweener.linear);
-                        console.log(JSON.stringify(x));
-                        JuanSprites.smileyFace(renderingContext, x);
 
-                        var initialAngles = startKeyframe.angles,
-                            finalAngles = endKeyframe.angles;
 
-                        var tweenedAngles = tweenArray(currentTweenFrame, initialAngles, finalAngles, duration, ease);
                         // Build our transform according to where we should be.
                         renderingContext.translate(
                             ease(currentTweenFrame, txStart, txDistance, duration),
@@ -327,13 +348,13 @@ var KeyframeTweener = {
                             ease(currentTweenFrame, rotateStart, rotateDistance, duration)
                         );
 
-                        //sprite.options = tweenSnake(startKeyframe.options, endKeyframe.options );
-
                         // Draw the sprite.
-                        sprites[i].draw(renderingContext,{angles: tweenedAngles, color:"pink"});
+                        var propertyArray = createPropertyArray();
+                        sprites[i].draw(renderingContext, tweenObject(currentTweenFrame, propertyArray, duration, ease));
 
                         // Clean up.
                         renderingContext.restore();
+
                     }
                 }
             }
