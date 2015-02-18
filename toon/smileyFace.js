@@ -153,34 +153,36 @@
         drawMouth(ctx, mouthAttributes);
         ctx.restore();
     };
-    window.JuanSprites.smileyFace.defaults = {
-        color: "yellow",
-        radius: 0,
-        xPos: 0,
-        yPos: 0,
-        blush: 0,
-        angle: 0,
-        leftEyeProperties : {
-            side: "left",
-            size: 0.25,
+    window.JuanSprites.smileyFace.defaultValues = function(){
+        return {
+            color: "yellow",
+            radius: 0,
+            xPos: 0,
+            yPos: 0,
+            blush: 0,
             angle: 0,
-            dist: 0,
-            lowerLid: 0,
-            upperLid: 0 
-        },
-        rightEyeProperties : {
-            side: "right",
-            size: 0.25,
-            angle: 0,
-            dist: 0,
-            lowerLid: 0,
-            upperLid: 0 
-        },
-        mouthProperties: {
-            scale: 0.9,
-            width: 0.2,
-            isOpen: false,
-            isHappy: false
-        }
+            leftEyeProperties: {
+                side: "left",
+                size: 0.25,
+                angle: 0,
+                dist: 0,
+                lowerLid: 0,
+                upperLid: 0 
+            },
+            rightEyeProperties: {
+                side: "right",
+                size: 0.25,
+                angle: 0,
+                dist: 0,
+                lowerLid: 0,
+                upperLid: 0 
+            },
+            mouthProperties: {
+                scale: 0.9,
+                width: 0.2,
+                isOpen: false,
+                isHappy: false
+            }
+        };
     };
 }());
