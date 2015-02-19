@@ -161,10 +161,9 @@ var KeyframeTweener = {
         // In percentages. 100% is default.
         var zoom = (options && options.zoom) ? options.zoom / 100 : 1;
 
-        
 
-        ctx.fillStyle = "#CC0000";
-        console.log(ctx.canvas.width);
+
+        ctx.fillStyle = "#CC4444";
         ctx.fillRect(0, 0, ctx.canvas.width, 500 + yOffset);
         ctx.fillStyle = "#521400";
         ctx.fillRect(0, 500 + yOffset, ctx.canvas.width, Math.max(500 + yOffset, ctx.canvas.height));
@@ -246,6 +245,8 @@ var KeyframeTweener = {
                     tweenedObject[prop["name"]] = tweenArray(currentTweenFrame, prop["initialValue"], prop["finalValue"], duration, ease);
                 }else if(type === "scalar"){
                     tweenedObject[prop["name"]] = tweenScalar(currentTweenFrame, prop["initialValue"], prop["finalValue"], duration, ease);
+                }else{
+                    tweenedObject[prop["name"]] = prop["initialValue"];
                 }
             }
             return tweenedObject;
@@ -389,7 +390,7 @@ var KeyframeTweener = {
 
             // Move to the next frame.
             currentFrame += 1;
-            if(currentFrame > 60) currentFrame = 0;
+            if(currentFrame > 1000) currentFrame = 0;
         }, 1000 / (settings.frameRate || 24));
     }
 };
