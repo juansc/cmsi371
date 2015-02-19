@@ -135,24 +135,6 @@ var KeyframeTweener = {
         if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
         return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
     },
-    easeInBounce: function (t, b, c, d) {
-        return c - easeOutBounce (x, d-t, 0, c, d) + b;
-    },
-    easeOutBounce: function (t, b, c, d) {
-        if ((t/=d) < (1/2.75)) {
-            return c*(7.5625*t*t) + b;
-        } else if (t < (2/2.75)) {
-            return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
-        } else if (t < (2.5/2.75)) {
-            return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
-        } else {
-            return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
-        }
-    },
-    easeInOutBounce: function (t, b, c, d) {
-        if (t < d/2) return easeInBounce (x, t*2, 0, c, d) * .5 + b;
-        return (x, t*2-d, 0, c, d) * .5 + c*.5 + b;
-    },
 
     drawBackground: function (ctx, options) {
         ctx.save();

@@ -35,6 +35,225 @@
                 ]
             },
             {
+                draw: JuanSprites.snake,
+                keyframes: [
+                    {
+                        frame: 385,
+                        properties: {
+                            headAngle: -30,
+                            xPos: -50,
+                            yPos: 275,
+                            angles: [0,0,0,0,0,0,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 395,
+                        properties: {
+                            headAngle: -30,
+                            xPos: -50,
+                            yPos: 275,
+                            angles: [0,0,0,0,0,0,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 400,
+                        ease: KeyframeTweener.easeInSine,
+                        properties: {
+                            headAngle: -30,
+                            xPos: 100,
+                            yPos: 225,
+                            angles: [0,0,0,0,0,0,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 405,
+                        ease: KeyframeTweener.easeInSine,                        
+                        properties: {
+                            headAngle: -20,
+                            xPos: 103,
+                            yPos: 225,
+                            angles: [20,0,-20,0,0,0,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 410,
+                        ease: KeyframeTweener.easeInSine,                        
+                        properties: {
+                            headAngle: -10,
+                            xPos: 100,
+                            yPos: 225,
+                            angles: [25,0,-25,0,0,0,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 415,
+                        ease: KeyframeTweener.easeInSine,                        
+                        properties: {
+                            headAngle: -20,
+                            xPos: 103,
+                            yPos: 225,
+                            angles: [20,0,-20,0,0,0,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 420,
+                        ease: KeyframeTweener.easeInSine,                        
+                        properties: {
+                            headAngle: -30,
+                            xPos: 100,
+                            yPos: 225,
+                            angles: [25,0,-25,-30,-30,-30,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 425,
+                        ease: KeyframeTweener.easeInSine,                        
+                        properties: {
+                            headAngle: -35,
+                            xPos: 103,
+                            yPos: 225,
+                            angles: [20,20,-20,20,20,20,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 430,
+                        ease: KeyframeTweener.easeInSine,                        
+                        properties: {
+                            headAngle: -30,
+                            xPos: 100,
+                            yPos: 225,
+                            angles: [25,0,-25,-30,-30,-30,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 435,
+                        ease: KeyframeTweener.easeInSine,                        
+                        properties: {
+                            headAngle: -35,
+                            xPos: 103,
+                            yPos: 225,
+                            angles: [20,20,-20,20,20,20,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 440,
+                        ease: KeyframeTweener.easeInSine,                        
+                        properties: {
+                            headAngle: -30,
+                            xPos: 100,
+                            yPos: 225,
+                            angles: [25,0,-25,-30,-30,-30,-30,20,20]
+                        }
+                    },
+                    {
+                        frame: 445,
+                        ease: KeyframeTweener.easeInSine,                        
+                        properties: {
+                            headAngle: -35,
+                            xPos: 103,
+                            yPos: 225,
+                            angles: [20,20,-20,20,20,20,45,45,45]
+                        }
+                    },
+                    {
+                        frame: 450,
+                        ease: KeyframeTweener.easeInSine,                        
+                        properties: {
+                            headAngle: -30,
+                            xPos: 100,
+                            yPos: 225,
+                            angles: [25,0,-25,-30,-30,-30,-30,0,0]
+                        }
+                    },
+                    {
+                        frame: 455,
+                        properties: {
+                            headAngle:0,
+                            xPos: 130,
+                            yPos: 225,
+                            angles: [0,0,-45,-45,0,0,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 460,
+                        properties: {
+                            headAngle:30,
+                            xPos: 130,
+                            yPos: 225,
+                            angles: [-30,0,-45,-45,0,0,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 465,
+                        properties: {
+                            headAngle:90,
+                            xPos: 130,
+                            yPos: 225,
+                            angles: [-90,0,-45,-45,0,0,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 470,
+                        properties: {
+                            headAngle:90,
+                            xPos: 130,
+                            yPos: 225,
+                            angles: [-90,0,0,0,-45,0,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 471,
+                        properties: {
+                            headAngle:90,
+                            xPos: 130,
+                            yPos: 225,
+                            angles: [-90,0,0,0,0,0,0,0,0]
+                        } 
+                    },                   
+                    {
+                        frame: 480,
+                        properties:{                            
+                            headAngle:90,
+                            xPos: 700,
+                            yPos: 250,
+                            angles: [-30,-30,-30,0,0,0,0,0,0]
+                        }
+                    },
+                    {
+                        frame: 485,
+                        ease: KeyframeTweener.linear,
+                        properties:{                            
+                            headAngle:90,
+                            xPos: 900,
+                            yPos: 500,
+                            angles: [-30,-30,-70,40,50,60,-20,50,0]
+                        }
+                    },
+                    {
+                        frame: 490,
+                        ease: KeyframeTweener.linear,
+                        properties: {
+                            eyeColor: "green",
+                            headAngle: 0,
+                            xPos: 910,
+                            yPos: 550,
+                            angles: [0,0,0,120,60,0,0,0,-45]
+                        }
+                    },
+                    {
+                        frame: 500,
+                        ease: KeyframeTweener.linear,
+                        properties: {
+                            eyeColor: "green",
+                            headAngle: 0,
+                            xPos: 910,
+                            yPos: 550,
+                            angles: [0,0,0,120,60,0,0,0,-45]
+                        }
+                    },                                                                                                                                                                                              
+                ]
+            },
+            {
                 draw: JuanSprites.cog,
                 keyframes: [
                     {
@@ -54,22 +273,143 @@
                             color: "black",
                             xPos: 72,
                             yPos: 265,
-                            angle: -140,
+                            angle: 160,
                             numOfTeeth: 10,
                             radius: 30
                         }
                     },
                     {
-                        frame: 1000,
+                        frame: 400,
                         properties: {
                             color: "black",
                             xPos: 72,
                             yPos: 265,
-                            angle: -7640,
+                            angle: 1660,
                             numOfTeeth: 10,
                             radius: 30                            
                         }
-                    }
+                    },
+                    {
+                        frame: 405,
+                        properties: {
+                            color: "black",
+                            xPos: 72,
+                            yPos: 265,
+                            angle: 1645,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 410,
+                        properties: {
+                            color: "black",
+                            xPos: 72,
+                            yPos: 265,
+                            angle: 1660,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 415,
+                        properties: {
+                            color: "black",
+                            xPos: 72,
+                            yPos: 265,
+                            angle: 1645,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    }, 
+                    {
+                        frame: 420,
+                        properties: {
+                            color: "black",
+                            xPos: 72,
+                            yPos: 265,
+                            angle: 1660,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 425,
+                        properties: {
+                            color: "black",
+                            xPos: 72,
+                            yPos: 265,
+                            angle: 1645,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 430,
+                        properties: {
+                            color: "black",
+                            xPos: 72,
+                            yPos: 265,
+                            angle: 1660,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 435,
+                        properties: {
+                            color: "black",
+                            xPos: 72,
+                            yPos: 265,
+                            angle: 1645,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 440,
+                        properties: {
+                            color: "black",
+                            xPos: 72,
+                            yPos: 265,
+                            angle: 1660,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 445,
+                        properties: {
+                            color: "black",
+                            xPos: 72,
+                            yPos: 265,
+                            angle: 1645,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    }, 
+                    {
+                        frame: 450,
+                        properties: {
+                            color: "black",
+                            xPos: 72,
+                            yPos: 265,
+                            angle: 1660,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 650,
+                        properties: {
+                            color: "black",
+                            xPos: 72,
+                            yPos: 265,
+                            angle: 3660,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },                                                                                          
                 ]
             },
             {
@@ -90,21 +430,131 @@
                         properties: {
                             xPos: 50,
                             yPos: 200,
-                            angle: 150,
+                            angle: -150,
                             numOfTeeth: 10,
                             radius: 30
                         }
                     },
                     {
-                        frame: 1000,
+                        frame: 400,
                         properties: {
                             xPos: 50,
                             yPos: 200,
-                            angle: 7650,
+                            angle: -1650,
                             numOfTeeth: 10,
                             radius: 30                            
                         }
-                    }
+                    },
+                    {
+                        frame: 405,
+                        properties: {
+                            xPos: 50,
+                            yPos: 200,
+                            angle: -1635,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 410,
+                        properties: {
+                            xPos: 50,
+                            yPos: 200,
+                            angle: -1650,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 415,
+                        properties: {
+                            xPos: 50,
+                            yPos: 200,
+                            angle: -1635,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    }, 
+                    {
+                        frame: 420,
+                        properties: {
+                            xPos: 50,
+                            yPos: 200,
+                            angle: -1650,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 425,
+                        properties: {
+                            xPos: 50,
+                            yPos: 200,
+                            angle: -1635,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 430,
+                        properties: {
+                            xPos: 50,
+                            yPos: 200,
+                            angle: -1650,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 435,
+                        properties: {
+                            xPos: 50,
+                            yPos: 200,
+                            angle: -1635,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 440,
+                        properties: {
+                            xPos: 50,
+                            yPos: 200,
+                            angle: -1650,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 445,
+                        properties: {
+                            xPos: 50,
+                            yPos: 200,
+                            angle: -1635,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 450,
+                        properties: {
+                            xPos: 50,
+                            yPos: 200,
+                            angle: -1650,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },
+                    {
+                        frame: 650,
+                        properties: {
+                            xPos: 50,
+                            yPos: 200,
+                            angle: -3650,
+                            numOfTeeth: 10,
+                            radius: 30                            
+                        }
+                    },                                                                                                                                
                 ]
             },
 
@@ -681,7 +1131,197 @@
                                 isOpen: false,
                             }
                         }
-                    }                                                                                                                                                                                                                                                                                                                                
+                    },
+                    {
+                        frame: 350,
+                        tx: 500,
+                        ty: 500,
+                        ease: KeyframeTweener.easeInCubic,
+                        properties: { 
+                            leftEyeProperties:{
+                                angle: 210,
+                                dist: 1,
+                            },
+                            rightEyeProperties:{
+                                angle: 210,
+                                dist:1
+                            },                            
+                            mouthProperties: {
+                                scale: 0.5,
+                                width: 0.9,
+                                isHappy: true,
+                                isOpen: false,
+                            }
+                        }
+                    },
+                    {
+                        frame: 400,
+                        tx: 500,
+                        ty: 500,
+                        ease: KeyframeTweener.easeInCubic,
+                        properties: { 
+                            leftEyeProperties:{
+                                angle: 210,
+                                dist: 1,
+                            },
+                            rightEyeProperties:{
+                                angle: 210,
+                                dist:1
+                            },                            
+                            mouthProperties: {
+                                scale: 0.5,
+                                width: 0.9,
+                                isHappy: true,
+                                isOpen: false,
+                            }
+                        }
+                    },
+                    {
+                        frame: 401,
+                        tx: 500,
+                        ty: 500,
+                        ease: KeyframeTweener.easeInCubic,
+                        properties: { 
+                            leftEyeProperties:{
+                                angle: 210,
+                                dist: 1,
+                            },
+                            rightEyeProperties:{
+                                angle: 210,
+                                dist:1
+                            },                            
+                            mouthProperties: {
+                                scale: 0.5,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                        
+                    },
+                    {
+                        frame: 405,
+                        tx: 500,
+                        ty: 500,
+                        ease: KeyframeTweener.linear,
+                        properties: { 
+                            leftEyeProperties:{
+                                angle: 210,
+                                dist: 1,
+                                lowerLid:1
+                            },
+                            rightEyeProperties:{
+                                angle: 210,
+                                dist:1,
+                                lowerLid: 1
+                            },                            
+                            mouthProperties: {
+                                scale: 0.5,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        }
+                    },
+                    {
+                        frame: 415,
+                        tx: 500,
+                        ty: 500,
+                        ease: KeyframeTweener.linear,
+                        properties: { 
+                            angle:20,
+                            leftEyeProperties:{
+                                angle: 210,
+                                dist: 1,
+                                lowerLid:1
+                            },
+                            rightEyeProperties:{
+                                angle: 210,
+                                dist:1,
+                                lowerLid: 1
+                            },                            
+                            mouthProperties: {
+                                scale: 0.5,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        }
+                    },
+                    {
+                        frame: 450,
+                        tx: 500,
+                        ty: 500,
+                        ease: KeyframeTweener.linear,
+                        properties: { 
+                            angle:20,
+                            leftEyeProperties:{
+                                angle: 210,
+                                dist: 1,
+                                lowerLid:1
+                            },
+                            rightEyeProperties:{
+                                angle: 210,
+                                dist:1,
+                                lowerLid: 1
+                            },                            
+                            mouthProperties: {
+                                scale: 0.7,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        }
+                    },
+                    {
+                        frame: 470,
+                        tx: 500,
+                        ty: 500,
+                        ease: KeyframeTweener.linear,
+                        properties: { 
+                            angle:20,
+                            leftEyeProperties:{
+                                angle: 210,
+                                dist: 1,
+                                lowerLid:1
+                            },
+                            rightEyeProperties:{
+                                angle: 210,
+                                dist:1,
+                                lowerLid: 1
+                            },                            
+                            mouthProperties: {
+                                scale: 0.7,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        }
+                    },                    
+                    {
+                        frame: 500,
+                        tx: 500,
+                        ty: 500,
+                        ease: KeyframeTweener.linear,
+                        properties: { 
+                            angle:0,
+                            leftEyeProperties:{
+                                angle: 360,
+                                dist: 1,
+                                lowerLid:1
+                            },
+                            rightEyeProperties:{
+                                angle: 360,
+                                dist:1,
+                                lowerLid: 1
+                            },                            
+                            mouthProperties: {
+                                scale: 0.7,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        }
+                    },                                        
                 ]
             }
         ];

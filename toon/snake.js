@@ -99,7 +99,7 @@
             xPos: 0,
             yPos: 0,
             headAngle: 0,
-            eyeColor: "blue",
+            eyeColor: "red",
             mouthAngle: -5,
             color: "green",
             facingLeft: false,
