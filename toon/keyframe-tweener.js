@@ -154,6 +154,30 @@ var KeyframeTweener = {
         return (x, t*2-d, 0, c, d) * .5 + c*.5 + b;
     },
 
+    drawBackground: function (ctx, options) {
+        ctx.save();
+        var xOffset = (options && options.xOffset) ? options.xOffset : 0;
+        var yOffset = (options && options.yOffset) ? options.yOffset : 0;
+        // In percentages. 100% is default.
+        var zoom = (options && options.zoom) ? options.zoom / 100 : 1;
+
+        
+
+        ctx.fillStyle = "#CC0000";
+        console.log(ctx.canvas.width);
+        ctx.fillRect(0, 0, ctx.canvas.width, 500 + yOffset);
+        ctx.fillStyle = "#521400";
+        ctx.fillRect(0, 500 + yOffset, ctx.canvas.width, Math.max(500 + yOffset, ctx.canvas.height));
+        var numberOfDoors = 10;
+        var doorHeight = 300;
+        var doorWidth = 150;
+        for(var i = 0; i < numberOfDoors; i++){
+            ctx.fillStyle = "#2E0F00";
+            ctx.fillRect(30 + xOffset + i*doorWidth*4, 500 + yOffset - doorHeight, doorWidth, doorHeight);
+        }
+        ctx.restore();
+    },
+
 
 
     // The big one: animation initialization.  The settings parameter
@@ -226,6 +250,7 @@ var KeyframeTweener = {
             }
             return tweenedObject;
         };
+
 
         var currentFrame = 0,
 
@@ -304,6 +329,9 @@ var KeyframeTweener = {
 
             // For every sprite, go to the current pair of keyframes.
             // Then, draw the sprite based on the current frame.
+            KeyframeTweener["drawBackground"](renderingContext);
+
+
             for (i = 0, maxI = sprites.length; i < maxI; i += 1) {
                 for (j = 0, maxJ = sprites[i].keyframes.length - 1; j < maxJ; j += 1) {
                     // We look for keyframe pairs such that the current
@@ -361,7 +389,15 @@ var KeyframeTweener = {
 
             // Move to the next frame.
             currentFrame += 1;
-            if(currentFrame > 100) currentFrame = 0;
+            if(currentFrame > 60) currentFrame = 0;
         }, 1000 / (settings.frameRate || 24));
     }
 };
+
+KeyframeTweener.drawBackground.defaultValues = function(){
+    return {
+        xOffset: 0,
+        yOffset: 0,
+        zoom: 1,
+    };
+}
