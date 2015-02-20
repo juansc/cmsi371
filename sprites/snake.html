@@ -8,7 +8,7 @@
   <body>
     <h1>Snake</h1>
     <p>The snake has a mouth which can open. The shape of the snake's body is described by an array of angles. An angle describes the angle of the joint between a particular segment and the segment right before it. Both the skin and eye color are also customizable.</p>
-    <canvas id="examples" width="450" height="450"></canvas>
+    <canvas id="examples" width="1024" height="600"></canvas>
     <script type="text/javascript" src="snake.js"></script>
     <script>
         var canvas = document.getElementById('examples');
@@ -21,46 +21,47 @@
             var pattern = ctx.createPattern(snakeSkin, 'repeat');
 
             JuanSprites.snake(ctx, {
-                color: pattern,
-                eyeColor: "black",
-                headAngle: -45,
-                angles: [50, -40, -10, -60, -50, 10, 50, 90, 0, 30, 30, 30, 30],
-                segmentLength: 35,
-                facingLeft: false,
-                xPos: 150,
-                yPos: 250,
-                mouthAngle: -15
+                mouthAngle: -45,
+                headAngle: 30,
+                xPos: 270,
+                yPos: 340,
+                angles: [-30,-30,-30,-45,0,75,0,35,0] 
             });
         };
 
         JuanSprites.snake(ctx, { 
-            angles: [30, 30, 30, 30, 30, 30],
-            xPos: 90,
-            yPos: 200,
-            mouthAngle: -45
+                color: "red",
+                mouthAngle: -45,
+                headAngle: 30,
+                xPos: 350,
+                yPos: 425,
+                angles: [10,-30,-30,-45,0,45,0,35,0]
         });
 
         JuanSprites.snake(ctx,{
-            color: "yellow",
-            eyeColor: "blue",
-            angles: [20, -30, -40, 10, 40, 10, 30, 45, 45, 30],
-            segmentLength: 35,
-            facingLeft: true,
-            xPos: 150,
-            yPos: 100,
-            mouthAngle: -15
+                color: "blue",
+                mouthAngle: -0,
+                headAngle: 0,
+                xPos: 425,
+                yPos: 500,
+                angles: [40,-10,-10,-35,-10,0,0,35,0]
         });
 
         JuanSprites.snake(ctx,{
-            color: "black",
-            eyeColor: "yellow",
-            headAngle: -45,
-            angles: [50, -40, -10, -60, -50, 10, 50, 90, 0, 30, 30, 30, 30],
-            segmentLength: 35,
-            facingLeft: true,
-            xPos: 240,
-            yPos: 250,
-            mouthAngle: -65
+                color: "black",
+                mouthAngle: -25,
+                headAngle: -30,
+                xPos: 420,
+                yPos: 400,
+                angles: [30,-10,-15,-25,0,35,0,35,0]
+        });
+        JuanSprites.snake(ctx,{
+                color: "cyan",
+                mouthAngle: -25,
+                headAngle: 5,
+                xPos: 350,
+                yPos: 350,
+                angles: [-30,-10,-15,-25,0,65,0,35,0]
         });
     </script>
   </body>
