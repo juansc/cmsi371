@@ -1243,27 +1243,382 @@
                         }
                     },
                     {
-                        frame:660,
+                        frame:700,
                         tx: 900,
                         ty: 500,
                         ease: KeyframeTweener.easeInSine,
                         properties: {
                             leftEyeProperties: {
-                                angle: 180,
+                                angle: 90,
+                                upperLid: 1,
                                 dist: 1,
+                                size: 0.5
                             },
                             rightEyeProperties: {
-                                angle: 180,
+                                upperLid: 1,
+                                angle: 90,
                                 dist: 1,
+                                size: 0.5
                             },
                             mouthProperties: {
                                 scale: 0.3,
-                                width: 0.3,
+                                width: 0.7,
                                 isHappy: false,
                                 isOpen: false,
                             }
                         }                      
-                    }                                                                                                                                                                                                                                                                                                                                                                                  
+                    },
+                    {
+                        frame:700,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 90,
+                                upperLid: 1,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            rightEyeProperties: {
+                                upperLid: 1,
+                                angle: 90,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.4,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    },
+                    {
+                        frame:750,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 90,
+                                upperLid: 1,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            rightEyeProperties: {
+                                upperLid: 1,
+                                angle: 90,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.4,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    },
+                    {
+                        frame:760,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 90,
+                                upperLid: 1,
+                                lowerLid: 1,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            rightEyeProperties: {
+                                upperLid: 1,
+                                lowerLid: 1,
+                                angle: 90,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.4,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    },
+                    {
+                        frame:770,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 90,
+                                upperLid: 1,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            rightEyeProperties: {
+                                upperLid: 1,
+                                angle: 90,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.4,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    },
+                    {
+                        frame:800,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 90,
+                                upperLid: 1,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            rightEyeProperties: {
+                                upperLid: 1,
+                                angle: 90,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.4,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    },
+                    {
+                        frame:805,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 90,
+                                upperLid: 1,
+                                lowerLid: 1,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            rightEyeProperties: {
+                                upperLid: 1,
+                                lowerLid: 1,
+                                angle: 90,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.4,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    },
+                    {
+                        frame:810,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 90,
+                                upperLid: 1,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            rightEyeProperties: {
+                                upperLid: 1,
+                                angle: 90,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.4,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    }, 
+                    {
+                        frame:850,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 90,
+                                upperLid: 1,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            rightEyeProperties: {
+                                upperLid: 1,
+                                angle: 90,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.4,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    },
+                     {
+                        frame:851,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 90,
+                                upperLid: 1,
+                                lowerLid: 1,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            rightEyeProperties: {
+                                upperLid: 1,
+                                lowerLid: 1,
+                                angle: 90,
+                                dist: 1,
+                                size: 0.5
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.4,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    },
+                     {
+                        frame:852,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 0,
+                                upperLid: 1,
+                                lowerLid: 1,
+                                dist: 1,
+                            },
+                            rightEyeProperties: {
+                                upperLid: 1,
+                                lowerLid: 1,
+                                angle: 0,
+                                dist: 1,
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.4,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    },
+                     {
+                        frame:855,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.1,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    },
+                    {
+                        frame:900,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 180
+                            },
+                            rightEyeProperties: {
+                                angle: 180
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.1,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    },
+                    {
+                        frame:920,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 180,
+                                dist: 1
+                            },
+                            rightEyeProperties: {
+                                angle: 180,
+                                dist: 1
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.1,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    },
+                    {
+                        frame:960,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 180,
+                                dist: 1
+                            },
+                            rightEyeProperties: {
+                                angle: 180,
+                                dist: 1
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.1,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        }                      
+                    }, 
+                   {
+                        frame: 975,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 135,
+                                dist: 1
+                            },
+                            rightEyeProperties: {
+                                angle: 135,
+                                dist: 1
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.1,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        } 
+                    },                                                            
                 ]
             },            
             {
@@ -1506,7 +1861,7 @@
                         }
                     },
                     {
-                        frame: 700,
+                        frame: 800,
                         properties: {
                             eyeColor: "green",
                             headAngle: 0,
@@ -1514,7 +1869,68 @@
                             yPos: 550,
                             angles: [0,0,0,120,60,0,0,0,-45]                             
                         }
-                    }                                                                                                                                                                                              
+                    },
+                    {
+                        frame: 810,
+                        ease: KeyframeTweener.easeInSine,
+                        properties: {
+                            eyeColor: "green",
+                            headAngle: 0,
+                            xPos: 610,
+                            yPos: 550,
+                            angles: [0,0,0,120,60,0,0,0,-35]                             
+                        }
+                    },
+                   {
+                        frame: 815,
+                        ease: KeyframeTweener.easeInSine,
+                        properties: {
+                            eyeColor: "green",
+                            headAngle: 0,
+                            xPos: 610,
+                            yPos: 550,
+                            angles: [0,0,0,120,60,0,0,0,-45]                             
+                        }
+                    },
+                   {
+                        frame: 950,
+                        properties: {
+                            eyeColor: "green",
+                            headAngle: 0,
+                            xPos: 610,
+                            yPos: 550,
+                            angles: [0,0,0,120,60,0,0,0,-45]                             
+                        }
+                    },
+                   {
+                        frame: 951,
+                        properties: {
+                            eyeColor: "red",
+                            headAngle: 0,
+                            xPos: 610,
+                            yPos: 550,
+                            angles: [0,0,0,120,60,0,0,0,-45]                             
+                        }
+                    },                    
+                   {
+                        frame: 955,
+                        properties: {
+                            headAngle: -30,
+                            eyeColor:"red",
+                            xPos: 610,
+                            yPos: 550,
+                            angles: [30,0,0,120,60,0,0,0,-45]                             
+                        }
+                    },
+                   {
+                        frame: 975,
+                        properties: {
+                            headAngle: -30,
+                            xPos: 610,
+                            yPos: 550,
+                            angles: [30,0,0,120,60,0,0,0,-45]                             
+                        }
+                    },
                 ]
             },
             {
