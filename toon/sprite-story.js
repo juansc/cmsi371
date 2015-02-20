@@ -1731,9 +1731,148 @@
                                 isOpen: true,
                             }
                         } 
-                    },                                                                                                                                                                                                                              
+                    }, 
+                   {
+                        frame: 1399,
+                        tx: 1200,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 360,
+                                dist: 1,
+                                size: 0.1
+                            },
+                            rightEyeProperties: {
+                                angle: 360,
+                                dist: 1,
+                                size: 0.1
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        } 
+                    }                                                                                                                                                                                                                                                                                                                            
                 ]
-            },            
+            },
+            {
+                draw: JuanSprites.smileyFace,
+                keyframes: [
+                    {
+                        frame: 1400,
+                        tx: 610,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 0,
+                                dist: 1,
+                            },
+                            rightEyeProperties: {
+                                angle: 0,
+                                dist: 1,
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        } 
+                    },                    
+                   {
+                        frame: 1401,
+                        tx: 610,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 0,
+                                dist: 1,
+                            },
+                            rightEyeProperties: {
+                                angle: 0,
+                                dist: 1,
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        } 
+                    },
+                   {
+                        frame: 1405,
+                        tx: 400,
+                        ty: 500,
+                        ease: KeyframeTweener.linear,
+                        properties: {
+                            angle: 10,
+                            leftEyeProperties: {
+                                angle: 0,
+                                dist: 1,
+                            },
+                            rightEyeProperties: {
+                                angle: 0,
+                                dist: 1,
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        } 
+                    }, 
+                   {
+                        frame: 1407,
+                        tx: 600,
+                        ty: 350,
+                        ease: KeyframeTweener.easeInCubic,
+                        properties: {
+                            angle: -10,
+                            leftEyeProperties: {
+                                angle: 0,
+                                dist: 1,
+                            },
+                            rightEyeProperties: {
+                                angle: 0,
+                                dist: 1,
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        } 
+                    },
+                   {
+                        frame: 1410,
+                        tx: 610,
+                        ty: 500,
+                        ease: KeyframeTweener.easeOutCubic,
+                        properties: {
+                            angle: 10,
+                            leftEyeProperties: {
+                                angle: 0,
+                                dist: 1,
+                            },
+                            rightEyeProperties: {
+                                angle: 0,
+                                dist: 1,
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        } 
+                    },     
+                ]
+            },                        
             {
                 draw: JuanSprites.snake,
                 keyframes: [

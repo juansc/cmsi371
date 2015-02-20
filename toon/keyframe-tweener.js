@@ -372,7 +372,7 @@ var KeyframeTweener = {
 
             // Move to the next frame.
             currentFrame += 1;
-            if(currentFrame > 2000) currentFrame = 0;
+            if(currentFrame > 1411) currentFrame = 1401;
         }, 1000 / (settings.frameRate || 24));
     }
 };
