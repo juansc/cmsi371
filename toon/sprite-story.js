@@ -1618,7 +1618,120 @@
                                 isOpen: false,
                             }
                         } 
-                    },                                                            
+                    },
+                   {
+                        frame: 1000,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 135,
+                                dist: 1
+                            },
+                            rightEyeProperties: {
+                                angle: 135,
+                                dist: 1
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.1,
+                                isHappy: false,
+                                isOpen: false,
+                            }
+                        } 
+                    },
+                   {
+                        frame: 1050,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 225,
+                                dist: 1,
+                                size: 0.1
+                            },
+                            rightEyeProperties: {
+                                angle: 225,
+                                dist: 1,
+                                size: 0.1
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        } 
+                    },
+                   {
+                        frame: 1150,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 225,
+                                dist: 1,
+                                size: 0.1
+                            },
+                            rightEyeProperties: {
+                                angle: 225,
+                                dist: 1,
+                                size: 0.1
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        } 
+                    },
+                   {
+                        frame: 1152,
+                        tx: 900,
+                        ty: 500,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 360,
+                                dist: 1,
+                                size: 0.1
+                            },
+                            rightEyeProperties: {
+                                angle: 360,
+                                dist: 1,
+                                size: 0.1
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        } 
+                    },
+                   {
+                        frame: 1154,
+                        tx: 1200,
+                        ty: 370,
+                        properties: {
+                            leftEyeProperties: {
+                                angle: 360,
+                                dist: 1,
+                                size: 0.1
+                            },
+                            rightEyeProperties: {
+                                angle: 360,
+                                dist: 1,
+                                size: 0.1
+                            },
+                            mouthProperties: {
+                                scale: 0.8,
+                                width: 0.9,
+                                isHappy: false,
+                                isOpen: true,
+                            }
+                        } 
+                    },                                                                                                                                                                                                                              
                 ]
             },            
             {
@@ -1931,6 +2044,108 @@
                             angles: [30,0,0,120,60,0,0,0,-45]                             
                         }
                     },
+                   {
+                        frame: 1000,
+                        properties: {
+                            headAngle: -30,
+                            xPos: 610,
+                            yPos: 550,
+                            angles: [30,0,0,120,60,-30,-30,-30,-45]                             
+                        }
+                    },
+                   {
+                        frame: 1050,
+                        properties: {
+                            headAngle: 30,
+                            xPos: 570,
+                            yPos: 340,
+                            angles: [-30,-30,-30,-45,0,75,0,35,0]                             
+                        }
+                    },
+                   {
+                        frame: 1070,
+                        ease: KeyframeTweener.easeInQuint,                        
+                        properties: {
+                            headAngle: 30,
+                            xPos: 570,
+                            yPos: 340,
+                            angles: [-30,-30,-30,-45,0,75,0,35,0]                             
+                        }
+                    },  
+                   {
+                        frame: 1075,
+                        properties: {
+                            mouthAngle: -45,
+                            headAngle: 30,
+                            xPos: 570,
+                            yPos: 340,
+                            angles: [-30,-30,-30,-45,0,75,0,35,0]                             
+                        }
+                    },                                       
+                   {
+                        frame: 1150,
+                        properties: {
+                            mouthAngle: -45,
+                            headAngle: 30,
+                            xPos: 570,
+                            yPos: 340,
+                            angles: [-30,-30,-30,-45,0,75,0,35,0]                             
+                        }
+                    },
+                   {
+                        frame: 1155,
+                        properties: {
+                            headAngle: 30,
+                            xPos: 900,
+                            yPos: 540,
+                            angles: [0,0,0,0,0,0,0,75,35]                             
+                        }
+                    },
+                   {
+                        frame: 1160,
+                        properties: {
+                            headAngle: 0,
+                            xPos: 900,
+                            yPos: 540,
+                            angles: [0,0,0,0,0,0,0,0,0]                             
+                        }
+                    },
+                   {
+                        frame: 1200,
+                        properties: {
+                            headAngle: 0,
+                            xPos: 900,
+                            yPos: 540,
+                            angles: [0,0,0,0,0,0,0,0,0]                             
+                        }
+                    },
+                   {
+                        frame: 1300,
+                        properties: {
+                            headAngle: 0,
+                            xPos: 900,
+                            yPos: 540,
+                            angles: [0,0,0,0,0,0,0,0,0]                             
+                        }
+                    },
+                   {
+                        frame: 1305,
+                        properties: {
+                            headAngle: 30,
+                            xPos: 1100,
+                            yPos: 435,
+                            angles: [-30,-30,0,0,30,30,30,0,-30]                             
+                        }
+                    },
+                   {
+                        frame: 1310,
+                        properties: {
+                            headAngle: 30,
+                            xPos: 1500,
+                            yPos: 455,
+                            angles: [-30,-30,0,0,30,30,30,0,-30]                             
+                        }
+                    }                                            
                 ]
             },
             {
