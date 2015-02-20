@@ -37,9 +37,32 @@
                         properties: {
                             xOffset: 0
                         }
-                    }                    
+                    },                                         
                 ]
             },
+            {
+                draw: KeyframeTweener.drawBackground,
+                keyframes:[
+                    {
+                        frame: 1250,
+                        properties:{
+                            xOffset: -10
+                        }
+                    },
+                    {
+                        frame: 1251,
+                        properties: {
+                            xOffset:-80,
+                        }
+                    },
+                    {
+                        frame: 1260,
+                        properties: {
+                            xOffset: -800
+                        }
+                    },                                        
+                ]
+            },            
             {
                 draw: JuanSprites.smileyFace,
                 keyframes: [
@@ -1761,8 +1784,8 @@
                 draw: JuanSprites.smileyFace,
                 keyframes: [
                     {
-                        frame: 1400,
-                        tx: 610,
+                        frame: 1250,
+                        tx: 810,
                         ty: 500,
                         properties: {
                             leftEyeProperties: {
@@ -1775,15 +1798,15 @@
                             },
                             mouthProperties: {
                                 scale: 0.8,
-                                width: 0.9,
+                                width: 0.7,
                                 isHappy: false,
                                 isOpen: true,
                             }
                         } 
                     },                    
                    {
-                        frame: 1401,
-                        tx: 610,
+                        frame: 1251,
+                        tx: 810,
                         ty: 500,
                         properties: {
                             leftEyeProperties: {
@@ -1796,15 +1819,15 @@
                             },
                             mouthProperties: {
                                 scale: 0.8,
-                                width: 0.9,
+                                width: 0.7,
                                 isHappy: false,
                                 isOpen: true,
                             }
                         } 
                     },
                    {
-                        frame: 1405,
-                        tx: 400,
+                        frame: 1255,
+                        tx: 600,
                         ty: 500,
                         ease: KeyframeTweener.linear,
                         properties: {
@@ -1819,15 +1842,15 @@
                             },
                             mouthProperties: {
                                 scale: 0.8,
-                                width: 0.9,
+                                width: 0.7,
                                 isHappy: false,
                                 isOpen: true,
                             }
                         } 
                     }, 
                    {
-                        frame: 1407,
-                        tx: 600,
+                        frame: 1257,
+                        tx: 800,
                         ty: 350,
                         ease: KeyframeTweener.easeInCubic,
                         properties: {
@@ -1842,15 +1865,15 @@
                             },
                             mouthProperties: {
                                 scale: 0.8,
-                                width: 0.9,
+                                width: 0.7,
                                 isHappy: false,
                                 isOpen: true,
                             }
                         } 
                     },
                    {
-                        frame: 1410,
-                        tx: 610,
+                        frame: 1260,
+                        tx: 810,
                         ty: 500,
                         ease: KeyframeTweener.easeOutCubic,
                         properties: {
@@ -1865,14 +1888,69 @@
                             },
                             mouthProperties: {
                                 scale: 0.8,
-                                width: 0.9,
+                                width: 0.7,
                                 isHappy: false,
                                 isOpen: true,
                             }
                         } 
                     },     
                 ]
-            },                        
+            },
+            {
+                draw: JuanSprites.snake,
+                keyframes: [
+                    {
+                        frame: 1250,
+                        properties: {
+                mouthAngle: -45,
+                headAngle: 30,
+                xPos: 270,
+                yPos: 340,
+                angles: [-30,-30,-30,-45,0,75,0,35,0]                             
+                        } 
+                    },                    
+                    {
+                        frame: 1251,
+                        properties: {
+                            mouthAngle: -45,
+                            headAngle: 30,
+                            xPos: 350,
+                            yPos: 425,
+                            angles: [10,-30,-30,-45,0,45,0,35,0]                             
+                        }
+                    },
+                    {
+                        frame: 1255,
+                        properties: {
+                            mouthAngle: -0,
+                            headAngle: 0,
+                            xPos: 425,
+                            yPos: 500,
+                            angles: [40,-10,-10,-35,-10,0,0,35,0]                           
+                        }
+                    }, 
+                    {
+                        frame: 1257,
+                        properties: {
+                            mouthAngle: -25,
+                            headAngle: -30,
+                            xPos: 420,
+                            yPos: 400,
+                            angles: [30,-10,-15,-25,0,35,0,35,0]                             
+                        }
+                    },
+                    {
+                        frame: 1260,
+                        properties: {
+                            mouthAngle: -25,
+                            headAngle: 5,
+                            xPos: 350,
+                            yPos: 350,
+                            angles: [-30,-10,-15,-25,0,65,0,35,0]                            
+                        }
+                    },     
+                ]
+            },                                     
             {
                 draw: JuanSprites.snake,
                 keyframes: [
@@ -2259,7 +2337,7 @@
                         }
                     },
                    {
-                        frame: 1300,
+                        frame: 1200,
                         properties: {
                             headAngle: 0,
                             xPos: 900,
@@ -2268,7 +2346,7 @@
                         }
                     },
                    {
-                        frame: 1305,
+                        frame: 1205,
                         properties: {
                             headAngle: 30,
                             xPos: 1100,
@@ -2277,7 +2355,7 @@
                         }
                     },
                    {
-                        frame: 1310,
+                        frame: 1210,
                         properties: {
                             headAngle: 30,
                             xPos: 1500,
