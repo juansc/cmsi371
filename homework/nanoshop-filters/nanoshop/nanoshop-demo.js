@@ -7,7 +7,44 @@
         renderingContext = canvas.getContext("2d"),
         gradient;
 
-    // Adapted from original code by Tyler Nichols.
+    var image = new Image();
+
+    image.onload = function(){
+        renderingContext.drawImage(image,0,0);
+        $("#apply-filter-button").click(function () {
+            // Filter time.
+            console.log("darken");
+            renderingContext.putImageData(
+                Nanoshop.applyFilter(
+                    renderingContext.getImageData(0, 0, canvas.width, canvas.height),
+                    // This is a basic "darkener."
+                    function (r, g, b, a) {
+                        return [r / 2, g / 2, b / 2, a];
+                    }
+                ),
+                0, 0
+            );
+        });
+
+        $("#contrast-button").click(function(){
+            renderingContext.putImageData(
+                Nanoshop.applyFilter(
+                    renderingContext.getImageData(0, 0, canvas.width, canvas.height),
+                    function (r, g, b, a){
+                        return (r + g + b > 255*3*(4/6)) ? [255,255,255, a] : [0, 0, 0, a];
+                    }
+                ), 
+                0,0
+            );
+        });
+
+    // Set a little event handler to apply the filter.        
+    }
+    image.src = "../Alejandra\ and\ Me.jpg";
+
+
+
+    /*/ Adapted from original code by Tyler Nichols.
     gradient = renderingContext.createRadialGradient(120, 120, 15, 120, 120, 75);
     gradient.addColorStop(0, "rgb(255, 102, 102)");
     gradient.addColorStop(1, "red");
@@ -48,20 +85,8 @@
     renderingContext.lineTo(435, 265);
     renderingContext.fill();
     renderingContext.closePath();
-    // (end of adapted code by Tyler Nichols)
+    // (end of adapted code by Tyler Nichols)*/
 
-    // Set a little event handler to apply the filter.
-    $("#apply-filter-button").click(function () {
-        // Filter time.
-        renderingContext.putImageData(
-            Nanoshop.applyFilter(
-                renderingContext.getImageData(0, 0, canvas.width, canvas.height),
-                // This is a basic "darkener."
-                function (r, g, b, a) {
-                    return [r / 2, g / 2, b / 2, a];
-                }
-            ),
-            0, 0
-        );
-    });
+
+
 }());

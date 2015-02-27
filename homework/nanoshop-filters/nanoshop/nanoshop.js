@@ -26,5 +26,5 @@ var Nanoshop = {
         }
 
         return imageData;
-    }
+    },
 };
