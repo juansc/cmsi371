@@ -379,6 +379,65 @@ var Primitives = {
         }
     },
 
+    circleBres3fill: function(context, xc, yc, r, color1, color2){
+        var x = r,
+            y = 0,
+            e = 0,
+            colorArr = this.generateGradTable(color1, color2, r);
+
+        while (y <= x) {
+            this.circleChordRadGrad(context, xc+x, yc+y, xc-x, yc+y, xc, yc, colorArr);
+            this.circleChordRadGrad(context, xc+x, yc-y, xc-x, yc-y, xc, yc, colorArr);
+            this.circleChordRadGrad(context, xc+y, yc+x, xc-y, yc+x, xc, yc, colorArr);
+            this.circleChordRadGrad(context, xc+y, yc-x, xc-y, yc-x, xc, yc, colorArr);            
+            y += 1;
+            e += (2 * y - 1);
+            if (e > x) {
+                x -= 1;
+                e -= (2 * x + 1);
+            }
+        }
+    },
+
+    circleChordRadGrad: function (context, x1, y1, x2, y2, xc, yc, colorArr) {
+        var steps = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1)),
+            dx = (x2 - x1) / steps,
+            dy = (y2 - y1) / steps,
+            x = x1,
+            y = y1,
+            i,
+            dist;
+
+        for (i = 0; i <= steps; i += 1) {
+            dist = Math.floor(Math.sqrt(Math.pow(xc-x,2)+Math.pow(yc-y,2)));
+            this.setPixel(context, x, y, 
+                colorArr[dist][0], 
+                colorArr[dist][1],
+                colorArr[dist][2]
+            );
+            x += dx;
+            y += dy;
+        }
+    },
+
+    generateGradTable: function (color1, color2, dist){
+        var colorArr = [];
+        var colorDelta = [
+            (color2[0] - color1[0])/dist,
+            (color2[1] - color1[1])/dist,
+            (color2[2] - color1[2])/dist
+        ];
+
+        for(var i = 0; i <= dist; i++){
+            colorArr[i] = [
+                color1[0] + i*colorDelta[0],
+                color1[1] + i*colorDelta[1],
+                color1[2] + i*colorDelta[2]
+            ];
+        }
+        return colorArr;
+    },
+
     /*
      * Now, the big one: a general polygon-filling algorithm.
      * We expect the polygon to be an array of objects with x
