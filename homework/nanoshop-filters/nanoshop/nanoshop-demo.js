@@ -38,6 +38,30 @@
             );
         });
 
+        $("#rotate-color").click(function(){
+            renderingContext.putImageData(
+                Nanoshop.applyFilter(
+                    renderingContext.getImageData(0, 0, canvas.width, canvas.height),
+                    function (r, g, b, a){
+                        return [g, b, r, a];
+                    }
+                ), 
+                0,0
+            );
+        });
+
+        $("#age").click(function(){
+            renderingContext.putImageData(
+                Nanoshop.applyFilter(
+                    renderingContext.getImageData(0, 0, canvas.width, canvas.height),
+                    function (r, g, b, a){
+                        var average = (r+g+b)/3;
+                        return [average*1.2, average, average*0.5, a];
+                    }
+                ), 
+                0,0
+            );
+        }); 
     // Set a little event handler to apply the filter.        
     }
     image.src = "../Alejandra\ and\ Me.jpg";
