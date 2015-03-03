@@ -1902,11 +1902,11 @@
                     {
                         frame: 1250,
                         properties: {
-                mouthAngle: -45,
-                headAngle: 30,
-                xPos: 270,
-                yPos: 340,
-                angles: [-30,-30,-30,-45,0,75,0,35,0]                             
+                            mouthAngle: -45,
+                            headAngle: 30,
+                            xPos: 270,
+                            yPos: 340,
+                            angles: [-30,-30,-30,-45,0,75,0,35,0]                             
                         } 
                     },                    
                     {
@@ -1922,21 +1922,21 @@
                     {
                         frame: 1255,
                         properties: {
-                            mouthAngle: -0,
+                            mouthAngle: 0,
                             headAngle: 0,
                             xPos: 425,
                             yPos: 500,
-                            angles: [40,-10,-10,-35,-10,0,0,35,0]                           
+                            angles: [30,-10,-10,-15,-10,0,0,35,0]                           
                         }
                     }, 
                     {
                         frame: 1257,
                         properties: {
-                            mouthAngle: -25,
-                            headAngle: -30,
-                            xPos: 420,
-                            yPos: 400,
-                            angles: [30,-10,-15,-25,0,35,0,35,0]                             
+                            mouthAngle: -10,
+                            headAngle: -45,
+                            xPos: 475,
+                            yPos: 450,
+                            angles: [10,10,35,25,0,-25,0,-35,0]                             
                         }
                     },
                     {
