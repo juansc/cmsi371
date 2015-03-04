@@ -37,6 +37,106 @@ var NanoshopNeighborhood = {
         return [ rTotal / 9, gTotal / 9, bTotal / 9, aTotal / 9 ];
     },
 
+    func1: function(rgb) {
+        var rTotal = 0,
+            gTotal = 0,
+            bTotal = 0,
+            aTotal = 0,
+            i;
+
+        for (i = 0; i < 9; i += 1) {
+            rTotal += rgb[i].r;
+            gTotal += rgb[i].g;
+            bTotal += rgb[i].b;
+            aTotal += rgb[i].a;
+        }
+
+        var rFinal = ( rgb[4].r >= rTotal / 9) ? rgb[4].r : rTotal / 9;
+        var gFinal = ( rgb[4].g >= gTotal / 9) ? rgb[4].g : gTotal / 9;
+        var bFinal = ( rgb[4].b >= bTotal / 9) ? rgb[4].b : bTotal / 9;
+
+
+        return [ rFinal, gFinal, bFinal , rgb[4].a];
+    },
+
+    func3: function(rgb) {
+        var rTotal = 0,
+            gTotal = 0,
+            bTotal = 0,
+            aTotal = 0,
+            i;
+
+        for (i = 0; i < 9; i += 1) {
+            rTotal += rgb[i].r;
+            gTotal += rgb[i].g;
+            bTotal += rgb[i].b;
+            aTotal += rgb[i].a;
+        }
+
+        var rFinal = (! (rgb[4].r >= rTotal / 9)) ? rgb[4].r : rTotal / 9;
+        var bFinal = (! (rgb[4].b >= bTotal / 9)) ? rgb[4].b : bTotal / 9;
+
+
+        return [ rFinal, rgb[4].g, bFinal , rgb[4].a];
+    },
+
+    func2: function(rgb) {
+        var rTotal = 0,
+            gTotal = 0,
+            bTotal = 0,
+            aTotal = 0,
+            i;
+
+        for (i = 0; i < 9; i += 1) {
+            rTotal += rgb[i].r;
+        }
+
+        var rFinal = ( rgb[4].r >= rTotal / 9) ? rgb[4].r : rTotal / 9;
+
+        return [ rFinal, rgb[4].g, rgb[4].b , rgb[4].a];
+    },
+
+    func4: function(rgb) {
+        var rTotal = 0,
+            gTotal = 0,
+            bTotal = 0,
+            aTotal = 0,
+            i;
+
+        for (i = 0; i < 9; i += 1) {
+            rTotal += rgb[i].r;
+            gTotal += rgb[i].g;
+            bTotal += rgb[i].b;
+            aTotal += rgb[i].a;
+        }
+
+        var rFinal = ( rTotal / 9 <= 255*0.3) ? rgb[4].r * 0.3 : (( rTotal / 9 >= 255/10*8 ) ? (rgb[4].r + 255)/2 : rgb[4].r);
+        var gFinal = ( gTotal / 9 <= 255*0.3) ? rgb[4].g * 0.3 : (( gTotal / 9 >= 255/10*8 ) ? (rgb[4].g + 255)/2 : rgb[4].g);
+        var bFinal = ( bTotal / 9 <= 255*0.3) ? rgb[4].b * 0.3 : (( bTotal / 9 >= 255/10*8 ) ? (rgb[4].b + 255)/2 : rgb[4].b);
+
+        return [ rFinal, gFinal, bFinal , rgb[4].a];
+    },
+
+    func5: function(rgb) {
+        var rTotal = 0,
+            gTotal = 0,
+            bTotal = 0,
+            aTotal = 0,
+            i;
+
+        for (i = 0; i < 9; i += 1) {
+            rTotal += rgb[i].r;
+            gTotal += rgb[i].g;
+            bTotal += rgb[i].b;
+            aTotal += rgb[i].a;
+        }
+
+        var colorTotal = rTotal + gTotal + bTotal;
+        var colorFinal = ( colorTotal / 27 <= 255*0.5) ? 0 : (( colorTotal / 27 >= 255*0.9 ) ? 255 : 255/2);
+
+        return [ colorFinal, colorFinal, colorFinal , rgb[4].a];
+    },                    
+
     /*
      * Applies the given filter to the given ImageData object,
      * then modifies its pixels according to the given filter.
