@@ -45,7 +45,7 @@
                 keyframes:[
                     {
                         frame: 1250,
-                        properties:{
+                        properties:{ // JD: 3
                             xOffset: -10
                         }
                     },
@@ -172,7 +172,7 @@
                         ease: KeyframeTweener.easeOutCubic,
                         properties: {
                             blush: 1,
-                            leftEyeProperties:{
+                            leftEyeProperties:{ // JD: 3
                                 lowerLid:1
                             },
                             rightEyeProperties:{
@@ -193,7 +193,7 @@
                         ease: KeyframeTweener.easeOutCubic,
                         properties: {
                             blush: 1,
-                            leftEyeProperties:{
+                            leftEyeProperties:{ // JD: 3
                                 lowerLid:1
                             },
                             rightEyeProperties:{
@@ -227,7 +227,7 @@
                         ty: 500,
                         ease: KeyframeTweener.easeOutCubic,
                         properties: { 
-                            leftEyeProperties:{
+                            leftEyeProperties:{ // JD: 3
                                 angle: 180,
                             },
                             rightEyeProperties:{
@@ -269,7 +269,7 @@
                         ty: 500,
                         ease: KeyframeTweener.linear,
                         properties: { 
-                            leftEyeProperties:{
+                            leftEyeProperties:{ // JD: 3
                                 angle: 180,
                                 dist: 1,
                             },
@@ -313,7 +313,7 @@
                         ty: 500,
                         ease: KeyframeTweener.easeInCubic,
                         properties: { 
-                            leftEyeProperties:{
+                            leftEyeProperties:{ // JD: 3
                                 angle: 180,
                                 dist: 1,
                             },
@@ -379,7 +379,7 @@
                         ty: 450,
                         ease: KeyframeTweener.easeOutCubic,
                         properties: { 
-                            leftEyeProperties:{
+                            leftEyeProperties:{  // JD: 3...etc. etc. etc.
                                 angle: 180,
                                 dist: 1,
                             },
@@ -1902,11 +1902,11 @@
                     {
                         frame: 1250,
                         properties: {
-                mouthAngle: -45,
+                mouthAngle: -45, // JD: 4
                 headAngle: 30,
                 xPos: 270,
                 yPos: 340,
-                angles: [-30,-30,-30,-45,0,75,0,35,0]                             
+                angles: [-30,-30,-30,-45,0,75,0,35,0] // JD: 3
                         } 
                     },                    
                     {
@@ -1946,7 +1946,7 @@
                             headAngle: 5,
                             xPos: 350,
                             yPos: 350,
-                            angles: [-30,-10,-15,-25,0,65,0,35,0]                            
+                            angles: [-30,-10,-15,-25,0,65,0,35,0] // JD: 3 (etc.)
                         }
                     },     
                 ]

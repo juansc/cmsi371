@@ -104,6 +104,7 @@
                 ctx.beginPath();
                 ctx.fillStyle = color;
                 ctx.strokeStyle = color;
+                // JD: 2
                 ctx.arc(0, 0, eyeSize, eyeLidSide * Math.PI / 2 * (1 - lidSize), eyeLidSide * Math.PI / 2 * (1 + lidSize), isTop);
                 ctx.fill();
                 ctx.stroke();
@@ -153,7 +154,7 @@
         drawMouth(ctx, mouthAttributes);
         ctx.restore();
     };
-    window.JuanSprites.smileyFace.defaultValues = function(){
+    window.JuanSprites.smileyFace.defaultValues = function(){ // JD: 3
         return {
             color: "yellow",
             radius: 0,

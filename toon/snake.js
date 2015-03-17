@@ -94,7 +94,7 @@
         ctx.restore();
     }; 
 
-    window.JuanSprites.snake.defaultValues = function(){
+    window.JuanSprites.snake.defaultValues = function(){ // JD: 3
         return {
             xPos: 0,
             yPos: 0,

@@ -25,7 +25,7 @@
         }
         ctx.restore();
     };
-    window.JuanSprites.cog.defaultValues = function (){
+    window.JuanSprites.cog.defaultValues = function (){ // JD: 3
         return { 
             numOfTeeth: 10,
             xPos: 0,

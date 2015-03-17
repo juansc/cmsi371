@@ -136,6 +136,7 @@ var KeyframeTweener = {
         return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
     },
 
+    // JD: 5
     drawBackground: function (ctx, options) {
         ctx.save();
         var xOffset = (options && options.xOffset) ? options.xOffset : 0;
@@ -204,6 +205,7 @@ var KeyframeTweener = {
             angles: "array"
         }
 
+        // JD: 6
         var tweenScalar = function(currentTweenFrame, initialValue, finalValue, duration, ease){
             return ease(currentTweenFrame,initialValue, finalValue - initialValue, duration);
         };
@@ -216,11 +218,31 @@ var KeyframeTweener = {
             return tweenedArray;
         };
 
+        // JD: 7
         var tweenObject = function(currentTweenFrame, propArr, duration, ease){
             var tweenedObject = {};
             for(var i = 0; i < propArr.length; i++){
                 var prop = propArr[i],
                     type = propType[prop["name"]] || "scalar";
+
+                // JD: 8
+                /*
+                
+                var tweeners = {
+                        object: function () {
+                            return tweenObject...
+                        },
+                        
+                        array: function () {
+                            return tweenArray...
+                        },
+                        
+                        ...etc., one for each possibility.
+                    };
+                
+                tweenedObject[prop.name] = tweeners[type] ? tweeners[type]() : prop.initialValue;
+
+                */
                 if(type === "object"){
                     tweenedObject[prop["name"]] = tweenObject(currentTweenFrame, prop["properties"], duration, ease);
                 }else if(type === "array"){
@@ -244,7 +266,7 @@ var KeyframeTweener = {
             height = settings.height,
             sprites = settings.sprites;
 
-        setInterval(function () {
+        setInterval(function () { // JD: 9
 
             var createPropertyArray = function(){
                 var propertyArray = [];
@@ -260,6 +282,7 @@ var KeyframeTweener = {
 
                 for(prop in finalObject){
                     // We handle subcases
+                    // JD: 10
                     if(["leftEyeProperties","rightEyeProperties", "mouthProperties"].indexOf(prop) !== -1){
                         var subpropArray = createSubpropertyArray(prop, initialObject[prop], finalObject[prop]);
                         propertyArray.push({name:prop, properties: subpropArray});
@@ -312,7 +335,7 @@ var KeyframeTweener = {
 
             // For every sprite, go to the current pair of keyframes.
             // Then, draw the sprite based on the current frame.
-            KeyframeTweener["drawBackground"](renderingContext);
+            KeyframeTweener["drawBackground"](renderingContext); // JD: 5
 
 
             for (i = 0, maxI = sprites.length; i < maxI; i += 1) {
@@ -372,12 +395,12 @@ var KeyframeTweener = {
 
             // Move to the next frame.
             currentFrame += 1;
-            if(currentFrame >= 1260) currentFrame = 1251;
+            if(currentFrame >= 1260) currentFrame = 1251; // JD: 11
         }, 1000 / (settings.frameRate || 24));
     }
 };
 
-KeyframeTweener.drawBackground.defaultValues = function(){
+KeyframeTweener.drawBackground.defaultValues = function(){ // JD: 5
     return {
         xOffset: 0,
         yOffset: 0,
