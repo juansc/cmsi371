@@ -7,6 +7,7 @@
     // Because many of these variables are best initialized then immediately
     // used in context, we merely name them here.  Read on to see how they
     // are used.
+
     var gl, // The WebGL context.
 
         // This variable stores 3D model information.
@@ -31,6 +32,7 @@
         i,
         max;
 
+
     // Grab the WebGL rendering context.
     gl = GLSLUtilities.getGL(canvas);
     if (!gl) {
@@ -48,6 +50,7 @@
     gl.viewport(0, 0, canvas.width, canvas.height);
 
     // Build the objects to display.
+
     objectsToDraw = [
         // Calibration: x, y, and z axis indicators.
         /*{
@@ -134,14 +137,14 @@
 
         // Shape library demonstration.
         {
-            color: { r: 1, g: 0.5, b: 0 },
-            vertices: Shapes.toRawLineArray(Shapes.icosahedron()),
+            color: { r: 1, g: 1, b: 0.0 },
+            vertices: Shape.toRawLineArray(Shape.trapezoidalCube(0.5,0,0)),
             mode: gl.LINES
         },
 
         {
             color: { r: 1, g: 1, b: 0},
-            vertices: Shapes.toRawTriangleArray(Shapes.n_cylinder(8)),
+            vertices: Shape.toRawTriangleArray(Shape.n_cylinder(8)),
             mode: gl.TRIANGLES
         }
     ];

@@ -169,15 +169,15 @@
             mode: gl.LINE_LOOP
         },*/
 
-        /*{
+        {
             color: { r: 1, g: 1, b: 0.0 },
-            vertices: Shapes.toRawLineArray(Shapes.icosahedron()),
+            vertices: Shape.toRawLineArray(Shape.sphere()),
             mode: gl.LINES
-        }*/
+        },
         {
             color: { r: 1, g: 0, b: 0.25},
-            vertices: Shapes.toRawTriangleArray(Shapes.n_cylinder(32)),
-            mode: gl.TRIANGLES
+            vertices: Shape.toRawLineArray(Shape.n_cylinder()),
+            mode: gl.LINES
         }        
     ];
 
