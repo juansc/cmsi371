@@ -386,6 +386,7 @@ var Primitives = {
             colorArr = this.generateGradTable(color1, color2, r);
 
         while (y <= x) {
+            // JD: 7
             this.circleChordRadGrad(context, xc+x, yc+y, xc-x, yc+y, xc, yc, colorArr);
             this.circleChordRadGrad(context, xc+x, yc-y, xc-x, yc-y, xc, yc, colorArr);
             this.circleChordRadGrad(context, xc+y, yc+x, xc-y, yc+x, xc, yc, colorArr);

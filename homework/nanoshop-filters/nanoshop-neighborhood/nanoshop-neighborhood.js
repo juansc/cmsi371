@@ -37,7 +37,7 @@ var NanoshopNeighborhood = {
         return [ rTotal / 9, gTotal / 9, bTotal / 9, aTotal / 9 ];
     },
 
-    func1: function(rgb) {
+    func1: function(rgb) { // JD: 3
         var rTotal = 0,
             gTotal = 0,
             bTotal = 0,
@@ -51,6 +51,7 @@ var NanoshopNeighborhood = {
             aTotal += rgb[i].a;
         }
 
+        // JD: 4
         var rFinal = ( rgb[4].r >= rTotal / 9) ? rgb[4].r : rTotal / 9;
         var gFinal = ( rgb[4].g >= gTotal / 9) ? rgb[4].g : gTotal / 9;
         var bFinal = ( rgb[4].b >= bTotal / 9) ? rgb[4].b : bTotal / 9;
@@ -77,7 +78,7 @@ var NanoshopNeighborhood = {
         var bFinal = (! (rgb[4].b >= bTotal / 9)) ? rgb[4].b : bTotal / 9;
 
 
-        return [ rFinal, rgb[4].g, bFinal , rgb[4].a];
+        return [ rFinal, rgb[4].g, bFinal , rgb[4].a]; // JD: 4
     },
 
     func2: function(rgb) {
@@ -110,6 +111,7 @@ var NanoshopNeighborhood = {
             aTotal += rgb[i].a;
         }
 
+        // JD: 5
         var rFinal = ( rTotal / 9 <= 255*0.3) ? rgb[4].r * 0.3 : (( rTotal / 9 >= 255/10*8 ) ? (rgb[4].r + 255)/2 : rgb[4].r);
         var gFinal = ( gTotal / 9 <= 255*0.3) ? rgb[4].g * 0.3 : (( gTotal / 9 >= 255/10*8 ) ? (rgb[4].g + 255)/2 : rgb[4].g);
         var bFinal = ( bTotal / 9 <= 255*0.3) ? rgb[4].b * 0.3 : (( bTotal / 9 >= 255/10*8 ) ? (rgb[4].b + 255)/2 : rgb[4].b);
@@ -135,7 +137,7 @@ var NanoshopNeighborhood = {
         var colorFinal = ( colorTotal / 27 <= 255*0.5) ? 0 : (( colorTotal / 27 >= 255*0.9 ) ? 255 : 255/2);
 
         return [ colorFinal, colorFinal, colorFinal , rgb[4].a];
-    },                    
+    }, // JD: 6
 
     /*
      * Applies the given filter to the given ImageData object,

@@ -18,7 +18,7 @@
                 NanoshopNeighborhood.applyFilter(
                     renderingContext,
                     renderingContext.getImageData(0, 0, canvas.width, canvas.height),
-                    NanoshopNeighborhood.func5
+                    NanoshopNeighborhood.func5 // JD: 3
                     //NanoshopNeighborhood.averager // Convenience comment for easy switching.
                 ),
                 0, 0
@@ -31,7 +31,7 @@
                 NanoshopNeighborhood.applyFilter(
                     renderingContext,
                     renderingContext.getImageData(0, 0, canvas.width, canvas.height),
-                    NanoshopNeighborhood.func4
+                    NanoshopNeighborhood.func4 // JD: 3
                 ),
                 0, 0
             );
