@@ -121,7 +121,7 @@
                 [ -0.25, 0.5, 0.5 ]
             ),
             mode: gl.TRIANGLES
-        },
+        },*/
 
         // A quadrilateral.
         {
@@ -133,7 +133,7 @@
                 [ -0.1, -1.0, 0.75 ]
             ),
             mode: gl.LINE_LOOP
-        },*/
+        },
 
         // Shape library demonstration.
         {
@@ -144,8 +144,8 @@
 
         {
             color: { r: 1, g: 1, b: 0},
-            vertices: Shape.toRawTriangleArray(Shape.n_cylinder(8)),
-            mode: gl.TRIANGLES
+            vertices: Shape.toRawLineArray(Shape.n_cylinder(8)),
+            mode: gl.LINES
         }
     ];
 

@@ -171,12 +171,12 @@
 
         {
             color: { r: 1, g: 1, b: 0.0 },
-            vertices: Shape.toRawLineArray(Shape.sphere()),
+            vertices: Shape.toRawLineArray(Shape.sphere(30,30)),
             mode: gl.LINES
         },
         {
             color: { r: 1, g: 0, b: 0.25},
-            vertices: Shape.toRawLineArray(Shape.n_cylinder()),
+            vertices: Shape.toRawLineArray(Shape.n_cylinder(5)),
             mode: gl.LINES
         }        
     ];

@@ -8,10 +8,20 @@ var Shape = {
     /*
      * Constructor for arbitrary shape.
      */
-    shape: function (vertices, indices, children) {
-        this.vertices = vertices;
-        this.indices = indices;
-        this.children = children;
+    shape: function (options) {
+        this.vertices = options.vertices || [];
+        this.color = options.color || { r: 1.0, g: 1.0, b: 0.0 };
+        this.indices = options.indices || [];
+        this.children = options.children || [];
+    },
+
+    // Example code from Dondi which needs to be modified.
+    draw = function (parentTransform) {
+        var t = calculateTransform() * (parentTransform || identity);
+        renderVertices();
+        children.forEach(function() {
+            children.draw(t);
+        });
     },
 
     /*
@@ -65,26 +75,23 @@ var Shape = {
         };
     },
 
-    // Where m is the number of longitude lines
-    // and n is the number of latitude lines.
+    /*
+     * Returns a sphere where m is number of longitudinal lines
+     * and n is the number of latitudinal lines. 
+     */
     sphere: function (m, n) {
-        var numLong = m || 10;
-        var numLat = n || 10;
-        var DEGREES_TO_RADIANS = Math.PI / 180;
-
-        var myVertices = [];
-        var myIndices = [];
-
-        var x, // The coordinate of a point.
-        y,
-        z,
-        v, // The index of the current vertex.
-        maxVertex = numLong * numLat + 1; // The index of the last vertex, at the north pole.
-
-        // deltaPhi is the angle difference between one latitude line to the next.
-        // deltaTheta is the angle difference between one longitude line to the next.            
-        var deltaPhi = 180 / (numLat + 1);
-        var deltaTheta = 360 / numLong;
+        var numLong = m || 10,
+            numLat = n || 10,
+            DEGREES_TO_RADIANS = Math.PI / 180,
+            myVertices = [],
+            myIndices = [],
+            x, // The coordinate of a point.
+            y,
+            z,
+            v, // The index of the current vertex.
+            maxVertex = numLong * numLat + 1; // The index of the last vertex, at the north pole.
+            deltaPhi = 180 / (numLat + 1), // deltaPhi is the angle difference between one latitude line to the next.
+            deltaTheta = 360 / numLong; // deltaTheta is the angle difference between one longitude line to the next.            
 
         // We push the point at the south pole
         myVertices.push([0, 0, -1]);
@@ -109,7 +116,7 @@ var Shape = {
 
         // Generate all triangles going up the sphere
         // from the south pole to the north pole
-        for (var i = 0; i < numLat - 1; i += 1) {
+        for (i = 0; i < numLat - 1; i += 1) {
             for (var j = 0; j < numLong - 1; j += 1) {
                 v = i * numLong + 1 + j;
                 myIndices.push([v, v + numLong, v + numLong + 1]);
@@ -120,7 +127,7 @@ var Shape = {
         }
 
         // We push the triangles at the south pole.
-        for (var i = 0; i < numLong - 1; i += 1) {
+        for (i = 0; i < numLong - 1; i += 1) {
             v = numLong * (numLat - 1) + 1 + i;
             myIndices.push([v, v + 1, maxVertex]);
         }
@@ -136,35 +143,31 @@ var Shape = {
     },
 
     n_cylinder: function (n) {
-        // These give the location of all the
-        // vertices.
 
         var numOfSides = n || 20;
-        var myVertices = [];
-        // These define triangles based off of
-        // counterclockwise rule.
-        var myIndices = [];
-        // Define useful constant
-        var deltaTheta = 2 * Math.PI / numOfSides;
-        var height = 0.25;
-        var scale = 0.3;
-        var x, y, v;
-        var numOfVertices = 2 * numOfSides;
+            myVertices = [],
+            myIndices = [],
+            HEIGHT = 0.25, // 
+            SCALE = 0.3,
+            x, y, v,
+            numOfVertices = 2 * numOfSides,        
+            deltaTheta = 2 * Math.PI / numOfSides;
+
 
         // Add the vertices and all the side faces
         // of the cylinder.
         for (var i = 0; i < numOfSides; i += 1) {
             v = i * 2;
-            x = Math.cos(deltaTheta * i) * scale;
-            y = Math.sin(deltaTheta * i) * scale;
+            x = Math.cos(deltaTheta * i) * SCALE;
+            y = Math.sin(deltaTheta * i) * SCALE;
 
-            myVertices.push([x, y, height]);
-            myVertices.push([x, y, -height]);
+            myVertices.push([x, y, HEIGHT]);
+            myVertices.push([x, y, -HEIGHT]);
             myIndices.push([v + 0, v + 1, (v + 3) % numOfVertices]);
             myIndices.push([v + 0, (v + 3) % numOfVertices, (v + 2) % numOfVertices]);
         }
         // Add both bases.
-        for (var i = 0; i < numOfSides - 2; i += 1) {
+        for (i = 0; i < numOfSides - 2; i += 1) {
             myIndices.push([0, (i + 1) * 2, (i + 2) * 2]);
             myIndices.push([1, (i + 1) * 2 + 1, (i + 2) * 2 + 1]);
         }
@@ -177,13 +180,12 @@ var Shape = {
     },
 
     trapezoidalCube: function (baseRatio, angle, dist ){
-        var ratio = baseRatio || 1;
-        var phi = angle || 0;
-        var radius = dist || 0;
-
-        var DEGREES_TO_RADIANS = Math.PI / 180;
-        var xOffSet = Math.cos(DEGREES_TO_RADIANS * phi) * radius;
-        var yOffSet = Math.sin(DEGREES_TO_RADIANS * phi) * radius;
+        var ratio = baseRatio || 1,
+            phi = angle || 0,
+            radius = dist || 0,
+            DEGREES_TO_RADIANS = Math.PI / 180,
+            xOffSet = Math.cos(DEGREES_TO_RADIANS * phi) * radius,
+            yOffSet = Math.sin(DEGREES_TO_RADIANS * phi) * radius;
 
         var myVertices = [
             [  0.25, 0.25, -0.25 ],
