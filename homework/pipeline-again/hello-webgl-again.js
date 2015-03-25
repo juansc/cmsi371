@@ -115,6 +115,7 @@
         return;
     }
 
+    var mySphere = new Shape(Shape.sphere(50,50));
     // Set up settings that will not change.  This is not "canned" into a
     // utility function because these settings really can vary from program
     // to program.
@@ -170,15 +171,15 @@
         },*/
 
         {
-            color: { r: 1, g: 1, b: 0.0 },
-            vertices: Shape.toRawLineArray(Shape.sphere(30,30)),
+            color: { },
+            vertices: mySphere.toRawLineArray(),
             mode: gl.LINES
         },
-        {
+        /*{
             color: { r: 1, g: 0, b: 0.25},
-            vertices: Shape.toRawLineArray(Shape.n_cylinder(5)),
+            vertices: mySphere.toRawLineArray(),
             mode: gl.LINES
-        }        
+        } */       
     ];
 
     // Pass the vertices to WebGL.
