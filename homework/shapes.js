@@ -13,6 +13,8 @@ var Shape = (function () {
         this.color = options.color || { r: 1.0, g: 1.0, b: 0.0 };
         this.indices = options.indices || [];
         this.children = options.children || [];
+        this.rawMode = options.drawingMode || "linearray";
+        this.mode = options.mode;
     };
 
     // Example code from Dondi which needs to be modified.
@@ -28,10 +30,15 @@ var Shape = (function () {
         this.children.push(child);
     };
 
+    shape.prototype.setMode = function(mode) {
+        this.mode = mode;
+    };
+
     /*
      * Utility function for turning indexed vertices into a "raw" coordinate array
      * arranged as triangles.
      */
+
     shape.prototype.toRawTriangleArray =  function () {
         var result = [],
             i,
@@ -74,6 +81,17 @@ var Shape = (function () {
 
         return result;
     };
+
+    shape.prototype.toRawFunctions = function (str) {
+        var funcStr = str.toLowerCase();
+        if(funcStr === "linearray") {
+            return this.toRawLineArray();
+        }else if (funcStr === "trianglearray") {
+            return this.toRawTriangleArray();
+        } else {
+            throw new Error("Not a valid function.");
+        }
+    };    
 
     return shape;
 

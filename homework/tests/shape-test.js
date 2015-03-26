@@ -4,7 +4,7 @@
 $(function () {
 
     // This suite checks instantiation basics.
-    test("Creation and Data Access", function () {
+    test("Icosahedron", function () {
         // Test the icosahedron, just to be sure ;)
         var myShape = new Shape(Shape.icosahedron());
         deepEqual(
@@ -28,7 +28,6 @@ $(function () {
                         [   0.850650808352039932,  -0.525731112119133606, 0.0 ],
                         [  -0.850650808352039932,  -0.525731112119133606, 0.0 ]
                     ],
-
                     indices: [
                         [  1,  4,  0 ],
                         [  4,  9,  0 ],
@@ -51,16 +50,72 @@ $(function () {
                         [  5,  2,  9 ],
                         [ 11,  2,  7 ]
                     ],
-
                     children: []
                 },
-                "Icosahedron Indices Check.");
-
+                "Icosahedron Check.");
     });
 
-    test("Addition and Subtraction", function () {
-        // Examples
+    
 
+    test("Cube Test", function () {
+        // Examples
+        var cube = new Shape(Shape.cylinder(4));
+
+        var cubeLowerBounds = [
+                                [  0.99, -0.01,  0.249 ],        
+                                [  0.99, -0.01, -0.251 ],
+                                [ -0.01,  0.99,  0.249 ],
+                                [ -0.01,  0.99, -0.251 ],
+                                [ -1.01, -0.01,  0.249 ],
+                                [ -1.01, -0.01, -0.251 ],
+                                [ -0.01, -1.01,  0.249 ],                                                                
+                                [ -0.01, -1.01, -0.251 ],
+                            ];
+        var cubeUpperBounds = [
+                                [  1.01,  0.01,  0.251 ],                                        
+                                [  1.01,  0.01, -0.249 ],
+                                [  0.01,  1.01,  0.251 ],
+                                [  0.01,  1.01, -0.249 ],
+                                [ -0.99,  0.01,  0.251 ],
+                                [ -0.99,  0.01, -0.249 ],
+                                [  0.01, -0.99,  0.251 ],
+                                [  0.01, -0.99, -0.249 ],
+                            ];
+        deepEqual(
+                {
+                    indices: cube.indices,
+                    children: cube.children,
+                },
+                {
+                    indices: [
+                        [ 0, 1, 3 ],
+                        [ 0, 3, 2 ],
+                        [ 2, 3, 5 ],
+                        [ 2, 5, 4 ],
+                        [ 4, 5, 7 ],
+                        [ 4, 7, 6 ],
+                        [ 6, 7, 1 ],
+                        [ 6, 1, 0 ],
+                        [ 0, 2, 4 ],
+                        [ 1, 3, 5 ],
+                        [ 0, 4, 6 ],
+                        [ 1, 5, 7 ]
+                      ],
+                    children: []
+                },
+                "Cube Check.");
+
+        var lowerBound,
+            upperBound;
+
+        for(var i = 0; i < cube.vertices.length; i += 1) {
+            for(var j = 0; j < 3; j += 1) {
+                lowerBound = cubeLowerBounds[i][j];
+                upperBound = cubeUpperBounds[i][j];
+                ok(  lowerBound < cube.vertices[i][j] && cube.vertices[i][j] < upperBound, 
+                    "Generated Vertices are correct.");
+            }
+        }
     });
 
 });

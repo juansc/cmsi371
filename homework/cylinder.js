@@ -10,7 +10,6 @@
             myVertices = [],
             myIndices = [],
             HEIGHT = 0.25, // 
-            SCALE = 0.3,
             x, y, v,
             numOfVertices = 2 * numOfSides,        
             deltaTheta = 2 * Math.PI / numOfSides;
@@ -20,8 +19,8 @@
         // of the cylinder.
         for (var i = 0; i < numOfSides; i += 1) {
             v = i * 2;
-            x = Math.cos(deltaTheta * i) * SCALE;
-            y = Math.sin(deltaTheta * i) * SCALE;
+            x = Math.cos(deltaTheta * i);
+            y = Math.sin(deltaTheta * i);
 
             myVertices.push([x, y, HEIGHT]);
             myVertices.push([x, y, -HEIGHT]);

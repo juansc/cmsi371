@@ -11,7 +11,7 @@
 
         // This variable stores 3D model information.
         objectsToDraw,
-        currentObject,
+
         // The shader program to use.
         shaderProgram,
 
@@ -122,56 +122,82 @@
     gl.clearColor(0.0, 0.0, 0.0, 0.0);
     gl.viewport(0, 0, canvas.width, canvas.height);
 
-    var mySphere = new Shape(Shape.sphere(30,30));
-    mySphere.mode = gl.LINES;
-
     // Build the objects to display.
     objectsToDraw = [
-            mySphere
         /*{
+            vertices: [].concat(
+                [ 0.0, 0.0, 0.0 ],
+                [ 0.5, 0.0, -0.75 ],
+                [ 0.0, 0.5, 0.0 ]
+            ),
+            colors: [].concat(
+                [ 1.0, 0.0, 0.0 ],
+                [ 0.0, 1.0, 0.0 ],
+                [ 0.0, 0.0, 1.0 ]
+            ),
+            mode: gl.TRIANGLES
+        },
+        {
+            color: { r: 0.0, g: 1.0, b: 0 },
+            vertices: [].concat(
+                [ 0.25, 0.0, -0.5 ],
+                [ 0.75, 0.0, -0.5 ],
+                [ 0.25, 0.5, -0.5 ]
+            ),
+            mode: gl.TRIANGLES
+        },
+        {
+            color: { r: 0.0, g: 0.0, b: 1.0 },
+            vertices: [].concat(
+                [ -0.25, 0.0, 0.5 ],
+                [ 0.5, 0.0, 0.5 ],
+                [ -0.25, 0.5, 0.5 ]
+            ),
+            mode: gl.TRIANGLES
+        },
+        {
+            color: { r: 0.0, g: 0.0, b: 1.0 },
+            vertices: [].concat(
+                [ -1.0, -1.0, 0.75 ],
+                [ -1.0, -0.1, -1.0 ],
+                [ -0.1, -0.1, -1.0 ],
+                [ -0.1, -1.0, 0.75 ]
+            ),
+            mode: gl.LINE_LOOP
+        },*/
+
+        {
+            color: { r: 1, g: 1, b: 0.0 },
+            vertices: Shape.toRawLineArray(Shape.sphere(30,30)),
+            mode: gl.LINES
+        },
+        {
             color: { r: 1, g: 0, b: 0.25},
             vertices: Shape.toRawLineArray(Shape.n_cylinder(5)),
             mode: gl.LINES
-        }*/        
+        }        
     ];
 
-    // Prepare the vertices to pass to WebGL.
-    verticesToWebGl = function (object, rawMode, mode) {
+    // Pass the vertices to WebGL.
+    for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
+        objectsToDraw[i].buffer = GLSLUtilities.initVertexBuffer(gl,
+                objectsToDraw[i].vertices);
 
-        // This statement allows children to inherit the 
-        // properties of the parent object. 
-        object.rawMode = rawMode || object.rawMode;
-        object.mode = mode || object.mode;
-
-        console.log(object.rawMode);
-        object.WebGLvertices = object.toRawFunctions(object.rawMode);
-        var vertices = object.WebGLvertices;
-
-        object.buffer = GLSLUtilities.initVertexBuffer(gl,vertices);
-
-        if (!object.colors) {
+        if (!objectsToDraw[i].colors) {
             // If we have a single color, we expand that into an array
             // of the same color over and over.
-            object.colors = [];
-            for (j = 0, maxj = vertices.length / 3;
+            objectsToDraw[i].colors = [];
+            for (j = 0, maxj = objectsToDraw[i].vertices.length / 3;
                     j < maxj; j += 1) {
-                object.colors = object.colors.concat(
-                    object.color.r,
-                    object.color.g,
-                    object.color.b
+                objectsToDraw[i].colors = objectsToDraw[i].colors.concat(
+                    objectsToDraw[i].color.r,
+                    objectsToDraw[i].color.g,
+                    objectsToDraw[i].color.b
                 );
             }
         }
-        object.colorBuffer = GLSLUtilities.initVertexBuffer(gl,
-                object.colors);
-    };
-
-    for(i = 0, maxi = objectsToDraw.length; i < maxi; i+= 1){
-        currentObject = objectsToDraw[i];
-        verticesToWebGl(currentObject);
-        for(var child in currentObject.children){
-            verticesToWebGl(child, currentObject.rawMode, currentObject.mode);
-        }
+        objectsToDraw[i].colorBuffer = GLSLUtilities.initVertexBuffer(gl,
+                objectsToDraw[i].colors);
     }
 
     // Initialize the shaders.
@@ -215,14 +241,13 @@
      */
     drawObject = function (object) {
         // Set the varying colors.
-        console.log(object);
         gl.bindBuffer(gl.ARRAY_BUFFER, object.colorBuffer);
         gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 0, 0);
 
         // Set the varying vertex coordinates.
         gl.bindBuffer(gl.ARRAY_BUFFER, object.buffer);
         gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
-        gl.drawArrays(object.mode, 0, object.WebGLvertices.length / 3);
+        gl.drawArrays(object.mode, 0, object.vertices.length / 3);
     };
 
     /*
@@ -238,9 +263,6 @@
         // Display the objects.
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
             drawObject(objectsToDraw[i]);
-            for(var child in objectsToDraw[i]) {
-                drawObject(child);
-            }
         }
 
         // All done.
