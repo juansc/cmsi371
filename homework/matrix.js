@@ -329,3 +329,5 @@ Matrix.rotateAxis = function (theta, x, y, z) {
         ],
         4,4);
 };
+
+Matrix.

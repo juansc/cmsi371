@@ -26,6 +26,16 @@ var Shape = (function () {
         });
     };
 
+    // Here we make a copy of the vertices, extend them to 4 dimensions,
+    // work on them, and return the value.
+    shape.prototype.applyTransform = function(matrix) {
+        var vertex;
+        for(var ind = 0, maxInd = this.vertices.length; ind < maxInd; ind += 1){
+            vertex = new Matrix(this.vertices[ind].concat([1]),4,1);
+            this.vertices[ind] = matrix.mult(vertex).elements.slice(0,3);
+        }
+    };
+
     shape.prototype.addChild = function (child) {
         this.children.push(child);
     };

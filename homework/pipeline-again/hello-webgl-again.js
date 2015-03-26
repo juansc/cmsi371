@@ -166,7 +166,7 @@
     for(i = 0, maxi = objectsToDraw.length; i < maxi; i+= 1){
         currentObject = objectsToDraw[i];
         verticesToWebGl(currentObject);
-        for(j = 0; j < currentObject.children.length; i += 1){
+        for(j = 0, maxj = currentObject.children.length; j < maxj; i += 1){
             verticesToWebGl(currentObject.children[i], currentObject.rawMode, currentObject.mode);
         }
     }
