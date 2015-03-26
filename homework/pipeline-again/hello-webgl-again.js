@@ -122,6 +122,7 @@
     gl.clearColor(0.0, 0.0, 0.0, 0.0);
     gl.viewport(0, 0, canvas.width, canvas.height);
 
+    // We set up a sphere which has a cube child.
     var mySphere = new Shape(Shape.sphere(30,30));
     var myCube = new Shape(Shape.cylinder(4));
     mySphere.addChild(myCube);
@@ -129,12 +130,7 @@
 
     // Build the objects to display.
     objectsToDraw = [
-            mySphere
-        /*{
-            color: { r: 1, g: 0, b: 0.25},
-            vertices: Shape.toRawLineArray(Shape.n_cylinder(5)),
-            mode: gl.LINES
-        }*/        
+            mySphere       
     ];
 
     // Prepare the vertices to pass to WebGL.
@@ -233,7 +229,8 @@
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         // Set up the rotation matrix.
-        gl.uniformMatrix4fv(rotationMatrix, gl.FALSE, new Float32Array(getRotationMatrix(currentRotation, 0, 1, 0)));
+        gl.uniformMatrix4fv(rotationMatrix, gl.FALSE, 
+            new Float32Array(getRotationMatrix(currentRotation, 0, 1, 0)));
 
         // Display the objects.
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
