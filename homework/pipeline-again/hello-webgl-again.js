@@ -123,6 +123,8 @@
     gl.viewport(0, 0, canvas.width, canvas.height);
 
     var mySphere = new Shape(Shape.sphere(30,30));
+    var myCube = new Shape(Shape.cylinder(4));
+    mySphere.addChild(myCube);
     mySphere.mode = gl.LINES;
 
     // Build the objects to display.
@@ -143,7 +145,6 @@
         object.rawMode = rawMode || object.rawMode;
         object.mode = mode || object.mode;
 
-        console.log(object.rawMode);
         object.WebGLvertices = object.toRawFunctions(object.rawMode);
         var vertices = object.WebGLvertices;
 
@@ -169,8 +170,8 @@
     for(i = 0, maxi = objectsToDraw.length; i < maxi; i+= 1){
         currentObject = objectsToDraw[i];
         verticesToWebGl(currentObject);
-        for(var child in currentObject.children){
-            verticesToWebGl(child, currentObject.rawMode, currentObject.mode);
+        for(j = 0; j < currentObject.children.length; i += 1){
+            verticesToWebGl(currentObject.children[i], currentObject.rawMode, currentObject.mode);
         }
     }
 
@@ -215,7 +216,6 @@
      */
     drawObject = function (object) {
         // Set the varying colors.
-        console.log(object);
         gl.bindBuffer(gl.ARRAY_BUFFER, object.colorBuffer);
         gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 0, 0);
 
@@ -238,8 +238,8 @@
         // Display the objects.
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
             drawObject(objectsToDraw[i]);
-            for(var child in objectsToDraw[i]) {
-                drawObject(child);
+            for(j = 0, maxj = objectsToDraw[i].children.length ; j < maxj; j+= 1) {
+                drawObject(objectsToDraw[i].children[j]);
             }
         }
 
