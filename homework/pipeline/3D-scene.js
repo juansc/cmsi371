@@ -122,15 +122,21 @@
     gl.clearColor(0.0, 0.0, 0.0, 0.0);
     gl.viewport(0, 0, canvas.width, canvas.height);
 
-    // We set up a sphere which has a cube child.
+    // We set up a sphere which has a cylinder child.
     var matrix = Matrix.scaleMatrix(0.5,0.5,0.5);
     var mySphere = new Shape(Shape.sphere(30,30));
-    var myCube = new Shape(Shape.cylinder(4));
+    var myCube = new Shape(Shape.cylinder(5));
+    myCube.mode = gl.TRIANGLES;
+    myCube.rawMode = "trianglearray";
+    myCube.color = {
+            r: 0.5,
+            g: 1.0,
+            b: 1.0
+        };
+    myCube.axis = {x: 1, y: 0, z: 1};
     mySphere.addChild(myCube);
-    mySphere.applyTransform(Matrix.scaleMatrix(0.5,0.5,0.5));
-    mySphere.applyTransform(Matrix.scaleMatrix(2,1,2));
     mySphere.mode = gl.LINES;
-    mySphere.axis = {x: 1, y: 0, z: 0};
+    mySphere.axis = {x: 1, y: 0, z: 1};
 
     // Build the objects to display.
     objectsToDraw = [
@@ -171,7 +177,7 @@
         currentObject = objectsToDraw[i];
         verticesToWebGl(currentObject);
         for(j = 0, maxj = currentObject.children.length; j < maxj; i += 1){
-            verticesToWebGl(currentObject.children[i], currentObject.rawMode, currentObject.mode);
+            verticesToWebGl(currentObject.children[i]/*, currentObject.rawMode, currentObject.mode*/);
         }
     }
 

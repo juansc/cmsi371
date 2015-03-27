@@ -17,7 +17,7 @@
             further functionality can be added to the software stack.
             Click the canvas to see what else is new.</p>
 
-        <canvas id="hello-webgl" width="512" height="512">
+        <canvas id="hello-webgl" width="1024" height="512">
             Sorry, your web browser does not appear to support
             the <code>canvas</code> element, either.
         </canvas>
@@ -30,6 +30,7 @@
         <script src="glsl-utilities.js"></script>
 
         <!-- Shapes is a library that generates "canned" shapes. -->
+        <script src="../matrix.js"></script>        
         <script src="../shapes.js"></script>
         <script src="../sphere.js"></script>
         <script src="../icosahedron.js"></script>
@@ -53,10 +54,11 @@
             // Note this new additional output.
             attribute vec3 vertexColor;
             varying vec4 finalVertexColor;
-            uniform mat4 rotationMatrix;
+            uniform mat4 projectionMatrix;
+            uniform mat4 modelViewMatrix;
 
             void main(void) {
-                gl_Position = rotationMatrix * vec4(vertexPosition, 1.0);
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(vertexPosition, 1.0);
                 finalVertexColor = vec4(vertexColor, 1.0);
             }
         </script>

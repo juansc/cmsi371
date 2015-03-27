@@ -4,21 +4,26 @@
  * converting these into "raw" coordinate arrays.
  */
 
-var Shape = (function () {
+var Shape = (function() {
     /*
      * Constructor for arbitrary shape.
      */
-    var shape = function (options) {
+    var shape = function(options) {
         this.vertices = options.vertices || [];
-        this.color = options.color || { r: 1.0, g: 1.0, b: 0.0 };
+        this.color = options.color || {
+            r: 1.0,
+            g: 1.0,
+            b: 0.0
+        };
         this.indices = options.indices || [];
         this.children = options.children || [];
         this.rawMode = options.drawingMode || "linearray";
         this.mode = options.mode;
+        this.axis = options.axis || {x: 0, y: 0, z: 1};
     };
 
     // Example code from Dondi which needs to be modified.
-    shape.prototype.draw =  function (parentTransform) {
+    shape.prototype.draw = function(parentTransform) {
         var t = calculateTransform() * (parentTransform || identity);
         renderVertices();
         children.forEach(function() {
@@ -30,13 +35,18 @@ var Shape = (function () {
     // work on them, and return the value.
     shape.prototype.applyTransform = function(matrix) {
         var vertex;
-        for(var ind = 0, maxInd = this.vertices.length; ind < maxInd; ind += 1){
-            vertex = new Matrix(this.vertices[ind].concat([1]),4,1);
-            this.vertices[ind] = matrix.mult(vertex).elements.slice(0,3);
+        for (var ind = 0, maxInd = this.vertices.length; ind < maxInd; ind += 1) {
+            vertex = new Matrix(this.vertices[ind].concat([1]), 4, 1);
+            this.vertices[ind] = matrix.mult(vertex).elements.slice(0, 3);
+        }
+        for (var i = 0, maxi = this.children.length; i < maxi; i+= 1) {
+            this.children[i].applyTransform(matrix);
         }
     };
 
-    shape.prototype.addChild = function (child) {
+    shape.prototype.addChild = function(child) {
+        // child.mode = this.mode;
+        // child.rawMode = this.rawMode;
         this.children.push(child);
     };
 
@@ -49,7 +59,7 @@ var Shape = (function () {
      * arranged as triangles.
      */
 
-    shape.prototype.toRawTriangleArray =  function () {
+    shape.prototype.toRawTriangleArray = function() {
         var result = [],
             i,
             j,
@@ -59,8 +69,8 @@ var Shape = (function () {
         for (i = 0, maxi = this.indices.length; i < maxi; i += 1) {
             for (j = 0, maxj = this.indices[i].length; j < maxj; j += 1) {
                 result = result.concat(
-                this.vertices[
-                this.indices[i][j]]);
+                    this.vertices[
+                        this.indices[i][j]]);
             }
         }
 
@@ -71,7 +81,7 @@ var Shape = (function () {
      * Utility function for turning indexed vertices into a "raw" coordinate array
      * arranged as line segments.
      */
-    shape.prototype.toRawLineArray =  function () {
+    shape.prototype.toRawLineArray = function() {
         var result = [],
             i,
             j,
@@ -81,27 +91,27 @@ var Shape = (function () {
         for (i = 0, maxi = this.indices.length; i < maxi; i += 1) {
             for (j = 0, maxj = this.indices[i].length; j < maxj; j += 1) {
                 result = result.concat(
-                this.vertices[
-                this.indices[i][j]],
+                    this.vertices[
+                        this.indices[i][j]],
 
-                this.vertices[
-                this.indices[i][(j + 1) % maxj]]);
+                    this.vertices[
+                        this.indices[i][(j + 1) % maxj]]);
             }
         }
 
         return result;
     };
 
-    shape.prototype.toRawFunctions = function (str) {
+    shape.prototype.toRawFunctions = function(str) {
         var funcStr = str.toLowerCase();
-        if(funcStr === "linearray") {
+        if (funcStr === "linearray") {
             return this.toRawLineArray();
-        }else if (funcStr === "trianglearray") {
+        } else if (funcStr === "trianglearray") {
             return this.toRawTriangleArray();
         } else {
             throw new Error("Not a valid function.");
         }
-    };    
+    };
 
     return shape;
 
