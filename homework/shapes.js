@@ -45,8 +45,6 @@ var Shape = (function() {
     };
 
     shape.prototype.addChild = function(child) {
-        // child.mode = this.mode;
-        // child.rawMode = this.rawMode;
         this.children.push(child);
     };
 

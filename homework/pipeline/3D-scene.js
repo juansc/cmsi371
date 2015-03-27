@@ -123,20 +123,33 @@
     gl.viewport(0, 0, canvas.width, canvas.height);
 
     // We set up a sphere which has a cylinder child.
-    var matrix = Matrix.scaleMatrix(0.5,0.5,0.5);
-    var mySphere = new Shape(Shape.sphere(30,30));
-    var myCube = new Shape(Shape.cylinder(5));
-    myCube.mode = gl.TRIANGLES;
-    myCube.rawMode = "trianglearray";
-    myCube.color = {
-            r: 0.5,
-            g: 1.0,
-            b: 1.0
-        };
-    myCube.axis = {x: 1, y: 0, z: 1};
-    mySphere.addChild(myCube);
+    var mySphere = new Shape(Shape.sphere(3,1));
+    mySphere.applyTransform(Matrix.scaleMatrix(0.5,0.5,0.5));
     mySphere.mode = gl.LINES;
     mySphere.axis = {x: 1, y: 0, z: 1};
+
+    var leftWing = new Shape(Shape.cylinder(6));
+    leftWing.applyTransform(Matrix.scaleMatrix(1,1,0.1));
+    leftWing.applyTransform(Matrix.translateMatrix(0,0,0.5));
+    leftWing.mode = gl.LINES;
+    leftWing.rawMode = "linearray";
+    leftWing.axis = {x: 1, y: 0, z: 1};
+
+    var rightWing = new Shape(Shape.cylinder(6));
+    rightWing.applyTransform(Matrix.scaleMatrix(1,1,0.1));
+    rightWing.applyTransform(Matrix.translateMatrix(0,0,-0.5));    
+    rightWing.mode = gl.LINES;
+    rightWing.rawMode = "linearray";
+    rightWing.axis = {x: 1, y: 0, z: 1};
+
+    mySphere.addChild(leftWing);
+    mySphere.addChild(rightWing);
+    mySphere.applyTransform(Matrix.translateMatrix(1,0,0));
+
+    var floor = new Shape(Shape.cylinder(10));
+
+
+
 
     // Build the objects to display.
     objectsToDraw = [
@@ -148,6 +161,7 @@
 
         // This statement allows children to inherit the 
         // properties of the parent object. 
+
         object.rawMode = rawMode || object.rawMode;
         object.mode = mode || object.mode;
 
@@ -160,7 +174,7 @@
             // If we have a single color, we expand that into an array
             // of the same color over and over.
             object.colors = [];
-            for (j = 0, maxj = vertices.length / 3;
+            for (var j = 0, maxj = vertices.length / 3;
                     j < maxj; j += 1) {
                 object.colors = object.colors.concat(
                     object.color.r,
@@ -176,8 +190,8 @@
     for(i = 0, maxi = objectsToDraw.length; i < maxi; i+= 1){
         currentObject = objectsToDraw[i];
         verticesToWebGl(currentObject);
-        for(j = 0, maxj = currentObject.children.length; j < maxj; i += 1){
-            verticesToWebGl(currentObject.children[i]/*, currentObject.rawMode, currentObject.mode*/);
+        for(j = 0, maxj = currentObject.children.length; j < maxj; j += 1){
+            verticesToWebGl(currentObject.children[j]);
         }
     }
 
