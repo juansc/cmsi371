@@ -198,16 +198,118 @@ $(function () {
             child1 = new Shape(Shape.icosahedron()),
             child2 = new Shape(Shape.cylinder(6)),
             child3 = new Shape(Shape.trapezoidalCube());
+            child4 = new Shape(Shape.sphere(50,50));
 
         shape.addChild(child1);
         shape.addChild(child2);
         shape.addChild(child3);
+        child1.addChild(child4);
 
         equal(shape.children.length, 3, "Correct number of children.");
         deepEqual(shape.children[0], child1, "First child matches.");
         deepEqual(shape.children[1], child2, "Second child matches.");
         deepEqual(shape.children[2], child3, "Third child matches.");
+        deepEqual(shape.children[0].children[0], child4, "Original Shape has more than one level of children.");
 
     });
 
+    test("Transforms", function () {
+        // Examples
+        var i,j;
+        var shape = new Shape(Shape.sphere(3,1));
+        shape.applyTransform(Matrix.translateMatrix(1,1,1));
+
+        var expectedVertices = [
+                                [      1,      1,     0 ],
+                                [      2,      1,     1 ],
+                                [    0.5,  1.866,     1 ],
+                                [    0.5,  0.134,     1 ],
+                                [      1,      1,     2 ],
+                            ];
+
+        for(i = 0; i < shape.vertices.length; i += 1) {
+            for(j = 0; j < 3; j += 1) {
+                ok(  Math.abs(shape.vertices[i][j] - expectedVertices[i][j]) < 0.01, 
+                    "Generated Vertices are correct after translation.");
+            }
+        }
+
+        shape.applyTransform(Matrix.scaleMatrix(2,1,1)); 
+        
+        expectedVertices =  [
+                                [      2,      1,     0 ],
+                                [      4,      1,     1 ],
+                                [      1,  1.866,     1 ],
+                                [      1,  0.134,     1 ],
+                                [      2,      1,     2 ],
+                            ];
+
+        for(i = 0; i < shape.vertices.length; i += 1) {
+            for(j = 0; j < 3; j += 1) {
+                ok(  Math.abs(shape.vertices[i][j] - expectedVertices[i][j]) < 0.01, 
+                    "Generated Vertices are correct after scaling.");
+            }
+        }
+
+        shape = new Shape(Shape.cylinder(4));
+        shape.applyTransform(Matrix.rotZMatrix(45));
+
+        expectedVertices = [
+                                [  0.707,  0.707,  0.25 ],
+                                [  0.707,  0.707, -0.25 ],
+                                [ -0.707,  0.707,  0.25 ],
+                                [ -0.707,  0.707, -0.25 ],
+                                [ -0.707, -0.707,  0.25 ],
+                                [ -0.707, -0.707, -0.25 ],
+                                [  0.707, -0.707,  0.25 ],
+                                [  0.707, -0.707, -0.25 ],
+                            ];
+
+        for(i = 0; i < shape.vertices.length; i += 1) {
+            for(j = 0; j < 3; j += 1) {
+                ok(  Math.abs(shape.vertices[i][j] - expectedVertices[i][j]) < 0.01, 
+                    "Generated Vertices are correct after rotation.");
+            }
+        }                            
+
+
+    });    
+
+    test("Invalid Constructor Arguments", function(){
+        throws(function() { 
+            new Shape(Shape.sphere(-1,2));
+        }, "Invalid Sphere rejected.");
+
+        throws(function() { 
+            new Shape(Shape.sphere(1,2));
+        }, "Invalid Sphere rejected.");
+
+        throws(function() { 
+            new Shape(Shape.sphere(50,0));
+        }, "Invalid Sphere rejected.");
+
+        throws(function() { 
+            new Shape(Shape.cylinder(0));
+        }, "Invalid Cylinder rejected.");
+
+        throws(function() { 
+            new Shape(Shape.cylinder(1));
+        }, "Invalid Cylinder rejected.");
+
+        throws(function() { 
+            new Shape(Shape.cylinder(2));
+        }, "Invalid Cylinder rejected.");                
+
+        throws(function() { 
+            new Shape(Shape.trapezoidalCube(2,1,-3));
+        }, "Invalid Trapezoidal Cube rejected."); 
+
+        throws(function() { 
+            new Shape(Shape.trapezoidalCube(-1,1,-4));
+        }, "Invalid Trapezoidal Cube rejected."); 
+
+        throws(function() { 
+            new Shape(Shape.trapezoidalCube(0,2,1));
+        }, "Invalid Trapezoidal Cube rejected.");                 
+    });
 });

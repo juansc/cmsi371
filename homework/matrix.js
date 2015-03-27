@@ -265,8 +265,8 @@ Matrix.rotZMatrix = function(theta) {
             0.0,
             0.0,
 
-            -Math.sin(theta),
-            Math.cos(theta),
+            -Math.sin(angle),
+            Math.cos(angle),
             0.0,
             0.0,
 

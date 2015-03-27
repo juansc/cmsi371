@@ -5,6 +5,9 @@
      * n-gons.
      */
     window.Shape.cylinder =  function (n) {
+        if(n < 3){
+            throw "The base must have at least 3 sides";
+        }
 
         var numOfSides = n || 20,
             myVertices = [],

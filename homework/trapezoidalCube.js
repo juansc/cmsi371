@@ -5,6 +5,9 @@
      * and n is the number of latitudinal lines. 
      */
     window.Shape.trapezoidalCube = function (baseRatio, angle, dist ) {
+        if(dist < 0 || baseRatio <= 0 ) {
+            throw "Invalid input.";
+        }
         var ratio = baseRatio || 1,
             phi = angle || 0,
             radius = dist || 0,

@@ -5,6 +5,9 @@
      * and n is the number of latitudinal lines. 
      */
     window.Shape.sphere =  function (m, n) {
+        if(m < 2 || n < 1){
+            throw "Must have at least two lines of longitude and at least one line of latitude.";
+        }
         var numLong = m || 10,
             numLat = n || 10,
             DEGREES_TO_RADIANS = Math.PI / 180,

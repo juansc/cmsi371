@@ -123,7 +123,7 @@
     gl.viewport(0, 0, canvas.width, canvas.height);
 
     // We set up a sphere which has a cylinder child.
-    var mySphere = new Shape(Shape.sphere(3,1));
+    var mySphere = new Shape(Shape.sphere(50,4));
     mySphere.applyTransform(Matrix.scaleMatrix(0.5,0.5,0.5));
     mySphere.mode = gl.LINES;
     mySphere.axis = {x: 1, y: 0, z: 1};

@@ -22,15 +22,6 @@ var Shape = (function() {
         this.axis = options.axis || {x: 0, y: 0, z: 1};
     };
 
-    // Example code from Dondi which needs to be modified.
-    shape.prototype.draw = function(parentTransform) {
-        var t = calculateTransform() * (parentTransform || identity);
-        renderVertices();
-        children.forEach(function() {
-            children.draw(t);
-        });
-    };
-
     // Here we make a copy of the vertices, extend them to 4 dimensions,
     // work on them, and return the value.
     shape.prototype.applyTransform = function(matrix) {
