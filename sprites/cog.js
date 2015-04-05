@@ -25,14 +25,16 @@
         }
         ctx.restore();
     };
-    window.JuanSprites.cog.defaults = {
-        numOfTeeth: 10,
-        xPos: 0,
-        yPos: 0,
-        radius: 100,
-        color: "grey",
-        angle: 0,
-        teethLength: 10,
-        teethWidth: 10,
+    window.JuanSprites.cog.defaultValues = function (){ // JD: 3
+        return { 
+            numOfTeeth: 10,
+            xPos: 0,
+            yPos: 0,
+            radius: 100,
+            color: "grey",
+            angle: 0,
+            teethLength: 10,
+            teethWidth: 10,
+        };
     };
 }());

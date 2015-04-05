@@ -93,18 +93,22 @@
         drawHead();
         ctx.restore();
     }; 
-    window.JuanSprites.snake.defaults = {
-        xPos: 0,
-        yPos: 0,
-        headAngle: 0,
-        eyeColor: "blue",
-        mouthAngle: -5,
-        color: "green",
-        facingLeft: false,
-        scale: 1,
-        segmentLength: 50,
-        girth: 18,
-        headSize: 15,
-        angles: [0, 0, 45, 45] 
-    };    
+
+    window.JuanSprites.snake.defaultValues = function(){ // JD: 3
+        return {
+            xPos: 0,
+            yPos: 0,
+            headAngle: 0,
+            eyeColor: "red",
+            mouthAngle: -5,
+            color: "green",
+            facingLeft: false,
+            scale: 1,
+            segmentLength: 50,
+            girth: 18,
+            headSize: 15,
+            angles: [0, 0, 45, 45]
+        };
+    };
+        
 }()); 

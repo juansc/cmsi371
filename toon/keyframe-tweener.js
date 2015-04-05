@@ -221,7 +221,7 @@ var KeyframeTweener = {
         // JD: 7
         var tweenObject = function(currentTweenFrame, propArr, duration, ease){
             var tweenedObject = {};
-            for(var i = 0; i < propArr.length; i++){
+            for(var i = 0; i < propArr.length; i+= 1) {
                 var prop = propArr[i],
                     type = propType[prop["name"]] || "scalar";
 
