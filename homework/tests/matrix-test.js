@@ -7,26 +7,36 @@ $(function () {
     test("Creating a Matrix", function () {
         var identity = new Matrix();
 
-        equal(identity.width, 4, "Correct width for identity matrix.");
-        equal(identity.height, 4, "Correct height for identity matrix.");
-        deepEqual(identity.elements, [
+        equal(identity.getWidth(), 4, "Correct width for identity matrix.");
+        equal(identity.getHeight(), 4, "Correct height for identity matrix.");
+        deepEqual(identity.getElements(), [
                 1, 0, 0, 0,
                 0, 1, 0, 0,
                 0, 0, 1, 0,
                 0, 0, 0, 1
             ], "Correct elements in matrix.");
 
+        var testMatrix = new Matrix([1, 2, 3, 4, 5, 6], 2, 3);
+
+        equal(testMatrix.getWidth(), 3, "Correct width for created matrix.");
+        equal(testMatrix.getHeight(), 2, "Correct height for created matrix.");
+        deepEqual(testMatrix.getElements(), [1, 2, 3, 4, 5, 6] , "Correct elements");
         
     });
 
     
-    test("Cube Test", function () {});
+    test("Rows and Columns", function () {
+    	var identity = new Matrix();
 
-    test("Sphere Test", function () {});
+    	deepEqual(identity.getRow(0), [1, 0, 0, 0], "Correct 1st row.");
+    	deepEqual(identity.getRow(1), [0, 1, 0, 0], "Correct 2nd row.");
+    	deepEqual(identity.getRow(2), [0, 0, 1, 0], "Correct 3rd row.");
+    	deepEqual(identity.getRow(3), [0, 0, 0, 1], "Correct 4th row.");
 
-    test("Children", function () {});
+    	deepEqual(identity.getColumn(0), [1, 0, 0, 0], "Correct 1st column.");
+    	deepEqual(identity.getColumn(1), [0, 1, 0, 0], "Correct 2nd column.");
+    	deepEqual(identity.getColumn(2), [0, 0, 1, 0], "Correct 3rd column.");
+    	deepEqual(identity.getColumn(3), [0, 0, 0, 1], "Correct 4th column.");    	
+    });
 
-    test("Transforms", function () {});    
-
-    test("Invalid Constructor Arguments", function(){});
 });

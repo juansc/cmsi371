@@ -55,11 +55,11 @@ var Matrix = (function() {
         return result;
     };
 
-    matrix.prototype.width = function() {
+    matrix.prototype.getWidth = function() {
         return this.width;
     };
 
-    matrix.prototype.height = function() {
+    matrix.prototype.getHeight = function() {
         return this.height;
     };
 
@@ -70,12 +70,18 @@ var Matrix = (function() {
     matrix.prototype.getElement = function(row, column) {
         if (!column) {
             var index = row;
+            if (row >= this.width * this.height) {
+                throw "Index out of bounds error.";
+            }
             return this.elements[index];
         }
         return this.elements[column * this.height + row];
     };
 
     matrix.prototype.getRow = function(row) {
+        if(row >= this.height) {
+            throw "Row out of bounds error.";
+        }
         var result = [];
         for (var column = 0, maxColumn = this.width; column < maxColumn; column += 1) {
             result.push(this.getElement(row, column));
@@ -84,6 +90,9 @@ var Matrix = (function() {
     };
 
     matrix.prototype.getColumn = function(column) {
+        if(column >= this.width) {
+            throw "Column out of bounds error.";
+        }
         var result = [];
         for (var row = 0, maxRow = this.height; row < maxRow; row += 1) {
             result.push(this.getElement(row, column));
@@ -138,9 +147,13 @@ var Matrix = (function() {
 
     // Returns a matrix in column major form so that it can
     // be used by WebGL
-    matrix.prototype.elements = function(){
+    matrix.prototype.getElements = function(){
         return this.elements;
     };
+
+    matrix.prototype.numOfElements = function(){
+        return this.numOfElements;
+    };    
 
     return matrix;
 })();
