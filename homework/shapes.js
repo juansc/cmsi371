@@ -22,7 +22,7 @@ var Shape = (function() {
         this.axis = options.axis || {x: 0, y: 0, z: 1};
     };
 
-    shape.prototype.draw = function (gl, modelViewMatrix ) {
+    shape.prototype.draw = function (gl, modelViewMatrix, vertexColor, currentRotation, vertexPosition) {
         var identityMatrix = new Matrix();
 
         // Set the varying colors.

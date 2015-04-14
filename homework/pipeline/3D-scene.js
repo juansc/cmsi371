@@ -235,26 +235,6 @@
     projectionMatrix = gl.getUniformLocation(shaderProgram, "projectionMatrix");
 
     /*
-     * Displays an individual object.
-     */
-    drawObject = function (object) {
-        var identityMatrix = new Matrix();
-
-        // Set the varying colors.
-        gl.bindBuffer(gl.ARRAY_BUFFER, object.colorBuffer);
-        gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 0, 0);
-
-        gl.uniformMatrix4fv(modelViewMatrix, gl.FALSE, new Float32Array(object.axis ?
-                Matrix.rotateAxis(currentRotation, object.axis.x, object.axis.y, object.axis.z).elements :
-                identityMatrix.elements
-            ));
-        // Set the varying vertex coordinates.
-        gl.bindBuffer(gl.ARRAY_BUFFER, object.buffer);
-        gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
-        gl.drawArrays(object.mode, 0, object.WebGLvertices.length / 3);
-    };
-
-    /*
      * Displays the scene.
      */
     drawScene = function () {
@@ -267,9 +247,9 @@
 
         // Display the objects.
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
-            objectsToDraw[i].draw(gl, modelViewMatrix);
+            objectsToDraw[i].draw(gl, modelViewMatrix, vertexColor, currentRotation, vertexPosition);
             for(j = 0, maxj = objectsToDraw[i].children.length ; j < maxj; j+= 1) {
-                objectsToDraw[i].children[j].draw(gl, modelViewMatrix);
+                objectsToDraw[i].children[j].draw(gl, modelViewMatrix, vertexColor, currentRotation, vertexPosition);
             }
         }
 
