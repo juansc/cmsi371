@@ -22,6 +22,23 @@ var Shape = (function() {
         this.axis = options.axis || {x: 0, y: 0, z: 1};
     };
 
+    shape.prototype.draw = function (gl, modelViewMatrix ) {
+        var identityMatrix = new Matrix();
+
+        // Set the varying colors.
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer);
+        gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 0, 0);
+
+        gl.uniformMatrix4fv(modelViewMatrix, gl.FALSE, new Float32Array(this.axis ?
+                Matrix.rotateAxis(currentRotation, this.axis.x, this.axis.y, this.axis.z).elements :
+                identityMatrix.elements
+            ));
+        // Set the varying vertex coordinates.
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
+        gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
+        gl.drawArrays(this.mode, 0, this.WebGLvertices.length / 3);
+    };    
+
     // Here we make a copy of the vertices, extend them to 4 dimensions,
     // work on them, and return the value.
     shape.prototype.applyTransform = function(matrix) {

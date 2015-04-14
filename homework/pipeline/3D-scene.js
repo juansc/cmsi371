@@ -267,9 +267,9 @@
 
         // Display the objects.
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
-            drawObject(objectsToDraw[i]);
+            objectsToDraw[i].draw(gl, modelViewMatrix);
             for(j = 0, maxj = objectsToDraw[i].children.length ; j < maxj; j+= 1) {
-                drawObject(objectsToDraw[i].children[j]);
+                objectsToDraw[i].children[j].draw(gl, modelViewMatrix);
             }
         }
 

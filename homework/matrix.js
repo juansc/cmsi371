@@ -36,7 +36,7 @@ var Matrix = (function() {
     };
 
     var checkIfEqualSize = function(m1, m2) {
-        if (m1.height() !== m2.height() || m1.width() !== m2.width()) {
+        if (m1.getHeight() !== m2.getHeight() || m1.getWidth() !== m2.getWidth()) {
             throw "Matrices have different dimensions";
         }
     };
@@ -45,6 +45,7 @@ var Matrix = (function() {
         if (v1.length !== v2.length) {
             throw "Dimension mismatch for dot products";
         }
+
         var result = 0,
             ind;
 
@@ -104,7 +105,7 @@ var Matrix = (function() {
         checkIfEqualSize(this, m);
         var result = [];
         for (var ind = 0, maxInd = this.numOfElements; ind < maxInd; ind += 1) {
-            result[ind] = this.getElement[ind] + m.getElement[ind];
+            result[ind] = this.getElement(ind) + m.getElement(ind);
         }
         return new Matrix(result, this.height, this.width);
     };
@@ -113,21 +114,25 @@ var Matrix = (function() {
         checkIfEqualSize(this, m);
         var result = [];
         for (var ind = 0, maxInd = this.numOfElements; ind < maxInd; ind += 1) {
-            result[ind] = this.getElement[ind] - m.getElement[ind];
+            result[ind] = this.getElement(ind) - m.getElement(ind);
         }
         return new Matrix(result, this.height, this.width);
     };
 
     matrix.prototype.scalarAdd = function(scalar) {
+        var result = [];
         for (var ind = 0, maxInd = this.numOfElements; ind < maxInd; ind += 1) {
-            this.elements[ind] += scalar;
+            result[ind] = this.elements[ind] + scalar;
         }
+        return new Matrix(result, this.height, this.width);
     };
 
     matrix.prototype.scalarMultiply = function(scalar) {
+        var result = [];
         for (var ind = 0, maxInd = this.numOfElements; ind < maxInd; ind += 1) {
-            this.elements[ind] *= scalar;
+            result[ind] = this.elements[ind] * scalar;
         }
+        return new Matrix(result, this.height, this.width);
     };
 
     matrix.prototype.mult = function(m) {
@@ -137,8 +142,8 @@ var Matrix = (function() {
         var col,
             row,
             result = [];
-        for (row = 0, maxRow = this.height; row < maxRow; row += 1) {
-            for (col = 0, maxCol = m.width; col < maxCol; col += 1) {
+        for(col = 0, maxCol = m.width; col < maxCol; col += 1) {
+            for (row = 0, maxRow = this.height; row < maxRow; row += 1) {
                 result.push(dotProduct(this.getRow(row), m.getColumn(col)));
             }
         }
