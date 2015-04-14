@@ -151,7 +151,7 @@ var Matrix = (function() {
         return this.elements;
     };
 
-    matrix.prototype.numOfElements = function(){
+    matrix.prototype.getNumOfElements = function(){
         return this.numOfElements;
     };    
 

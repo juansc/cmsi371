@@ -36,7 +36,14 @@ $(function () {
     	deepEqual(identity.getColumn(0), [1, 0, 0, 0], "Correct 1st column.");
     	deepEqual(identity.getColumn(1), [0, 1, 0, 0], "Correct 2nd column.");
     	deepEqual(identity.getColumn(2), [0, 0, 1, 0], "Correct 3rd column.");
-    	deepEqual(identity.getColumn(3), [0, 0, 0, 1], "Correct 4th column.");    	
+    	deepEqual(identity.getColumn(3), [0, 0, 0, 1], "Correct 4th column.");
+
+    	var testMatrix = new Matrix([1, 2, 3, 4, 5, 6], 2, 3);
+    	deepEqual(testMatrix.getRow(0), [1,3,5], "Correct first row.");
+    	deepEqual(testMatrix.getRow(1), [2,4,6], "Correct first row.");
+    	deepEqual(testMatrix.getColumn(0), [1,2], "Correct 1st column.");
+    	deepEqual(testMatrix.getColumn(1), [3,4], "Correct 2nd column.");
+    	deepEqual(testMatrix.getColumn(2), [5,6], "Correct 3rd column.");
     });
 
 });
