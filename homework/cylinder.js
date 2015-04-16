@@ -11,7 +11,6 @@
 
         var myVertices = [];
         var numOfSides = n || 20,
-            /*myVertices = [],*/
             myIndices = [],
             HEIGHT = Math.sqrt(2) / 2, // 
             x, y, v,
@@ -25,9 +24,7 @@
             x = Math.cos(deltaTheta * i);
             y = Math.sin(deltaTheta * i);
 
-            //console.log(myVertices);
             myVertices.push([x, y, HEIGHT]);
-            //throw "Stop"            
             myVertices.push([x, y, -HEIGHT]);
             myIndices.push([v + 0, v + 1, (v + 3) % numOfVertices]);
             myIndices.push([v + 0, (v + 3) % numOfVertices, (v + 2) % numOfVertices]);

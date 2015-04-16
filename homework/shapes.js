@@ -62,6 +62,24 @@ var Shape = (function() {
         return this;
     };
 
+    shape.prototype.setRawMode = function(mode) {
+        this.rawMode = mode;
+        console.log("Setting the mode" + mode + ".");        
+        for(var ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
+            this.children[ind].setRawMode(mode);
+        }
+        return this;    
+    };
+
+    shape.prototype.setMode = function(mode) {
+        console.log("AM I being called!?!?!");
+        this.mode = mode;
+        for(var ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
+            this.children[ind].setMode(mode);
+        }
+        return this;
+    };
+
     shape.prototype.invertFaces = function () {
         var temp,
             currentArr,

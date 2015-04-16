@@ -85,7 +85,11 @@
     mySphere.setAxis({x: 1, y: 0, z: 1});*/
 
     var Endurance = new Shape(Shape.endurance());
-    Endurance.setAxis({x:0, y:1, z:0})/*scale(2,2,2)*/;
+    console.log("About to call this shit.");
+    Endurance.setMode(gl.TRIANGLES);
+    console.log("Call this shit.");    
+    Endurance.setRawMode("trianglearray");
+    Endurance.setAxis({x:0, y:0, z:1});
 
 
     // Build the objects to display.
