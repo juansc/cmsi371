@@ -300,23 +300,16 @@ Matrix.rotZMatrix = function(theta) {
         ], 4, 4);
 };
 
-Matrix.rotateAxis = function(angle, Vx, Vy, Vz) {
-    // Adapted from code by Dr. Dionisio.
-
-
-    var theta = angle ? (angle * Math.PI / 180.0) : 0,
-        x = Vx || 0,
-        y = Vy || 0,
-        z = Vz || 1;
-
+Matrix.rotateAxis = function (angle, x, y, z) {
+    // In production code, this function should be associated
+    // with a matrix object with associated functions.
     var axisLength = Math.sqrt((x * x) + (y * y) + (z * z)),
-        s = Math.sin(theta),
-        c = Math.cos(theta),
+        s = Math.sin(angle * Math.PI / 180.0),
+        c = Math.cos(angle * Math.PI / 180.0),
         oneMinusC = 1.0 - c,
 
         // We can't calculate this until we have normalized
         // the axis vector of rotation.
-
         x2, // "2" for "squared."
         y2,
         z2,
@@ -326,6 +319,7 @@ Matrix.rotateAxis = function(angle, Vx, Vy, Vz) {
         xs,
         ys,
         zs;
+
     // Normalize the axis vector of rotation.
     x /= axisLength;
     y /= axisLength;
@@ -342,28 +336,28 @@ Matrix.rotateAxis = function(angle, Vx, Vy, Vz) {
     ys = y * s;
     zs = z * s;
 
-    return new Matrix(
-        [
-            (x2 * oneMinusC) + c,
-            (xy * oneMinusC) + zs,
-            (xz * oneMinusC) - ys,
-            0.0,
+    // GL expects its matrices in column major order.
+    return new Matrix([
+        (x2 * oneMinusC) + c,
+        (xy * oneMinusC) + zs,
+        (xz * oneMinusC) - ys,
+        0.0,
 
-            (xy * oneMinusC) - zs,
-            (y2 * oneMinusC) + c,
-            (yz * oneMinusC) + xs,
-            0.0,
+        (xy * oneMinusC) - zs,
+        (y2 * oneMinusC) + c,
+        (yz * oneMinusC) + xs,
+        0.0,
 
-            (xz * oneMinusC) + ys,
-            (yz * oneMinusC) - xs,
-            (z2 * oneMinusC) + c,
-            0.0,
+        (xz * oneMinusC) + ys,
+        (yz * oneMinusC) - xs,
+        (z2 * oneMinusC) + c,
+        0.0,
 
-            0.0,
-            0.0,
-            0.0,
-            1.0
-        ], 4, 4);
+        0.0,
+        0.0,
+        0.0,
+        1.0
+    ], 4, 4);
 };
 
 Matrix.orthoProjectMatrix = function(r, l, t, b, n, f) {

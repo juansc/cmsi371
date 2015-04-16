@@ -39,6 +39,29 @@ var Shape = (function() {
         gl.drawArrays(this.mode, 0, this.WebGLvertices.length / 3);
     };
 
+    shape.prototype.scale = function (sx, sy, sz) {
+        this.applyTransform(Matrix.scaleMatrix(sx, sy, sz));
+        return this;
+    };
+
+    shape.prototype.translate = function (dx, dy, dz) {
+        this.applyTransform(Matrix.translateMatrix(dx, dy, dz));
+        return this;
+    };
+
+    shape.prototype.rotate = function (angle, Vx, Vy, Vz) {
+        this.applyTransform(Matrix.rotateAxis(angle, Vx, Vy, Vz));
+        return this;
+    };        
+
+    shape.prototype.setAxis = function(axis) {
+        this.axis = axis;
+        for(var ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
+            this.children[ind].setAxis(axis);
+        }
+        return this;
+    };
+
     shape.prototype.invertFaces = function () {
         var temp,
             currentArr,
@@ -53,6 +76,7 @@ var Shape = (function() {
         for(ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
             this.children[ind].invertFaces();
         }
+        return this;
     };
 
     // Here we make a copy of the vertices, extend them to 4 dimensions,
@@ -70,10 +94,12 @@ var Shape = (function() {
 
     shape.prototype.addChild = function(child) {
         this.children.push(child);
+        return this;
     };
 
     shape.prototype.setMode = function(mode) {
         this.mode = mode;
+        return this;
     };
 
     /*

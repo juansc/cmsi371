@@ -62,7 +62,7 @@
     //spaceBackground.mode = gl.TRIANGLES;
     //spaceBackground.rawMode = "trianglearray";
 
-    var mySphere = new Shape(Shape.sphere(20,20));
+    /*var mySphere = new Shape(Shape.sphere(20,20));
     mySphere.applyTransform(Matrix.scaleMatrix(0.5,0.5,0.5));
     mySphere.mode = gl.LINES;
     mySphere.axis = {x: 1, y: 0, z: 1};
@@ -72,23 +72,25 @@
     leftWing.applyTransform(Matrix.translateMatrix(0,0,0.5));
     leftWing.mode = gl.LINES;
     leftWing.rawMode = "linearray";
-    leftWing.axis = {x: 1, y: 0, z: 1};
 
     var rightWing = new Shape(Shape.cylinder(20));
     rightWing.applyTransform(Matrix.scaleMatrix(1,1,0.1));
     rightWing.applyTransform(Matrix.translateMatrix(0,0,-0.5));    
     rightWing.mode = gl.LINES;
     rightWing.rawMode = "linearray";
-    rightWing.axis = {x: 1, y: 0, z: 1};
 
     mySphere.addChild(leftWing);
     mySphere.addChild(rightWing);
     mySphere.applyTransform(Matrix.translateMatrix(1,0,0));
+    mySphere.setAxis({x: 1, y: 0, z: 1});*/
+
+    var Endurance = new Shape(Shape.endurance());
+    Endurance.setAxis({x:0, y:1, z:0})/*scale(2,2,2)*/;
+
 
     // Build the objects to display.
     objectsToDraw = [
-            spaceBackground,
-            mySphere
+            Endurance
     ];
 
     // Prepare the vertices to pass to WebGL.
@@ -176,13 +178,8 @@
         // Clear the display.
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        // Set up the rotation matrix.
-        gl.uniformMatrix4fv(rotationMatrix, gl.FALSE,
-            new Float32Array(Matrix.rotateAxis(currentRotation, 0, 1, 0)));
-
         // Display the objects.
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
-            console.log("We're drawing objects.");
             objectsToDraw[i].draw(gl, modelViewMatrix, vertexColor, currentRotation, vertexPosition);
             for(j = 0, maxj = objectsToDraw[i].children.length ; j < maxj; j+= 1) {
                 objectsToDraw[i].children[j].draw(gl, modelViewMatrix, vertexColor, currentRotation, vertexPosition);
