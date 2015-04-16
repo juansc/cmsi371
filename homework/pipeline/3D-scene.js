@@ -62,34 +62,11 @@
     //spaceBackground.mode = gl.TRIANGLES;
     //spaceBackground.rawMode = "trianglearray";
 
-    /*var mySphere = new Shape(Shape.sphere(20,20));
-    mySphere.applyTransform(Matrix.scaleMatrix(0.5,0.5,0.5));
-    mySphere.mode = gl.LINES;
-    mySphere.axis = {x: 1, y: 0, z: 1};
-
-    var leftWing = new Shape(Shape.cylinder(20));
-    leftWing.applyTransform(Matrix.scaleMatrix(1,1,0.1));
-    leftWing.applyTransform(Matrix.translateMatrix(0,0,0.5));
-    leftWing.mode = gl.LINES;
-    leftWing.rawMode = "linearray";
-
-    var rightWing = new Shape(Shape.cylinder(20));
-    rightWing.applyTransform(Matrix.scaleMatrix(1,1,0.1));
-    rightWing.applyTransform(Matrix.translateMatrix(0,0,-0.5));    
-    rightWing.mode = gl.LINES;
-    rightWing.rawMode = "linearray";
-
-    mySphere.addChild(leftWing);
-    mySphere.addChild(rightWing);
-    mySphere.applyTransform(Matrix.translateMatrix(1,0,0));
-    mySphere.setAxis({x: 1, y: 0, z: 1});*/
-
     var Endurance = new Shape(Shape.endurance());
-    console.log("About to call this shit.");
-    Endurance.setMode(gl.TRIANGLES);
-    console.log("Call this shit.");    
+    Endurance.setGLMode(gl.TRIANGLES);
     Endurance.setRawMode("trianglearray");
-    Endurance.setAxis({x:0, y:0, z:1});
+    Endurance.setAxis({x:0, y:1, z:0});
+    Endurance.setColor({r:1, g: 1, b: 1});
 
 
     // Build the objects to display.

@@ -64,18 +64,24 @@ var Shape = (function() {
 
     shape.prototype.setRawMode = function(mode) {
         this.rawMode = mode;
-        console.log("Setting the mode" + mode + ".");        
         for(var ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
             this.children[ind].setRawMode(mode);
         }
         return this;    
     };
 
-    shape.prototype.setMode = function(mode) {
-        console.log("AM I being called!?!?!");
+    shape.prototype.setColor = function(color) {
+        this.color = color;
+        for(var ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
+            this.children[ind].setColor(color);
+        }
+        return this;         
+    };
+
+    shape.prototype.setGLMode = function(mode) {
         this.mode = mode;
         for(var ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
-            this.children[ind].setMode(mode);
+            this.children[ind].setGLMode(mode);
         }
         return this;
     };
