@@ -37,77 +37,10 @@
         j,
         maxj,
 
-        /*
-         * This code does not really belong here: it should live
-         * in a separate library of matrix and transformation
-         * functions.  It is here only to show you how matrices
-         * can be used with GLSL.
-         *
-         * Based on the original glRotate reference:
-         *     http://www.opengl.org/sdk/docs/man/xhtml/glRotate.xml
-         */
-        getRotationMatrix = function (angle, x, y, z) {
-            // In production code, this function should be associated
-            // with a matrix object with associated functions.
-            var axisLength = Math.sqrt((x * x) + (y * y) + (z * z)),
-                s = Math.sin(angle * Math.PI / 180.0),
-                c = Math.cos(angle * Math.PI / 180.0),
-                oneMinusC = 1.0 - c,
-
-                // We can't calculate this until we have normalized
-                // the axis vector of rotation.
-                x2, // "2" for "squared."
-                y2,
-                z2,
-                xy,
-                yz,
-                xz,
-                xs,
-                ys,
-                zs;
-
-            // Normalize the axis vector of rotation.
-            x /= axisLength;
-            y /= axisLength;
-            z /= axisLength;
-
-            // *Now* we can calculate the other terms.
-            x2 = x * x;
-            y2 = y * y;
-            z2 = z * z;
-            xy = x * y;
-            yz = y * z;
-            xz = x * z;
-            xs = x * s;
-            ys = y * s;
-            zs = z * s;
-
-            // GL expects its matrices in column major order.
-            return [
-                (x2 * oneMinusC) + c,
-                (xy * oneMinusC) + zs,
-                (xz * oneMinusC) - ys,
-                0.0,
-
-                (xy * oneMinusC) - zs,
-                (y2 * oneMinusC) + c,
-                (yz * oneMinusC) + xs,
-                0.0,
-
-                (xz * oneMinusC) + ys,
-                (yz * oneMinusC) - xs,
-                (z2 * oneMinusC) + c,
-                0.0,
-
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ];
-        };
-
-    // Grab the WebGL rendering context.
+        // Grab the WebGL rendering context.
+        
     gl = GLSLUtilities.getGL(canvas);
+
     if (!gl) {
         alert("No WebGL context found...sorry.");
 
@@ -123,6 +56,12 @@
     gl.viewport(0, 0, canvas.width, canvas.height);
 
     // We set up a sphere which has a cylinder child.
+    //var spaceBackground = new Shape(Shape.sphere(20,20));
+    //spaceBackground.applyTransform(Matrix.scaleMatrix(5,5,5));
+    //spaceBackground.invertFaces();
+    //spaceBackground.mode = gl.TRIANGLES;
+    //spaceBackground.rawMode = "trianglearray";
+
     var mySphere = new Shape(Shape.sphere(20,20));
     mySphere.applyTransform(Matrix.scaleMatrix(0.5,0.5,0.5));
     mySphere.mode = gl.LINES;
@@ -146,14 +85,10 @@
     mySphere.addChild(rightWing);
     mySphere.applyTransform(Matrix.translateMatrix(1,0,0));
 
-    var floor = new Shape(Shape.cylinder(10));
-
-
-
-
     // Build the objects to display.
     objectsToDraw = [
-            mySphere       
+            spaceBackground,
+            mySphere
     ];
 
     // Prepare the vertices to pass to WebGL.
@@ -243,10 +178,11 @@
 
         // Set up the rotation matrix.
         gl.uniformMatrix4fv(rotationMatrix, gl.FALSE,
-            new Float32Array(getRotationMatrix(currentRotation, 0, 1, 0)));
+            new Float32Array(Matrix.rotateAxis(currentRotation, 0, 1, 0)));
 
         // Display the objects.
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
+            console.log("We're drawing objects.");
             objectsToDraw[i].draw(gl, modelViewMatrix, vertexColor, currentRotation, vertexPosition);
             for(j = 0, maxj = objectsToDraw[i].children.length ; j < maxj; j+= 1) {
                 objectsToDraw[i].children[j].draw(gl, modelViewMatrix, vertexColor, currentRotation, vertexPosition);
@@ -265,6 +201,7 @@
         -10,
         10
     ).elements));    // Draw the initial scene.
+
     drawScene();
 
     // Set up the rotation toggle: clicking on the canvas does it.

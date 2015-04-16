@@ -18,7 +18,7 @@ var Shape = (function() {
         this.indices = options.indices || [];
         this.children = options.children || [];
         this.rawMode = options.drawingMode || "linearray";
-        this.mode = options.mode;
+        this.mode = options.mode || WebGLRenderingContext.LINES;
         this.axis = options.axis || {x: 0, y: 0, z: 1};
     };
 
@@ -37,7 +37,23 @@ var Shape = (function() {
         gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
         gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
         gl.drawArrays(this.mode, 0, this.WebGLvertices.length / 3);
-    };    
+    };
+
+    shape.prototype.invertFaces = function () {
+        var temp,
+            currentArr,
+            ind,
+            maxInd;
+        for(ind = 0, maxInd = this.indices.length; ind < maxInd; ind += 1) {
+            currentArr = this.indices[ind];
+            temp = currentArr[1];
+            currentArr[1] = currentArr[2];
+            currentArr[2] = temp;
+        }
+        for(ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
+            this.children[ind].invertFaces();
+        }
+    };
 
     // Here we make a copy of the vertices, extend them to 4 dimensions,
     // work on them, and return the value.
