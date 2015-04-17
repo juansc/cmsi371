@@ -65,13 +65,20 @@
     var Endurance = new Shape(Shape.endurance());
     Endurance.setGLMode(gl.TRIANGLES);
     Endurance.setRawMode("trianglearray");
-    Endurance.setAxis({x:0, y:1, z:0});
+    Endurance.setAxis("x", [0, 1, 1]);
+    console.log(Endurance.xAxis);
     Endurance.setColor({r:1, g: 1, b: 1});
+
+    var star = new Shape(Shape.sphere(30,30));
+    star.setGLMode(gl.TRIANGLES).setRawMode("trianglearray");
+    star.setColor({r:1, g: 0, b: 1});
+    star.translate(0, 0, -8);
 
 
     // Build the objects to display.
     objectsToDraw = [
-            Endurance
+            Endurance,
+            star
     ];
 
     // Prepare the vertices to pass to WebGL.
@@ -181,6 +188,7 @@
     ).elements));    // Draw the initial scene.
 
     drawScene();
+
 
     // Set up the rotation toggle: clicking on the canvas does it.
     $(canvas).click(function () {

@@ -1,12 +1,13 @@
-(function(){
-    window.Shape = window.Shape || { };
+(function() {
+    window.Shape = window.Shape || {};
     /*
      * Returns a sphere where m is number of longitudinal lines
-     * and n is the number of latitudinal lines. 
+     * and n is the number of latitudinal lines.
      */
-    window.Shape.endurance =  function () {
+    window.Shape.endurance = function() {
 
         var RADIANS_TO_DEGREES = 180 / Math.PI;
+
         // All the parts of the Endurance are children
         // of a shape object with no vertices of its own
         var myChildren = [];
@@ -31,26 +32,25 @@
             angle,
             deltaTheta = Math.PI * 2 / 12;
 
-        for(var i = 0; i < 12; i += 1) {
+        for (var i = 0; i < 12; i += 1) {
             angle = i * deltaTheta;
             currentModule = new Shape(Shape.cylinder(4));
-            currentModule.translate(0,0,0);
-            currentModule.rotate(45, 0, 0, 1).scale(0.2,0.4,0.2);
-            currentModule.rotate(angle * RADIANS_TO_DEGREES, 1, 0, 0);            
+            currentModule.translate(0, 0, 0);
+            currentModule.rotate(45, 0, 0, 1).scale(0.2, 0.4, 0.2);
+            currentModule.rotate(angle * RADIANS_TO_DEGREES, 1, 0, 0);
             currentModule.translate(0, Math.cos(angle) * 1.1, Math.sin(angle) * 1.1);
-            myChildren.push(currentModule);         
+            myChildren.push(currentModule);
         }
 
         var offset = Math.PI * 2 / 24;
         // Create cylinders connecting modules
-        for(var i = 0; i< 12; i+= 1) {
+        for (var i = 0; i < 12; i += 1) {
             angle = i * deltaTheta + offset;
             currentModule = new Shape(Shape.cylinder(20));
-            currentModule.translate(0,0,0);
-            currentModule.scale(0.1,0.1,0.3);
-            currentModule.rotate(angle * RADIANS_TO_DEGREES, 1, 0, 0);            
+            currentModule.translate(0, 0, 0).scale(0.1, 0.1, 0.3);
+            currentModule.rotate(angle * RADIANS_TO_DEGREES, 1, 0, 0);
             currentModule.translate(0, Math.cos(angle) * 1.1, Math.sin(angle) * 1.1);
-            myChildren.push(currentModule);             
+            myChildren.push(currentModule);
         }
 
         return {
