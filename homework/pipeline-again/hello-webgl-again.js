@@ -46,6 +46,7 @@
          * Based on the original glRotate reference:
          *     http://www.opengl.org/sdk/docs/man/xhtml/glRotate.xml
          */
+        // JD: 1(b)
         getRotationMatrix = function (angle, x, y, z) {
             // In production code, this function should be associated
             // with a matrix object with associated functions.
@@ -138,6 +139,7 @@
     ];
 
     // Prepare the vertices to pass to WebGL.
+    // JD: 2(a)
     verticesToWebGl = function (object, rawMode, mode) {
 
         // This statement allows children to inherit the 
@@ -217,6 +219,7 @@
     /*
      * Displays an individual object.
      */
+    // JD: 2(a)
     drawObject = function (object) {
         var identityMatrix = new Matrix();
 
@@ -237,6 +240,7 @@
     /*
      * Displays the scene.
      */
+    // JD: 2(a)
     drawScene = function () {
         // Clear the display.
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -246,6 +250,7 @@
             new Float32Array(getRotationMatrix(currentRotation, 0, 1, 0)));
 
         // Display the objects.
+        // JD: 3(a)
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
             drawObject(objectsToDraw[i]);
             for(j = 0, maxj = objectsToDraw[i].children.length ; j < maxj; j+= 1) {

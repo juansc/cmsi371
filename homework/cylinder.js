@@ -4,6 +4,7 @@
      * Returns a cylinder whose bases are regular
      * n-gons.
      */
+    // JD: 6(a)
     window.Shape.cylinder =  function (n) {
         if(n < 3){
             throw "The base must have at least 3 sides";

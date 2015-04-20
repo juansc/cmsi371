@@ -4,6 +4,7 @@
      * Returns a sphere where m is number of longitudinal lines
      * and n is the number of latitudinal lines. 
      */
+    // JD: 6(a)
     window.Shape.trapezoidalCube = function (baseRatio, angle, dist ) {
         if(dist < 0 || baseRatio <= 0 ) {
             throw "Invalid input.";

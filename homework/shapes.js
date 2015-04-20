@@ -3,7 +3,7 @@
  * The "shapes" are returned as indexed vertices, with utility functions for
  * converting these into "raw" coordinate arrays.
  */
-
+// JD: 1(a)
 var Shape = (function() {
     /*
      * Constructor for arbitrary shape.
@@ -24,6 +24,7 @@ var Shape = (function() {
 
     // Here we make a copy of the vertices, extend them to 4 dimensions,
     // work on them, and return the value.
+    // JD: 4(a)
     shape.prototype.applyTransform = function(matrix) {
         var vertex;
         for (var ind = 0, maxInd = this.vertices.length; ind < maxInd; ind += 1) {
@@ -35,6 +36,7 @@ var Shape = (function() {
         }
     };
 
+    // JD: 5(a)
     shape.prototype.addChild = function(child) {
         this.children.push(child);
     };

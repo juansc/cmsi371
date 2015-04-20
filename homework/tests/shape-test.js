@@ -213,6 +213,7 @@ $(function () {
 
     });
 
+    // JD: 2(b)
     test("Transforms", function () {
         // Examples
         var i,j;
@@ -312,4 +313,6 @@ $(function () {
             new Shape(Shape.trapezoidalCube(0,2,1));
         }, "Invalid Trapezoidal Cube rejected.");                 
     });
+
+    // JD: 7(a)
 });

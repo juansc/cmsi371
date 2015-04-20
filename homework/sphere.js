@@ -1,4 +1,5 @@
 (function(){
+    // JD: 6(a)
     window.Shape = window.Shape || { };
     /*
      * Returns a sphere where m is number of longitudinal lines

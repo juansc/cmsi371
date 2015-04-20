@@ -20,7 +20,7 @@
  * Of course, the indexes begin at zero. The top, left-most element is 0,0.
  *
  */
-
+// JD: 3(b)
 var Matrix = (function() {
     // Define the constructor.
     var matrix = function(elements, height, width) {
@@ -282,6 +282,7 @@ Matrix.rotZMatrix = function(theta) {
         ], 4, 4);
 };
 
+// JD: 4(b)
 Matrix.rotateAxis = function(angle, Vx, Vy, Vz) {
     // Adapted from code by Dr. Dionisio.
 
