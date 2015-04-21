@@ -15,6 +15,7 @@ var Shape = (function() {
             g: 1.0,
             b: 0.0
         };
+        this.instanceTransform = new Matrix();
         this.indices = options.indices || [];
         this.children = options.children || [];
         this.rawMode = options.drawingMode || "linearray";
@@ -37,10 +38,13 @@ var Shape = (function() {
         gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer);
         gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 0, 0);
 
-        gl.uniformMatrix4fv(modelViewMatrix, gl.FALSE, new Float32Array(this.axis ?
-            Matrix.rotateAxis(currentRotation, this.axis.x, this.axis.y, this.axis.z).elements :
-            identityMatrix.elements
+        gl.uniformMatrix4fv(modelViewMatrix, gl.FALSE, new Float32Array(/*this.axis ?
+            Matrix.rotateAxis(currentRotation, this.axis.x, this.axis.y, this.axis.z).elements :*/
+
+            // This should be this.transform
+            this.instanceTransform.elements
         ));
+
         // Set the varying vertex coordinates.
         gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
         gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
@@ -129,11 +133,7 @@ var Shape = (function() {
     // Here we make a copy of the vertices, extend them to 4 dimensions,
     // work on them, and return the value.
     shape.prototype.applyTransform = function(matrix) {
-        var vertex;
-        for (var ind = 0, maxInd = this.vertices.length; ind < maxInd; ind += 1) {
-            vertex = new Matrix(this.vertices[ind].concat([1]), 4, 1);
-            this.vertices[ind] = matrix.mult(vertex).elements.slice(0, 3);
-        }
+        this.instanceTransform = matrix.mult(this.instanceTransform);
         for (var i = 0, maxi = this.children.length; i < maxi; i += 1) {
             this.children[i].applyTransform(matrix);
         }
@@ -146,6 +146,16 @@ var Shape = (function() {
 
     shape.prototype.setMode = function(mode) {
         this.mode = mode;
+        return this;
+    };
+
+    shape.prototype.resetTransform = function(mode) {
+        this.instanceTransform = new Matrix ();
+        return this;
+    };
+
+    shape.prototype.setTransform = function(matrix) {
+        this.instanceTransform = matrix;
         return this;
     };
 
@@ -164,6 +174,54 @@ var Shape = (function() {
         for (i = 0, maxi = this.indices.length; i < maxi; i += 1) {
             for (j = 0, maxj = this.indices[i].length; j < maxj; j += 1) {
                 result = result.concat(this.vertices[this.indices[i][j]]);
+            }
+        }
+
+        return result;
+    };
+
+    /*
+     * Utility function for computing normal vectors based on indexed vertices.
+     * The secret: take the cross product of each triangle.  Note that vertex order
+     * now matters---the resulting normal faces out from the side of the triangle
+     * that "sees" the vertices listed counterclockwise.
+     *
+     * The vector computations involved here mean that the Vector module must be
+     * loaded up for this function to work.
+     */
+    shape.prototype.toNormalArray =  function () {
+        var result = [],
+            i,
+            j,
+            maxi,
+            maxj,
+            p0,
+            p1,
+            p2,
+            v0,
+            v1,
+            v2,
+            normal;
+
+        // For each face...
+        for (i = 0, maxi = this.indices.length; i < maxi; i += 1) {
+            // We form vectors from the first and second then second and third vertices.
+            p0 = this.vertices[this.indices[i][0]];
+            p1 = this.vertices[this.indices[i][1]];
+            p2 = this.vertices[this.indices[i][2]];
+
+            // Technically, the first value is not a vector, but v can stand for vertex
+            // anyway, so...
+            v0 = new Vector(p0[0], p0[1], p0[2]);
+            v1 = new Vector(p1[0], p1[1], p1[2]).subtract(v0);
+            v2 = new Vector(p2[0], p2[1], p2[2]).subtract(v0);
+            normal = v1.cross(v2).unit();
+
+            // We then use this same normal for every vertex in this face.
+            for (j = 0, maxj = this.indices[i].length; j < maxj; j += 1) {
+                result = result.concat(
+                    [ normal.x(), normal.y(), normal.z() ]
+                );
             }
         }
 

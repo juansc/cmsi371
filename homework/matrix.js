@@ -360,7 +360,7 @@ Matrix.rotateAxis = function (angle, x, y, z) {
     ], 4, 4);
 };
 
-Matrix.orthoProjectMatrix = function(r, l, t, b, n, f) {
+Matrix.orthoProjectMatrix = function(l, r, b, t, n, f) {
     var left   = l || -1,
         right  = r || 1,
         top    = t || 1,
@@ -395,7 +395,7 @@ Matrix.orthoProjectMatrix = function(r, l, t, b, n, f) {
     ], 4, 4);
 };
 
-Matrix.perspectiveProjMatrix = function(r, l, t, b, n, f) {
+Matrix.perspectiveProjMatrix = function(l, r, b, t, n, f) {
     var left   = l || -1,
         right  = r || 1,
         top    = t || 1,
@@ -429,3 +429,5 @@ Matrix.perspectiveProjMatrix = function(r, l, t, b, n, f) {
         0.0
     ], 4, 4);
 };
+
+// TODO add formatForWebGl code

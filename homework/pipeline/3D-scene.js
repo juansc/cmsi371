@@ -22,6 +22,7 @@
         currentRotation = 0.0,
         currentInterval,
         rotationMatrix,
+        cameraMatrix,
         vertexPosition,
         vertexColor,
 
@@ -55,24 +56,18 @@
     gl.clearColor(0.0, 0.0, 0.0, 0.0);
     gl.viewport(0, 0, canvas.width, canvas.height);
 
-    // We set up a sphere which has a cylinder child.
-    //var spaceBackground = new Shape(Shape.sphere(20,20));
-    //spaceBackground.applyTransform(Matrix.scaleMatrix(5,5,5));
-    //spaceBackground.invertFaces();
-    //spaceBackground.mode = gl.TRIANGLES;
-    //spaceBackground.rawMode = "trianglearray";
 
     var Endurance = new Shape(Shape.endurance());
     Endurance.setGLMode(gl.TRIANGLES);
+    Endurance.translate(0, 0, 0);
     Endurance.setRawMode("trianglearray");
     Endurance.setAxis("x", [0, 1, 1]);
-    console.log(Endurance.xAxis);
     Endurance.setColor({r:1, g: 1, b: 1});
 
     var star = new Shape(Shape.sphere(30,30));
     star.setGLMode(gl.TRIANGLES).setRawMode("trianglearray");
     star.setColor({r:1, g: 0, b: 1});
-    star.translate(0, 0, -8);
+    star.translate(0, 0, -7);
 
 
     // Build the objects to display.
@@ -158,13 +153,17 @@
 
     modelViewMatrix = gl.getUniformLocation(shaderProgram, "modelViewMatrix");
     projectionMatrix = gl.getUniformLocation(shaderProgram, "projectionMatrix");
-
+    cameraMatrix = gl.getUniformLocation(shaderProgram, "cameraMatrix");
     /*
      * Displays the scene.
      */
     drawScene = function () {
         // Clear the display.
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        var rotation = Matrix.rotateAxis(currentRotation, 0, 1, 0);
+        var translation = Matrix.translateMatrix(0, 0, -15);
+        var finalTransform = translation.mult(rotation);
+        gl.uniformMatrix4fv(cameraMatrix, gl.FALSE, new Float32Array(finalTransform.elements));
 
         // Display the objects.
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
@@ -178,14 +177,15 @@
         gl.flush();
     };
 
-    gl.uniformMatrix4fv(projectionMatrix, gl.FALSE, new Float32Array(Matrix.orthoProjectMatrix(
-        -2 * (canvas.width / canvas.height),
-        2 * (canvas.width / canvas.height),
-        -2,
-        2,
-        -10,
-        10
+    gl.uniformMatrix4fv(projectionMatrix, gl.FALSE, new Float32Array(Matrix.perspectiveProjMatrix(
+        -2 * (canvas.width / canvas.height) ,
+        2 * (canvas.width / canvas.height) ,
+        -2 ,
+        2 ,
+        5,
+        1000
     ).elements));    // Draw the initial scene.
+
 
     drawScene();
 
@@ -197,6 +197,7 @@
             currentInterval = null;
         } else {
             currentInterval = setInterval(function () {
+                Endurance.rotate(1, 0, 0, 1);
                 currentRotation += 1.0;
                 drawScene();
                 if (currentRotation >= 360.0) {
