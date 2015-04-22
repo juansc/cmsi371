@@ -31,24 +31,24 @@ var Shape = (function() {
         this.zAxis = options.zAxis || [0, 0, 1];
     };
 
-    shape.prototype.draw = function(gl, modelViewMatrix, vertexColor, currentRotation, vertexPosition) {
+    shape.prototype.draw = function(gl, modelViewMatrix, vertexColor, vertexPosition) {
         var identityMatrix = new Matrix();
 
         // Set the varying colors.
         gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer);
         gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 0, 0);
 
-        gl.uniformMatrix4fv(modelViewMatrix, gl.FALSE, new Float32Array(/*this.axis ?
-            Matrix.rotateAxis(currentRotation, this.axis.x, this.axis.y, this.axis.z).elements :*/
-
-            // This should be this.transform
-            this.instanceTransform.elements
-        ));
+        gl.uniformMatrix4fv(modelViewMatrix, gl.FALSE, this.instanceTransform.formatForWebGl());
 
         // Set the varying vertex coordinates.
         gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
         gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
         gl.drawArrays(this.mode, 0, this.WebGLvertices.length / 3);
+
+        for (var ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
+            this.children[ind].draw(gl, modelViewMatrix, vertexColor, vertexPosition);
+        }
+
     };
 
     shape.prototype.scale = function(sx, sy, sz) {

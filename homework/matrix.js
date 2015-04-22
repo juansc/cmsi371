@@ -152,12 +152,16 @@ var Matrix = (function() {
 
     // Returns a matrix in column major form so that it can
     // be used by WebGL
-    matrix.prototype.getElements = function(){
+    matrix.prototype.getElements = function() {
         return this.elements;
     };
 
-    matrix.prototype.getNumOfElements = function(){
+    matrix.prototype.getNumOfElements = function() {
         return this.numOfElements;
+    };    
+
+    matrix.prototype.formatForWebGl =function() {
+        return new Float32Array(this.elements);
     };    
 
     return matrix;
@@ -395,6 +399,49 @@ Matrix.orthoProjectMatrix = function(l, r, b, t, n, f) {
     ], 4, 4);
 };
 
+Matrix.cameraMatrix = function(px, py, pz, qx, qy, qz, ux, uy, uz) {
+    var cameraPosition = new Vector(px, py, pz),
+        lookAtPoint = new Vector(qx, qy, qz),
+        upVector = new Vector(ux, uy, uz);
+
+    // Calculate the new axes
+    var newZAxis = cameraPosition.subtract(lookAtPoint).unit(),
+        newYAxis = upVector.subtract(upVector.projection(newZAxis)),
+        newXAxis = newYAxis.cross(newZAxis);
+
+    console.log(newXAxis);
+    console.log(newYAxis);
+    console.log(newZAxis);
+
+    var mat =  new Matrix([
+        newXAxis.x(),
+        newYAxis.x(),
+        newZAxis.x(),
+        0,
+
+        newXAxis.y(),
+        newYAxis.y(),
+        newZAxis.y(),
+        0,
+
+        newXAxis.z(),
+        newYAxis.z(),
+        newZAxis.z(),
+        0,
+
+        -1 * cameraPosition.dot(newXAxis),
+        -1 * cameraPosition.dot(newYAxis),
+        -1 * cameraPosition.dot(newZAxis),
+        1
+    ], 4, 4);
+
+    console.log("This is a matrix");
+    console.log(mat);
+
+    return mat;
+
+};
+
 Matrix.perspectiveProjMatrix = function(l, r, b, t, n, f) {
     var left   = l || -1,
         right  = r || 1,
@@ -429,5 +476,3 @@ Matrix.perspectiveProjMatrix = function(l, r, b, t, n, f) {
         0.0
     ], 4, 4);
 };
-
-// TODO add formatForWebGl code

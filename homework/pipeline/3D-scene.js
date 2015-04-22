@@ -66,8 +66,8 @@
 
     var star = new Shape(Shape.sphere(30,30));
     star.setGLMode(gl.TRIANGLES).setRawMode("trianglearray");
-    star.setColor({r:1, g: 0, b: 1});
-    star.translate(0, 0, -7);
+    star.setColor({r:1, g: 0.6, b: 0.2});
+    star.translate(0, 0, -10);
 
 
     // Build the objects to display.
@@ -157,20 +157,32 @@
     /*
      * Displays the scene.
      */
+
+    var DEGREE_TO_RADIANS = Math.PI / 180;
+
     drawScene = function () {
         // Clear the display.
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         var rotation = Matrix.rotateAxis(currentRotation, 0, 1, 0);
         var translation = Matrix.translateMatrix(0, 0, -15);
         var finalTransform = translation.mult(rotation);
-        gl.uniformMatrix4fv(cameraMatrix, gl.FALSE, new Float32Array(finalTransform.elements));
+
+        var lookAt = Matrix.cameraMatrix(Math.sin(currentRotation * DEGREE_TO_RADIANS) * 10,
+                                            0,
+                                            Math.cos(currentRotation * DEGREE_TO_RADIANS) * 10,
+
+                                            0,
+                                            0,
+                                            0,
+
+                                            0,
+                                            1,
+                                            0);
+        gl.uniformMatrix4fv(cameraMatrix, gl.FALSE, lookAt.formatForWebGl());
 
         // Display the objects.
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
-            objectsToDraw[i].draw(gl, modelViewMatrix, vertexColor, currentRotation, vertexPosition);
-            for(j = 0, maxj = objectsToDraw[i].children.length ; j < maxj; j+= 1) {
-                objectsToDraw[i].children[j].draw(gl, modelViewMatrix, vertexColor, currentRotation, vertexPosition);
-            }
+            objectsToDraw[i].draw(gl, modelViewMatrix, vertexColor, vertexPosition);
         }
 
         // All done.
@@ -197,7 +209,7 @@
             currentInterval = null;
         } else {
             currentInterval = setInterval(function () {
-                Endurance.rotate(1, 0, 0, 1);
+                //Endurance.rotate(1, 0, 0, 1);
                 currentRotation += 1.0;
                 drawScene();
                 if (currentRotation >= 360.0) {
