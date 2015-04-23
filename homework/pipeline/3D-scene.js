@@ -56,14 +56,14 @@
 
     var scene = new Shape();
 
-    var Endurance = new Shape(Shape.endurance());
+    var Endurance = Shape.endurance();
     Endurance.setGLMode(gl.TRIANGLES);
     Endurance.translate(0, 0, 0);
     Endurance.setRawMode("trianglearray");
     Endurance.setAxis("x", [0, 1, 1]);
     Endurance.setColor({r:1, g: 1, b: 1});
 
-    var star = new Shape(Shape.sphere(30,30));
+    var star = Shape.sphere(30,30);
     star.setGLMode(gl.TRIANGLES).setRawMode("trianglearray");
     star.setColor({r:1, g: 0.6, b: 0.2});
     star.translate(0, 0, -10);
@@ -113,8 +113,6 @@
     /*
      * Displays the scene.
      */
-    // JD: 2(a)
-
     var DEGREE_TO_RADIANS = Math.PI / 180;
 
     drawScene = function () {

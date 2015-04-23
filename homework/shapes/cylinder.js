@@ -36,11 +36,11 @@
             myIndices.push([1, (i + 1) * 2 + 1, (i + 2) * 2 + 1]);
         }
 
-        return {
+        return new Shape({
             vertices: myVertices,
             indices: myIndices,
             children: []
-        };
+        });
     };
     
 }());

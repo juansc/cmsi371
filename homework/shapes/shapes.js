@@ -178,7 +178,6 @@ var Shape = (function() {
 
     // JD: 5(a)
     shape.prototype.addChild = function(child) {
-        child.applyTransform(this.instanceTransform);
         this.children.push(child);
         return this;
     };

@@ -73,10 +73,10 @@
 
 
 
-        return {
+        return new Shape({
             vertices: myVertices,
             indices: myIndices,
             children: []
-        };
+        });
     };
 }());
