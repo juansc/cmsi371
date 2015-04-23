@@ -8,7 +8,8 @@ var Shape = (function() {
     /*
      * Constructor for arbitrary shape.
      */
-    var shape = function(options) {
+    var shape = function(shapeOptions) {
+        var options = shapeOptions || {};
         this.vertices = options.vertices || [];
         this.color = options.color || {
             r: 1.0,

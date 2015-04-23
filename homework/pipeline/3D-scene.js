@@ -56,6 +56,8 @@
     gl.clearColor(0.0, 0.0, 0.0, 0.0);
     gl.viewport(0, 0, canvas.width, canvas.height);
 
+    var scene = new Shape();
+
 
     var Endurance = new Shape(Shape.endurance());
     Endurance.setGLMode(gl.TRIANGLES);
@@ -69,12 +71,7 @@
     star.setColor({r:1, g: 0.6, b: 0.2});
     star.translate(0, 0, -10);
 
-
-    // Build the objects to display.
-    objectsToDraw = [
-            Endurance,
-            star
-    ];
+    scene.addChild(Endurance).addChild(star);
 
     // Prepare the vertices to pass to WebGL.
     verticesToWebGl = function (object, rawMode, mode) {
@@ -105,15 +102,14 @@
         }
         object.colorBuffer = GLSLUtilities.initVertexBuffer(gl,
                 object.colors);
+
+        // Call recursively
+        for(var ind = 0, maxInd = object.children.length; ind < maxInd; ind += 1) {
+            verticesToWebGl(object.children[ind]);
+        }
     };
 
-    for(i = 0, maxi = objectsToDraw.length; i < maxi; i+= 1){
-        currentObject = objectsToDraw[i];
-        verticesToWebGl(currentObject);
-        for(j = 0, maxj = currentObject.children.length; j < maxj; j += 1){
-            verticesToWebGl(currentObject.children[j]);
-        }
-    }
+    verticesToWebGl(scene);
 
     // Initialize the shaders.
     shaderProgram = GLSLUtilities.initSimpleShaderProgram(
@@ -154,6 +150,7 @@
     modelViewMatrix = gl.getUniformLocation(shaderProgram, "modelViewMatrix");
     projectionMatrix = gl.getUniformLocation(shaderProgram, "projectionMatrix");
     cameraMatrix = gl.getUniformLocation(shaderProgram, "cameraMatrix");
+
     /*
      * Displays the scene.
      */
@@ -180,23 +177,21 @@
                                             0);
         gl.uniformMatrix4fv(cameraMatrix, gl.FALSE, lookAt.formatForWebGl());
 
-        // Display the objects.
-        for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
-            objectsToDraw[i].draw(gl, modelViewMatrix, vertexColor, vertexPosition);
-        }
+        scene.draw(gl, modelViewMatrix, vertexColor, vertexPosition);
 
         // All done.
         gl.flush();
     };
 
-    gl.uniformMatrix4fv(projectionMatrix, gl.FALSE, new Float32Array(Matrix.perspectiveProjMatrix(
+
+    gl.uniformMatrix4fv(projectionMatrix, gl.FALSE, Matrix.perspectiveProjMatrix(
         -2 * (canvas.width / canvas.height) ,
         2 * (canvas.width / canvas.height) ,
         -2 ,
         2 ,
         5,
         1000
-    ).elements));    // Draw the initial scene.
+    ).formatForWebGl());    // Draw the initial scene.
 
 
     drawScene();
@@ -209,7 +204,6 @@
             currentInterval = null;
         } else {
             currentInterval = setInterval(function () {
-                //Endurance.rotate(1, 0, 0, 1);
                 currentRotation += 1.0;
                 drawScene();
                 if (currentRotation >= 360.0) {
