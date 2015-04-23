@@ -36,7 +36,7 @@ var Matrix = (function() {
     };
 
     var checkIfEqualSize = function(m1, m2) {
-        if (m1.height() !== m2.height() || m1.width() !== m2.width()) {
+        if (m1.getHeight() !== m2.getHeight() || m1.getWidth() !== m2.getWidth()) {
             throw "Matrices have different dimensions";
         }
     };
@@ -45,6 +45,7 @@ var Matrix = (function() {
         if (v1.length !== v2.length) {
             throw "Dimension mismatch for dot products";
         }
+
         var result = 0,
             ind;
 
@@ -55,11 +56,11 @@ var Matrix = (function() {
         return result;
     };
 
-    matrix.prototype.width = function() {
+    matrix.prototype.getWidth = function() {
         return this.width;
     };
 
-    matrix.prototype.height = function() {
+    matrix.prototype.getHeight = function() {
         return this.height;
     };
 
@@ -70,12 +71,18 @@ var Matrix = (function() {
     matrix.prototype.getElement = function(row, column) {
         if (!column) {
             var index = row;
+            if (row >= this.width * this.height) {
+                throw "Index out of bounds error.";
+            }
             return this.elements[index];
         }
         return this.elements[column * this.height + row];
     };
 
     matrix.prototype.getRow = function(row) {
+        if(row >= this.height) {
+            throw "Row out of bounds error.";
+        }
         var result = [];
         for (var column = 0, maxColumn = this.width; column < maxColumn; column += 1) {
             result.push(this.getElement(row, column));
@@ -84,6 +91,9 @@ var Matrix = (function() {
     };
 
     matrix.prototype.getColumn = function(column) {
+        if(column >= this.width) {
+            throw "Column out of bounds error.";
+        }
         var result = [];
         for (var row = 0, maxRow = this.height; row < maxRow; row += 1) {
             result.push(this.getElement(row, column));
@@ -95,7 +105,7 @@ var Matrix = (function() {
         checkIfEqualSize(this, m);
         var result = [];
         for (var ind = 0, maxInd = this.numOfElements; ind < maxInd; ind += 1) {
-            result[ind] = this.getElement[ind] + m.getElement[ind];
+            result[ind] = this.getElement(ind) + m.getElement(ind);
         }
         return new Matrix(result, this.height, this.width);
     };
@@ -104,21 +114,25 @@ var Matrix = (function() {
         checkIfEqualSize(this, m);
         var result = [];
         for (var ind = 0, maxInd = this.numOfElements; ind < maxInd; ind += 1) {
-            result[ind] = this.getElement[ind] - m.getElement[ind];
+            result[ind] = this.getElement(ind) - m.getElement(ind);
         }
         return new Matrix(result, this.height, this.width);
     };
 
     matrix.prototype.scalarAdd = function(scalar) {
+        var result = [];
         for (var ind = 0, maxInd = this.numOfElements; ind < maxInd; ind += 1) {
-            this.elements[ind] += scalar;
+            result[ind] = this.elements[ind] + scalar;
         }
+        return new Matrix(result, this.height, this.width);
     };
 
     matrix.prototype.scalarMultiply = function(scalar) {
+        var result = [];
         for (var ind = 0, maxInd = this.numOfElements; ind < maxInd; ind += 1) {
-            this.elements[ind] *= scalar;
+            result[ind] = this.elements[ind] * scalar;
         }
+        return new Matrix(result, this.height, this.width);
     };
 
     matrix.prototype.mult = function(m) {
@@ -128,8 +142,8 @@ var Matrix = (function() {
         var col,
             row,
             result = [];
-        for (row = 0, maxRow = this.height; row < maxRow; row += 1) {
-            for (col = 0, maxCol = m.width; col < maxCol; col += 1) {
+        for(col = 0, maxCol = m.width; col < maxCol; col += 1) {
+            for (row = 0, maxRow = this.height; row < maxRow; row += 1) {
                 result.push(dotProduct(this.getRow(row), m.getColumn(col)));
             }
         }
@@ -138,9 +152,17 @@ var Matrix = (function() {
 
     // Returns a matrix in column major form so that it can
     // be used by WebGL
-    matrix.prototype.elements = function(){
+    matrix.prototype.getElements = function() {
         return this.elements;
     };
+
+    matrix.prototype.getNumOfElements = function() {
+        return this.numOfElements;
+    };    
+
+    matrix.prototype.formatForWebGl =function() {
+        return new Float32Array(this.elements);
+    };    
 
     return matrix;
 })();
@@ -283,23 +305,16 @@ Matrix.rotZMatrix = function(theta) {
 };
 
 // JD: 4(b)
-Matrix.rotateAxis = function(angle, Vx, Vy, Vz) {
-    // Adapted from code by Dr. Dionisio.
-
-
-    var theta = angle ? (angle * Math.PI / 180.0) : 0,
-        x = Vx || 0,
-        y = Vy || 0,
-        z = Vz || 1;
-
+Matrix.rotateAxis = function (angle, x, y, z) {
+    // In production code, this function should be associated
+    // with a matrix object with associated functions.
     var axisLength = Math.sqrt((x * x) + (y * y) + (z * z)),
-        s = Math.sin(theta),
-        c = Math.cos(theta),
+        s = Math.sin(angle * Math.PI / 180.0),
+        c = Math.cos(angle * Math.PI / 180.0),
         oneMinusC = 1.0 - c,
 
         // We can't calculate this until we have normalized
         // the axis vector of rotation.
-
         x2, // "2" for "squared."
         y2,
         z2,
@@ -309,6 +324,7 @@ Matrix.rotateAxis = function(angle, Vx, Vy, Vz) {
         xs,
         ys,
         zs;
+
     // Normalize the axis vector of rotation.
     x /= axisLength;
     y /= axisLength;
@@ -325,31 +341,31 @@ Matrix.rotateAxis = function(angle, Vx, Vy, Vz) {
     ys = y * s;
     zs = z * s;
 
-    return new Matrix(
-        [
-            (x2 * oneMinusC) + c,
-            (xy * oneMinusC) + zs,
-            (xz * oneMinusC) - ys,
-            0.0,
+    // GL expects its matrices in column major order.
+    return new Matrix([
+        (x2 * oneMinusC) + c,
+        (xy * oneMinusC) + zs,
+        (xz * oneMinusC) - ys,
+        0.0,
 
-            (xy * oneMinusC) - zs,
-            (y2 * oneMinusC) + c,
-            (yz * oneMinusC) + xs,
-            0.0,
+        (xy * oneMinusC) - zs,
+        (y2 * oneMinusC) + c,
+        (yz * oneMinusC) + xs,
+        0.0,
 
-            (xz * oneMinusC) + ys,
-            (yz * oneMinusC) - xs,
-            (z2 * oneMinusC) + c,
-            0.0,
+        (xz * oneMinusC) + ys,
+        (yz * oneMinusC) - xs,
+        (z2 * oneMinusC) + c,
+        0.0,
 
-            0.0,
-            0.0,
-            0.0,
-            1.0
-        ], 4, 4);
+        0.0,
+        0.0,
+        0.0,
+        1.0
+    ], 4, 4);
 };
 
-Matrix.orthoProjectMatrix = function(r, l, t, b, n, f) {
+Matrix.orthoProjectMatrix = function(l, r, b, t, n, f) {
     var left   = l || -1,
         right  = r || 1,
         top    = t || 1,
@@ -384,7 +400,50 @@ Matrix.orthoProjectMatrix = function(r, l, t, b, n, f) {
     ], 4, 4);
 };
 
-Matrix.perspectiveProjMatrix = function(r, l, t, b, n, f) {
+Matrix.cameraMatrix = function(px, py, pz, qx, qy, qz, ux, uy, uz) {
+    var cameraPosition = new Vector(px, py, pz),
+        lookAtPoint = new Vector(qx, qy, qz),
+        upVector = new Vector(ux, uy, uz);
+
+    // Calculate the new axes
+    var newZAxis = cameraPosition.subtract(lookAtPoint).unit(),
+        newYAxis = upVector.subtract(upVector.projection(newZAxis)),
+        newXAxis = newYAxis.cross(newZAxis);
+
+    console.log(newXAxis);
+    console.log(newYAxis);
+    console.log(newZAxis);
+
+    var mat =  new Matrix([
+        newXAxis.x(),
+        newYAxis.x(),
+        newZAxis.x(),
+        0,
+
+        newXAxis.y(),
+        newYAxis.y(),
+        newZAxis.y(),
+        0,
+
+        newXAxis.z(),
+        newYAxis.z(),
+        newZAxis.z(),
+        0,
+
+        -1 * cameraPosition.dot(newXAxis),
+        -1 * cameraPosition.dot(newYAxis),
+        -1 * cameraPosition.dot(newZAxis),
+        1
+    ], 4, 4);
+
+    console.log("This is a matrix");
+    console.log(mat);
+
+    return mat;
+
+};
+
+Matrix.perspectiveProjMatrix = function(l, r, b, t, n, f) {
     var left   = l || -1,
         right  = r || 1,
         top    = t || 1,

@@ -14,6 +14,7 @@
             DEGREES_TO_RADIANS = Math.PI / 180,
             myVertices = [],
             myIndices = [],
+            myColors = [],
             x, // The coordinate of a point.
             y,
             z,
@@ -22,7 +23,9 @@
             theta,
             maxVertex = numLong * numLat + 1, // The index of the last vertex, at the north pole.
             deltaPhi = 180 / (numLat + 1),    // Angle between one latitude line to the next.
-            deltaTheta = 360 / numLong;       // Angle between one longitude line to the next.            
+            deltaTheta = 360 / numLong;       // Angle between one longitude line to the next.
+
+                    
 
         // We push the point at the south pole
         myVertices.push([0, 0, -1]);
@@ -66,6 +69,9 @@
         // We add the very last triangle.
         v = numLong * (numLat - 1) + 1;
         myIndices.push([v + numLong - 1, v, maxVertex]);
+
+
+
 
         return {
             vertices: myVertices,

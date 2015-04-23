@@ -10,14 +10,13 @@
             throw "The base must have at least 3 sides";
         }
 
+        var myVertices = [];
         var numOfSides = n || 20,
-            myVertices = [],
             myIndices = [],
-            HEIGHT = 0.25, // 
+            HEIGHT = Math.sqrt(2) / 2, // 
             x, y, v,
             numOfVertices = 2 * numOfSides,        
             deltaTheta = 2 * Math.PI / numOfSides;
-
 
         // Add the vertices and all the side faces
         // of the cylinder.
