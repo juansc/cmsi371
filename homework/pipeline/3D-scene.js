@@ -58,7 +58,6 @@
 
     var scene = new Shape();
 
-
     var Endurance = new Shape(Shape.endurance());
     Endurance.setGLMode(gl.TRIANGLES);
     Endurance.translate(0, 0, 0);
@@ -71,45 +70,7 @@
     star.setColor({r:1, g: 0.6, b: 0.2});
     star.translate(0, 0, -10);
 
-    scene.addChild(Endurance).addChild(star);
-
-    // Prepare the vertices to pass to WebGL.
-    verticesToWebGl = function (object, rawMode, mode) {
-
-        // This statement allows children to inherit the 
-        // properties of the parent object. 
-
-        object.rawMode = rawMode || object.rawMode;
-        object.mode = mode || object.mode;
-
-        object.WebGLvertices = object.toRawFunctions(object.rawMode);
-        var vertices = object.WebGLvertices;
-
-        object.buffer = GLSLUtilities.initVertexBuffer(gl,vertices);
-
-        if (!object.colors) {
-            // If we have a single color, we expand that into an array
-            // of the same color over and over.
-            object.colors = [];
-            for (var j = 0, maxj = vertices.length / 3;
-                    j < maxj; j += 1) {
-                object.colors = object.colors.concat(
-                    object.color.r,
-                    object.color.g,
-                    object.color.b
-                );
-            }
-        }
-        object.colorBuffer = GLSLUtilities.initVertexBuffer(gl,
-                object.colors);
-
-        // Call recursively
-        for(var ind = 0, maxInd = object.children.length; ind < maxInd; ind += 1) {
-            verticesToWebGl(object.children[ind]);
-        }
-    };
-
-    verticesToWebGl(scene);
+    scene.addChild(Endurance).addChild(star).verticesToWebGl(gl);
 
     // Initialize the shaders.
     shaderProgram = GLSLUtilities.initSimpleShaderProgram(

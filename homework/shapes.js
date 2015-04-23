@@ -52,6 +52,41 @@ var Shape = (function() {
 
     };
 
+    shape.prototype.verticesToWebGl = function(gl, rawMode, mode) {
+
+        // This statement allows children to inherit the 
+        // properties of the parent object. 
+
+        this.rawMode = rawMode || this.rawMode;
+        this.mode = mode || this.mode;
+
+        this.WebGLvertices = this.toRawFunctions(this.rawMode);
+        var vertices = this.WebGLvertices;
+
+        this.buffer = GLSLUtilities.initVertexBuffer(gl,vertices);
+
+        if (!this.colors) {
+            // If we have a single color, we expand that into an array
+            // of the same color over and over.
+            this.colors = [];
+            for (var j = 0, maxj = vertices.length / 3;
+                    j < maxj; j += 1) {
+                this.colors = this.colors.concat(
+                    this.color.r,
+                    this.color.g,
+                    this.color.b
+                );
+            }
+        }
+        this.colorBuffer = GLSLUtilities.initVertexBuffer(gl,
+                this.colors);
+
+        // Call recursively
+        for(var ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
+            this.children[ind].verticesToWebGl(gl);
+        }        
+    }
+
     shape.prototype.scale = function(sx, sy, sz) {
         this.applyTransform(Matrix.scaleMatrix(sx, sy, sz));
         return this;
