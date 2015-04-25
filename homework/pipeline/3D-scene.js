@@ -73,10 +73,10 @@
     var star = Shape.sphere(20,20);
     star.setGLMode(gl.TRIANGLES).setRawMode("trianglearray");
     star.setColor({r:1, g: 0.6, b: 0.2});
-    star.translate(0, 0, -10);
+    star.translate(0, 0, -100);
 
     var space = Shape.sphere(20, 20);
-    space.scale(20,20,20);
+    space.scale(200,200,200);
     space.setGLMode(gl.TRIANGLES);
     space.setRawMode("trianglearray");
     space.setColor({r:0.99, g: 0.99, b: 0.99});  
@@ -194,9 +194,13 @@
         keyArr[e.keyCode] = false;
     });
 
-    var deltaXDeg = 0,
-        deltaYDeg = 0,
-        deltaZDeg = 0;
+    var rollAccel,
+        yawAccel,
+        pitchAccel,
+        rollVel = Math.random() * 2 - 4,
+        yawVel = Math.random() * 2 - 4,
+        pitchVel = Math.random() * 2 - 4;
+
 
     // Set up the rotation toggle: clicking on the canvas does it.
     /*$(canvas).click(function () {
@@ -224,18 +228,22 @@
 
     var spinScene = function() {
         requestAnimationFrame(spinScene);
-        currentRotation += 1;
+        currentRotation += 0.1;
         if(currentRotation >= 360) currentRotation = -360;
-        deltaXDeg = deltaYDeg = deltaZDeg = 0;
-        if(keyArr[A_KEY]){deltaXDeg += 1;}
-        if(keyArr[Q_KEY]){deltaXDeg -= 1;}
-        if(keyArr[S_KEY]){deltaYDeg += 1;}
-        if(keyArr[W_KEY]){deltaYDeg -= 1;}
-        if(keyArr[D_KEY]){deltaZDeg += 1;}
-        if(keyArr[E_KEY]){deltaZDeg -= 1;}
-        Endurance.rotateAxisOnX(deltaXDeg);
-        Endurance.rotateAxisOnY(deltaYDeg);
-        Endurance.rotateAxisOnZ(deltaZDeg);
+        rollAccel = yawAccel = pitchAccel = 0;
+        if(keyArr[A_KEY]){rollAccel += 0.01;}
+        if(keyArr[Q_KEY]){rollAccel -= 0.01;}
+        if(keyArr[S_KEY]){yawAccel += 0.01;}
+        if(keyArr[W_KEY]){yawAccel -= 0.01;}
+        if(keyArr[D_KEY]){pitchAccel += 0.01;}
+        if(keyArr[E_KEY]){pitchAccel -= 0.01;}
+        rollVel += rollAccel;
+        yawVel += yawAccel;
+        pitchVel += pitchAccel;
+
+        Endurance.rotateAxisOnX(rollVel);
+        Endurance.rotateAxisOnY(yawVel);
+        Endurance.rotateAxisOnZ(pitchVel);
         drawScene();        
     };
 
