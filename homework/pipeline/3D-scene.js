@@ -79,7 +79,7 @@
     space.scale(20,20,20);
     space.setGLMode(gl.TRIANGLES);
     space.setRawMode("trianglearray");
-    space.setColor({r:0.1, g: 0.1, b: 0.1});  
+    space.setColor({r:0.99, g: 0.99, b: 0.99});  
     //var ico = Shape.icosahedron().setGLMode(gl.TRIANGLES).setRawMode("trianglearray");
     //scene.addChild(ico);
 
@@ -149,9 +149,9 @@
         var translation = Matrix.translateMatrix(0, 0, -15);
         var finalTransform = translation.mult(rotation);
 
-        var lookAt = Matrix.cameraMatrix(Math.sin(currentRotation * DEGREE_TO_RADIANS) * 15,
+        var lookAt = Matrix.cameraMatrix(Math.sin(currentRotation * DEGREE_TO_RADIANS) * 7,
                                             0,
-                                            Math.cos(currentRotation * DEGREE_TO_RADIANS) * 15,
+                                            Math.cos(currentRotation * DEGREE_TO_RADIANS) * 7,
 
                                             0,
                                             0,
@@ -179,7 +179,7 @@
     ).formatForWebGl());    
 
     // Set up our one light source and its colors.
-    gl.uniform4fv(lightPosition, [0.0, 0.0, -3.0, 1.0]);
+    gl.uniform4fv(lightPosition, [0.0, 0.0, -0.5, 1.0]);
     gl.uniform3fv(lightDiffuse, [1.0, 1.0, 1.0]);
     gl.uniform3fv(lightSpecular, [1.0, 1.0, 1.0]);
 
@@ -199,7 +199,7 @@
         deltaZDeg = 0;
 
     // Set up the rotation toggle: clicking on the canvas does it.
-    $(canvas).click(function () {
+    /*$(canvas).click(function () {
         if (currentInterval) {
             clearInterval(currentInterval);
             currentInterval = null;
@@ -220,6 +220,25 @@
                 drawScene();
             }, 30);
         }
-    });
+    });*/
+
+    var spinScene = function() {
+        requestAnimationFrame(spinScene);
+        currentRotation += 1;
+        if(currentRotation >= 360) currentRotation = -360;
+        deltaXDeg = deltaYDeg = deltaZDeg = 0;
+        if(keyArr[A_KEY]){deltaXDeg += 1;}
+        if(keyArr[Q_KEY]){deltaXDeg -= 1;}
+        if(keyArr[S_KEY]){deltaYDeg += 1;}
+        if(keyArr[W_KEY]){deltaYDeg -= 1;}
+        if(keyArr[D_KEY]){deltaZDeg += 1;}
+        if(keyArr[E_KEY]){deltaZDeg -= 1;}
+        Endurance.rotateAxisOnX(deltaXDeg);
+        Endurance.rotateAxisOnY(deltaYDeg);
+        Endurance.rotateAxisOnZ(deltaZDeg);
+        drawScene();        
+    };
+
+    spinScene();
 
 }(document.getElementById("hello-webgl")));
