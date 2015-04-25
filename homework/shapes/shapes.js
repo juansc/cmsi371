@@ -41,9 +41,9 @@ var Shape = (function() {
         this.rawMode = options.drawingMode || "linearray";
         this.mode = options.mode || WebGLRenderingContext.LINES;
 
-        this.xAxis = options.xAxis || [1, 0, 0];
-        this.yAxis = options.yAxis || [0, 1, 0];
-        this.zAxis = options.zAxis || [0, 0, 1];
+        this.xAxis = options.xAxis || [1, 0, 0, 1];
+        this.yAxis = options.yAxis || [0, 1, 0, 1];
+        this.zAxis = options.zAxis || [0, 0, 1, 1];
     };
 
     shape.prototype.draw = function(gl, modelViewMatrix, vertexDiffuseColor, vertexPosition) {
@@ -91,12 +91,12 @@ var Shape = (function() {
         // of the same color over and over.
         if (!this.colors) {
 
-            /*this.colors = arrayOfClones([
+            this.colors = arrayOfClones([
                                     this.color.r,
                                     this.color.g,
                                     this.color.b
-                                ], vertices.length / 3 + 3);*/
-            this.colors = [];
+                                ], vertices.length / 3);
+            /*this.colors = [];
             for (var j = 0, maxj = this.vertices.length / 3;
                     j < maxj; j += 1) {
                 this.colors = this.colors.concat(
@@ -104,16 +104,16 @@ var Shape = (function() {
                     this.color.g,
                     this.color.b
                 );
-            }            
+            } */           
         }
 
         if (!this.specularColors) {
-            /*this.specularColors = arrayOfClones([
+            this.specularColors = arrayOfClones([
                                     this.specularColor.r,
                                     this.specularColor.g,
                                     this.specularColor.b
-                                ], vertices.length / 3 + 3);*/
-            this.specularColors = [];
+                                ], vertices.length / 3);
+            /*this.specularColors = [];
             for (var j = 0, maxj = this.vertices.length / 3;
                     j < maxj; j += 1) {
                 this.specularColors = this.specularColors.concat(
@@ -121,7 +121,7 @@ var Shape = (function() {
                     this.specularColor.g,
                     this.specularColor.b
                 );
-            }
+            }*/
         }        
 
         this.colorBuffer = GLSLUtilities.initVertexBuffer(gl,
@@ -226,8 +226,8 @@ var Shape = (function() {
         }
     };
 
-    // JD: 5(a)
     shape.prototype.addChild = function(child) {
+        child.applyTransform(this.instanceTransform);
         this.children.push(child);
         return this;
     };
@@ -246,6 +246,52 @@ var Shape = (function() {
         this.instanceTransform = matrix;
         return this;
     };
+
+    shape.prototype.rotateAxisOnZ = function(degrees) {
+        this.rotate(degrees, this.zAxis[0], this.zAxis[1], this.zAxis[2]);
+        var newXAxis = new Matrix(this.xAxis, 4 ,1);
+        this.xAxis = (Matrix.rotateAxis(degrees, 
+                            this.zAxis[0], 
+                            this.zAxis[1], 
+                            this.zAxis[2])).mult(newXAxis).elements;
+        var newYAxis = new Matrix(this.yAxis, 4 ,1);
+        this.yAxis = (Matrix.rotateAxis(degrees, 
+                            this.zAxis[0], 
+                            this.zAxis[1], 
+                            this.zAxis[2])).mult(newYAxis).elements;       
+        return this;
+    };
+
+    shape.prototype.rotateAxisOnY = function(degrees) {
+        this.rotate(degrees, this.yAxis[0], this.yAxis[1], this.yAxis[2]);
+        var newXAxis = new Matrix(this.xAxis, 4 ,1);
+        this.xAxis = (Matrix.rotateAxis(degrees, 
+                            this.yAxis[0], 
+                            this.yAxis[1], 
+                            this.yAxis[2])).mult(newXAxis).elements;
+        var newZAxis = new Matrix(this.zAxis, 4 ,1);
+        this.zAxis = (Matrix.rotateAxis(degrees, 
+                            this.yAxis[0], 
+                            this.yAxis[1], 
+                            this.yAxis[2])).mult(newZAxis).elements;        
+        return this;
+    };
+
+    shape.prototype.rotateAxisOnX = function(degrees) {
+        this.rotate(degrees, this.xAxis[0], this.xAxis[1], this.xAxis[2]);
+        var newYAxis = new Matrix(this.yAxis, 4 ,1);
+        console.log(newYAxis.elements);
+        this.yAxis = (Matrix.rotateAxis(degrees, 
+                            this.xAxis[0], 
+                            this.xAxis[1], 
+                            this.xAxis[2])).mult(newYAxis).elements;
+        var newZAxis = new Matrix(this.zAxis, 4 ,1);
+        this.zAxis = (Matrix.rotateAxis(degrees, 
+                            this.xAxis[0],
+                            this.xAxis[1], 
+                            this.xAxis[2])).mult(newZAxis).elements;                                 
+        return this;
+    };        
 
     /*
      * Utility function for turning indexed vertices into a "raw" coordinate array

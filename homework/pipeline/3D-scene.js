@@ -36,7 +36,15 @@
         i,
         maxi,
         j,
-        maxj;
+        maxj,
+        // Constants for interaction
+        A_KEY = 65,
+        D_KEY = 68,
+        E_KEY = 69,
+        Q_KEY = 81,
+        S_KEY = 83,
+        W_KEY = 87;
+
 
     
 
@@ -60,8 +68,7 @@
     Endurance.setGLMode(gl.TRIANGLES);
     Endurance.translate(0, 0, 0);
     Endurance.setRawMode("trianglearray");
-    Endurance.setAxis("x", [0, 1, 1]);
-    Endurance.setColor({r:0.8, g: 0.8, b: 0.8});
+    Endurance.setColor({r:0.9, g: 0.9, b: 0.9});
 
     var star = Shape.sphere(10,10);
     star.setGLMode(gl.TRIANGLES).setRawMode("trianglearray");
@@ -134,9 +141,9 @@
         var translation = Matrix.translateMatrix(0, 0, -15);
         var finalTransform = translation.mult(rotation);
 
-        var lookAt = Matrix.cameraMatrix(Math.sin(currentRotation * DEGREE_TO_RADIANS) * 30,
+        var lookAt = Matrix.cameraMatrix(Math.sin(0 * DEGREE_TO_RADIANS) * 7,
                                             0,
-                                            Math.cos(currentRotation * DEGREE_TO_RADIANS) * 30,
+                                            Math.cos(0 * DEGREE_TO_RADIANS) * 7,
 
                                             0,
                                             0,
@@ -164,13 +171,24 @@
     ).formatForWebGl());    
 
     // Set up our one light source and its colors.
-    gl.uniform4fv(lightPosition, [0.0, 0.0, -5.0, 1.0]);
+    gl.uniform4fv(lightPosition, [0.0, -2.0, -5.0, 1.0]);
     gl.uniform3fv(lightDiffuse, [1.0, 1.0, 1.0]);
     gl.uniform3fv(lightSpecular, [1.0, 1.0, 1.0]);
 
     // Draw the initial scene.
     drawScene();
 
+    var keyArr = [];
+    $(document).keydown(function(e) {
+        keyArr[e.keyCode] = true;
+    });
+    $(document).keyup(function(e) {
+        keyArr[e.keyCode] = false;
+    });
+
+    var deltaXDeg = 0,
+        deltaYDeg = 0,
+        deltaZDeg = 0;
 
     // Set up the rotation toggle: clicking on the canvas does it.
     $(canvas).click(function () {
@@ -179,11 +197,17 @@
             currentInterval = null;
         } else {
             currentInterval = setInterval(function () {
-                currentRotation += 2;
+                deltaXDeg = deltaYDeg = deltaZDeg = 0;
+                if(keyArr[A_KEY]){deltaXDeg += 1;}
+                if(keyArr[Q_KEY]){deltaXDeg -= 1;}
+                if(keyArr[S_KEY]){deltaYDeg += 1;}
+                if(keyArr[W_KEY]){deltaYDeg -= 1;}
+                if(keyArr[D_KEY]){deltaZDeg += 1;}
+                if(keyArr[E_KEY]){deltaZDeg -= 1;}
+                Endurance.rotateAxisOnX(deltaXDeg);
+                Endurance.rotateAxisOnY(deltaYDeg);
+                Endurance.rotateAxisOnZ(deltaZDeg);
                 drawScene();
-                if (currentRotation >= 360.0) {
-                    currentRotation -= 360.0;
-                }
             }, 30);
         }
     });
