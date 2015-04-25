@@ -70,12 +70,20 @@
     Endurance.setRawMode("trianglearray");
     Endurance.setColor({r:0.9, g: 0.9, b: 0.9});
 
-    var star = Shape.sphere(10,10);
+    var star = Shape.sphere(20,20);
     star.setGLMode(gl.TRIANGLES).setRawMode("trianglearray");
     star.setColor({r:1, g: 0.6, b: 0.2});
     star.translate(0, 0, -10);
 
-    scene.addChild(Endurance).addChild(star).verticesToWebGl(gl);
+    var space = Shape.sphere(20, 20);
+    space.scale(20,20,20);
+    space.setGLMode(gl.TRIANGLES);
+    space.setRawMode("trianglearray");
+    space.setColor({r:0.1, g: 0.1, b: 0.1});  
+    //var ico = Shape.icosahedron().setGLMode(gl.TRIANGLES).setRawMode("trianglearray");
+    //scene.addChild(ico);
+
+    scene.addChild(Endurance).addChild(star).addChild(space).verticesToWebGl(gl);
 
     // Initialize the shaders.
     shaderProgram = GLSLUtilities.initSimpleShaderProgram(
@@ -141,9 +149,9 @@
         var translation = Matrix.translateMatrix(0, 0, -15);
         var finalTransform = translation.mult(rotation);
 
-        var lookAt = Matrix.cameraMatrix(Math.sin(0 * DEGREE_TO_RADIANS) * 7,
+        var lookAt = Matrix.cameraMatrix(Math.sin(currentRotation * DEGREE_TO_RADIANS) * 15,
                                             0,
-                                            Math.cos(0 * DEGREE_TO_RADIANS) * 7,
+                                            Math.cos(currentRotation * DEGREE_TO_RADIANS) * 15,
 
                                             0,
                                             0,
@@ -171,7 +179,7 @@
     ).formatForWebGl());    
 
     // Set up our one light source and its colors.
-    gl.uniform4fv(lightPosition, [0.0, -2.0, -5.0, 1.0]);
+    gl.uniform4fv(lightPosition, [0.0, 0.0, -3.0, 1.0]);
     gl.uniform3fv(lightDiffuse, [1.0, 1.0, 1.0]);
     gl.uniform3fv(lightSpecular, [1.0, 1.0, 1.0]);
 
@@ -197,6 +205,8 @@
             currentInterval = null;
         } else {
             currentInterval = setInterval(function () {
+                currentRotation += 1;
+                if(currentRotation >= 360) currentRotation = -360;
                 deltaXDeg = deltaYDeg = deltaZDeg = 0;
                 if(keyArr[A_KEY]){deltaXDeg += 1;}
                 if(keyArr[Q_KEY]){deltaXDeg -= 1;}

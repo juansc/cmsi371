@@ -64,11 +64,11 @@
         // We push the triangles at the south pole.
         for (i = 0; i < numLong - 1; i += 1) {
             v = numLong * (numLat - 1) + 1 + i;
-            myIndices.push([v, v + 1, maxVertex]);
+            myIndices.push([v, maxVertex,v + 1]);
         }
         // We add the very last triangle.
         v = numLong * (numLat - 1) + 1;
-        myIndices.push([v + numLong - 1, v, maxVertex]);
+        myIndices.push([v + numLong - 1, maxVertex, v]);
 
 
 

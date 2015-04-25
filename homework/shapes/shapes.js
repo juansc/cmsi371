@@ -280,7 +280,6 @@ var Shape = (function() {
     shape.prototype.rotateAxisOnX = function(degrees) {
         this.rotate(degrees, this.xAxis[0], this.xAxis[1], this.xAxis[2]);
         var newYAxis = new Matrix(this.yAxis, 4 ,1);
-        console.log(newYAxis.elements);
         this.yAxis = (Matrix.rotateAxis(degrees, 
                             this.xAxis[0], 
                             this.xAxis[1], 
