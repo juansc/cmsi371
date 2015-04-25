@@ -7,7 +7,7 @@
     // Because many of these variables are best initialized then immediately
     // used in context, we merely name them here.  Read on to see how they
     // are used.
-    var gl, // The WebGL context.
+    var gl = GLSLUtilities.getGL(canvas), // The WebGL context.
 
         // This variable stores 3D model information.
         objectsToDraw,
@@ -36,9 +36,9 @@
         i,
         maxi,
         j,
-        maxj,
+        maxj;
 
-    gl = GLSLUtilities.getGL(canvas);
+    
 
     if (!gl) {
         alert("No WebGL context found...sorry.");
@@ -61,9 +61,9 @@
     Endurance.translate(0, 0, 0);
     Endurance.setRawMode("trianglearray");
     Endurance.setAxis("x", [0, 1, 1]);
-    Endurance.setColor({r:1, g: 1, b: 1});
+    Endurance.setColor({r:0.8, g: 0.8, b: 0.8});
 
-    var star = Shape.sphere(30,30);
+    var star = Shape.sphere(10,10);
     star.setGLMode(gl.TRIANGLES).setRawMode("trianglearray");
     star.setColor({r:1, g: 0.6, b: 0.2});
     star.translate(0, 0, -10);
@@ -102,13 +102,25 @@
     // Hold on to the important variables within the shaders.
     vertexPosition = gl.getAttribLocation(shaderProgram, "vertexPosition");
     gl.enableVertexAttribArray(vertexPosition);
-    vertexColor = gl.getAttribLocation(shaderProgram, "vertexColor");
-    gl.enableVertexAttribArray(vertexColor);
+    //vertexColor = gl.getAttribLocation(shaderProgram, "vertexColor");
+    //gl.enableVertexAttribArray(vertexColor);
+    vertexDiffuseColor = gl.getAttribLocation(shaderProgram, "vertexDiffuseColor");
+    gl.enableVertexAttribArray(vertexDiffuseColor);
+    vertexSpecularColor = gl.getAttribLocation(shaderProgram, "vertexSpecularColor");
+    gl.enableVertexAttribArray(vertexSpecularColor);
+    normalVector = gl.getAttribLocation(shaderProgram, "normalVector");    
+    gl.enableVertexAttribArray(normalVector);
 
-
+    // How we see the world
     modelViewMatrix = gl.getUniformLocation(shaderProgram, "modelViewMatrix");
     projectionMatrix = gl.getUniformLocation(shaderProgram, "projectionMatrix");
     cameraMatrix = gl.getUniformLocation(shaderProgram, "cameraMatrix");
+
+    // Things to do with light
+    lightPosition = gl.getUniformLocation(shaderProgram, "lightPosition");
+    lightDiffuse = gl.getUniformLocation(shaderProgram, "lightDiffuse");
+    lightSpecular = gl.getUniformLocation(shaderProgram, "lightSpecular");
+    shininess = gl.getUniformLocation(shaderProgram, "shininess");    
 
     /*
      * Displays the scene.
@@ -122,9 +134,9 @@
         var translation = Matrix.translateMatrix(0, 0, -15);
         var finalTransform = translation.mult(rotation);
 
-        var lookAt = Matrix.cameraMatrix(Math.sin(currentRotation * DEGREE_TO_RADIANS) * 10,
+        var lookAt = Matrix.cameraMatrix(Math.sin(currentRotation * DEGREE_TO_RADIANS) * 30,
                                             0,
-                                            Math.cos(currentRotation * DEGREE_TO_RADIANS) * 10,
+                                            Math.cos(currentRotation * DEGREE_TO_RADIANS) * 30,
 
                                             0,
                                             0,
@@ -135,7 +147,7 @@
                                             0);
         gl.uniformMatrix4fv(cameraMatrix, gl.FALSE, lookAt.formatForWebGl());
 
-        scene.draw(gl, modelViewMatrix, vertexColor, vertexPosition);
+        scene.draw(gl, modelViewMatrix, vertexDiffuseColor, vertexPosition);
 
         // All done.
         gl.flush();
@@ -149,9 +161,14 @@
         2 ,
         5,
         1000
-    ).formatForWebGl());    // Draw the initial scene.
+    ).formatForWebGl());    
 
+    // Set up our one light source and its colors.
+    gl.uniform4fv(lightPosition, [0.0, 0.0, -5.0, 1.0]);
+    gl.uniform3fv(lightDiffuse, [1.0, 1.0, 1.0]);
+    gl.uniform3fv(lightSpecular, [1.0, 1.0, 1.0]);
 
+    // Draw the initial scene.
     drawScene();
 
 
@@ -162,7 +179,7 @@
             currentInterval = null;
         } else {
             currentInterval = setInterval(function () {
-                currentRotation += 1.0;
+                currentRotation += 2;
                 drawScene();
                 if (currentRotation >= 360.0) {
                     currentRotation -= 360.0;

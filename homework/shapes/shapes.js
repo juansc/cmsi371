@@ -3,43 +3,66 @@
  * The "shapes" are returned as indexed vertices, with utility functions for
  * converting these into "raw" coordinate arrays.
  */
-// JD: 1(a)
 var Shape = (function() {
     /*
      * Constructor for arbitrary shape.
      */
+
+    var arrayOfClones = function(original, numOfCopies) {
+        var arr = [];
+        for(var ind = 0, maxInd = numOfCopies; ind < maxInd; ind += 1) {
+            arr = arr.concat(original);
+        }
+        return arr;
+    };
+
     var shape = function(shapeOptions) {
         var options = shapeOptions || {};
+        this.shininess = options.shininess || 16;
         this.vertices = options.vertices || [];
         this.color = options.color || {
             r: 1.0,
             g: 1.0,
             b: 0.0
         };
+        this.specularColor = options.specularColor || {
+            r: 1.0,
+            g: 1.0,
+            b: 1.0
+        };
+        this.axis = options.axis || {
+            x: 0,
+            y: 0,
+            z: 1
+        };        
         this.instanceTransform = new Matrix();
         this.indices = options.indices || [];
         this.children = options.children || [];
         this.rawMode = options.drawingMode || "linearray";
         this.mode = options.mode || WebGLRenderingContext.LINES;
-        this.axis = options.axis || {
-            x: 0,
-            y: 0,
-            z: 1
-        };
-        this.axis = options.axis || {x: 0, y: 1, z: 0};
+
         this.xAxis = options.xAxis || [1, 0, 0];
         this.yAxis = options.yAxis || [0, 1, 0];
         this.zAxis = options.zAxis || [0, 0, 1];
     };
 
-    shape.prototype.draw = function(gl, modelViewMatrix, vertexColor, vertexPosition) {
+    shape.prototype.draw = function(gl, modelViewMatrix, vertexDiffuseColor, vertexPosition) {
         var identityMatrix = new Matrix();
 
         // Set the varying colors.
         gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer);
-        gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 0, 0);
+        gl.vertexAttribPointer(vertexDiffuseColor, 3, gl.FLOAT, false, 0, 0);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.specularBuffer);
+        gl.vertexAttribPointer(vertexSpecularColor, 3, gl.FLOAT, false, 0, 0);
+
+        gl.uniform1f(shininess, this.shininess);
 
         gl.uniformMatrix4fv(modelViewMatrix, gl.FALSE, this.instanceTransform.formatForWebGl());
+
+        // Set the varying normal vectors.
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer);
+        gl.vertexAttribPointer(normalVector, 3, gl.FLOAT, false, 0, 0);        
 
         // Set the varying vertex coordinates.
         gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
@@ -47,7 +70,7 @@ var Shape = (function() {
         gl.drawArrays(this.mode, 0, this.WebGLvertices.length / 3);
 
         for (var ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
-            this.children[ind].draw(gl, modelViewMatrix, vertexColor, vertexPosition);
+            this.children[ind].draw(gl, modelViewMatrix, vertexDiffuseColor, vertexPosition);
         }
 
     };
@@ -55,8 +78,7 @@ var Shape = (function() {
     shape.prototype.verticesToWebGl = function(gl, rawMode, mode) {
 
         // This statement allows children to inherit the 
-        // properties of the parent object. 
-
+        // properties of the parent object.
         this.rawMode = rawMode || this.rawMode;
         this.mode = mode || this.mode;
 
@@ -65,27 +87,55 @@ var Shape = (function() {
 
         this.buffer = GLSLUtilities.initVertexBuffer(gl,vertices);
 
+        // If we have a single color, we expand that into an array
+        // of the same color over and over.
         if (!this.colors) {
-            // If we have a single color, we expand that into an array
-            // of the same color over and over.
+
+            /*this.colors = arrayOfClones([
+                                    this.color.r,
+                                    this.color.g,
+                                    this.color.b
+                                ], vertices.length / 3 + 3);*/
             this.colors = [];
-            for (var j = 0, maxj = vertices.length / 3;
+            for (var j = 0, maxj = this.vertices.length / 3;
                     j < maxj; j += 1) {
                 this.colors = this.colors.concat(
                     this.color.r,
                     this.color.g,
                     this.color.b
                 );
-            }
+            }            
         }
+
+        if (!this.specularColors) {
+            /*this.specularColors = arrayOfClones([
+                                    this.specularColor.r,
+                                    this.specularColor.g,
+                                    this.specularColor.b
+                                ], vertices.length / 3 + 3);*/
+            this.specularColors = [];
+            for (var j = 0, maxj = this.vertices.length / 3;
+                    j < maxj; j += 1) {
+                this.specularColors = this.specularColors.concat(
+                    this.specularColor.r,
+                    this.specularColor.g,
+                    this.specularColor.b
+                );
+            }
+        }        
+
         this.colorBuffer = GLSLUtilities.initVertexBuffer(gl,
                 this.colors);
+        this.specularBuffer = GLSLUtilities.initVertexBuffer(gl,
+                this.specularColors);
+        this.normalBuffer = GLSLUtilities.initVertexBuffer(gl,
+                this.toNormalArray());        
 
         // Call recursively
         for(var ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
             this.children[ind].verticesToWebGl(gl);
         }        
-    }
+    };
 
     shape.prototype.scale = function(sx, sy, sz) {
         this.applyTransform(Matrix.scaleMatrix(sx, sy, sz));

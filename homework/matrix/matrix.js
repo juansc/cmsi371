@@ -410,10 +410,6 @@ Matrix.cameraMatrix = function(px, py, pz, qx, qy, qz, ux, uy, uz) {
         newYAxis = upVector.subtract(upVector.projection(newZAxis)),
         newXAxis = newYAxis.cross(newZAxis);
 
-    console.log(newXAxis);
-    console.log(newYAxis);
-    console.log(newZAxis);
-
     var mat =  new Matrix([
         newXAxis.x(),
         newYAxis.x(),
@@ -435,9 +431,6 @@ Matrix.cameraMatrix = function(px, py, pz, qx, qy, qz, ux, uy, uz) {
         -1 * cameraPosition.dot(newZAxis),
         1
     ], 4, 4);
-
-    console.log("This is a matrix");
-    console.log(mat);
 
     return mat;
 
