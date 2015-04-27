@@ -7,6 +7,7 @@
     // Because many of these variables are best initialized then immediately
     // used in context, we merely name them here.  Read on to see how they
     // are used.
+
     var gl = GLSLUtilities.getGL(canvas), // The WebGL context.
 
         // This variable stores 3D model information.
@@ -43,10 +44,11 @@
         E_KEY = 69,
         Q_KEY = 81,
         S_KEY = 83,
-        W_KEY = 87;
+        W_KEY = 87,
+        shipStats = $("#ship-stats");
 
+    console.log(shipStats);
 
-    
 
     if (!gl) {
         alert("No WebGL context found...sorry.");
@@ -197,34 +199,21 @@
     var rollAccel,
         yawAccel,
         pitchAccel,
-        rollVel = Math.random() * 2 - 4,
-        yawVel = Math.random() * 2 - 4,
-        pitchVel = Math.random() * 2 - 4;
+        rollVel = Math.random() * 6 - 3,
+        yawVel = Math.random() * 6 - 3,
+        pitchVel = Math.random() * 6 - 3;
 
+    var updateShipStats = function () {
+        var rollStat = rollVel.toFixed(2);
+        var yawStat = yawVel.toFixed(2);
+        var pitchStat = pitchVel.toFixed(2);
 
-    // Set up the rotation toggle: clicking on the canvas does it.
-    /*$(canvas).click(function () {
-        if (currentInterval) {
-            clearInterval(currentInterval);
-            currentInterval = null;
-        } else {
-            currentInterval = setInterval(function () {
-                currentRotation += 1;
-                if(currentRotation >= 360) currentRotation = -360;
-                deltaXDeg = deltaYDeg = deltaZDeg = 0;
-                if(keyArr[A_KEY]){deltaXDeg += 1;}
-                if(keyArr[Q_KEY]){deltaXDeg -= 1;}
-                if(keyArr[S_KEY]){deltaYDeg += 1;}
-                if(keyArr[W_KEY]){deltaYDeg -= 1;}
-                if(keyArr[D_KEY]){deltaZDeg += 1;}
-                if(keyArr[E_KEY]){deltaZDeg -= 1;}
-                Endurance.rotateAxisOnX(deltaXDeg);
-                Endurance.rotateAxisOnY(deltaYDeg);
-                Endurance.rotateAxisOnZ(deltaZDeg);
-                drawScene();
-            }, 30);
-        }
-    });*/
+        var rollStr = "Roll Velocity = " + ((rollVel < 0) ?  "" : " ") + rollStat;
+        var yawStr = "Yaw Volocity = " + ((yawVel < 0) ?  "" : " ") + yawStat;
+        var pitchStr = "Pitch Velocity = " + ((pitchVel < 0) ?  "" : " ") + pitchStat;
+
+        shipStats.html("<pre>" + rollStr + " " + yawStr + " " + pitchStr + "</pre>");
+    };
 
     var spinScene = function() {
         requestAnimationFrame(spinScene);
@@ -244,6 +233,9 @@
         Endurance.rotateAxisOnX(rollVel);
         Endurance.rotateAxisOnY(yawVel);
         Endurance.rotateAxisOnZ(pitchVel);
+
+        updateShipStats();
+
         drawScene();        
     };
 
