@@ -64,6 +64,7 @@
             uniform mat4 projectionMatrix;
             uniform mat4 modelViewMatrix;
             uniform mat4 cameraMatrix;
+            uniform float transformNormals;            
 
             // Matrices to do with coloring and shading
             varying vec3 fragmentDiffuseColor;
@@ -78,10 +79,15 @@
             uniform vec4 lightPosition;            
 
             void main(void) {
+
+                fragmentLight = lightPosition.xyz;
                 fragmentNormal = normalVector;
                 fragmentEye = vertexPosition;
-                fragmentLight = lightPosition.xyz;
 
+                if(transformNormals == 1.0){
+                    fragmentNormal = vec3(modelViewMatrix * vec4(fragmentNormal, 0.0));
+                    fragmentEye = vec3(modelViewMatrix * vec4(fragmentEye, 1.0));
+                }
                 // No conditional expressions in GLSL, unfortunately.  We have to
                 // do this the other way.
                 if (lightPosition.w != 0.0) {

@@ -40,13 +40,24 @@ var Shape = (function() {
         this.children = options.children || [];
         this.rawMode = options.drawingMode || "linearray";
         this.mode = options.mode || WebGLRenderingContext.LINES;
+        this.normals = this.toNormalArray();
+        this.transformNorms = options.transformNorms || 0.0;
 
         this.xAxis = options.xAxis || [1, 0, 0, 1];
         this.yAxis = options.yAxis || [0, 1, 0, 1];
         this.zAxis = options.zAxis || [0, 0, 1, 1];
     };
 
-    shape.prototype.draw = function(gl, modelViewMatrix, vertexDiffuseColor, vertexPosition) {
+    shape.prototype.transformNormals = function(state) {
+        // WebGL uses 1's and 0's, not bools.
+        this.transformNorms = state ? 1.0 : 0.0;
+        for(var ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
+            this.children[ind].transformNormals(state);
+        }
+        return this;
+    };
+
+    shape.prototype.draw = function(gl, modelViewMatrix, vertexDiffuseColor, vertexPosition, transformNormals) {
         var identityMatrix = new Matrix();
 
         // Set the varying colors.
@@ -57,6 +68,10 @@ var Shape = (function() {
         gl.vertexAttribPointer(vertexSpecularColor, 3, gl.FLOAT, false, 0, 0);
 
         gl.uniform1f(shininess, this.shininess);
+        // Whether or not hte normals are transformed.
+        // This is useful so we can skip the transform for objects
+        // whose normals should not be changed.
+        gl.uniform1f(transformNormals, this.transformNorms);
 
         gl.uniformMatrix4fv(modelViewMatrix, gl.FALSE, this.instanceTransform.formatForWebGl());
 
@@ -70,7 +85,7 @@ var Shape = (function() {
         gl.drawArrays(this.mode, 0, this.WebGLvertices.length / 3);
 
         for (var ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
-            this.children[ind].draw(gl, modelViewMatrix, vertexDiffuseColor, vertexPosition);
+            this.children[ind].draw(gl, modelViewMatrix, vertexDiffuseColor, vertexPosition, transformNormals);
         }
 
     };
@@ -95,16 +110,7 @@ var Shape = (function() {
                                     this.color.r,
                                     this.color.g,
                                     this.color.b
-                                ], vertices.length / 3);
-            /*this.colors = [];
-            for (var j = 0, maxj = this.vertices.length / 3;
-                    j < maxj; j += 1) {
-                this.colors = this.colors.concat(
-                    this.color.r,
-                    this.color.g,
-                    this.color.b
-                );
-            } */           
+                                ], vertices.length / 3);        
         }
 
         if (!this.specularColors) {
@@ -113,15 +119,6 @@ var Shape = (function() {
                                     this.specularColor.g,
                                     this.specularColor.b
                                 ], vertices.length / 3);
-            /*this.specularColors = [];
-            for (var j = 0, maxj = this.vertices.length / 3;
-                    j < maxj; j += 1) {
-                this.specularColors = this.specularColors.concat(
-                    this.specularColor.r,
-                    this.specularColor.g,
-                    this.specularColor.b
-                );
-            }*/
         }        
 
         this.colorBuffer = GLSLUtilities.initVertexBuffer(gl,
@@ -129,7 +126,7 @@ var Shape = (function() {
         this.specularBuffer = GLSLUtilities.initVertexBuffer(gl,
                 this.specularColors);
         this.normalBuffer = GLSLUtilities.initVertexBuffer(gl,
-                this.toNormalArray());        
+                this.normals);        
 
         // Call recursively
         for(var ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
@@ -218,16 +215,21 @@ var Shape = (function() {
 
     // Here we make a copy of the vertices, extend them to 4 dimensions,
     // work on them, and return the value.
-    // JD: 4(a)
     shape.prototype.applyTransform = function(matrix) {
         this.instanceTransform = matrix.mult(this.instanceTransform);
+        this.updateNormals();
         for (var i = 0, maxi = this.children.length; i < maxi; i += 1) {
             this.children[i].applyTransform(matrix);
         }
     };
 
+    shape.prototype.updateNormals = function() {
+        this.normals = this.toNormalArray();
+        return this;
+    };
+
     shape.prototype.addChild = function(child) {
-        child.applyTransform(this.instanceTransform);
+        child.setTransform(child.instanceTransform.mult(this.instanceTransform));
         this.children.push(child);
         return this;
     };
@@ -350,10 +352,14 @@ var Shape = (function() {
             v2 = new Vector(p2[0], p2[1], p2[2]).subtract(v0);
             normal = v1.cross(v2).unit();
 
+            //var normVect = new Matrix([normal.x(), normal.y(), normal.z(), 1], 4, 1);
+            //normVect = this.instanceTransform.mult(normVect).elements;
+
             // We then use this same normal for every vertex in this face.
             for (j = 0, maxj = this.indices[i].length; j < maxj; j += 1) {
                 result = result.concat(
-                    [ normal.x(), normal.y(), normal.z() ]
+                    //[ normVect[0], normVect[1], normVect[2] ]
+                    [normal.x(), normal.y(), normal.z()]
                 );
             }
         }

@@ -40,6 +40,8 @@
             currentModule.rotate(45, 0, 0, 1).scale(0.2, 0.4, 0.2);
             currentModule.rotate(angle * RADIANS_TO_DEGREES, 1, 0, 0);
             currentModule.translate(0, Math.cos(angle) * 1.1, Math.sin(angle) * 1.1);
+console.log("vertices", currentModule.toRawTriangleArray());
+console.log("normals", currentModule.normals);
             myChildren.push(currentModule);
         }
 

@@ -45,14 +45,11 @@
         Q_KEY = 81,
         S_KEY = 83,
         W_KEY = 87,
+        DEGREE_TO_RADIANS = Math.PI / 180,
         shipStats = $("#ship-stats");
-
-    console.log(shipStats);
-
 
     if (!gl) {
         alert("No WebGL context found...sorry.");
-
         // No WebGL, no use going on...
         return;
     }
@@ -71,21 +68,21 @@
     Endurance.translate(0, 0, 0);
     Endurance.setRawMode("trianglearray");
     Endurance.setColor({r:0.9, g: 0.9, b: 0.9});
+    Endurance.transformNormals(true);
 
     var star = Shape.sphere(20,20);
     star.setGLMode(gl.TRIANGLES).setRawMode("trianglearray");
     star.setColor({r:1, g: 0.6, b: 0.2});
-    star.translate(0, 0, -100);
+    star.translate(0, 0, -15);
+    star.scale(2,2,2);
 
     var space = Shape.sphere(20, 20);
     space.scale(200,200,200);
     space.setGLMode(gl.TRIANGLES);
     space.setRawMode("trianglearray");
-    space.setColor({r:0.99, g: 0.99, b: 0.99});  
-    //var ico = Shape.icosahedron().setGLMode(gl.TRIANGLES).setRawMode("trianglearray");
-    //scene.addChild(ico);
+    space.setColor({r:0.0, g: 0.0, b: 0.0});
 
-    scene.addChild(Endurance).addChild(star).addChild(space).verticesToWebGl(gl);
+    scene.addChild(Endurance).addChild(star).addChild(space).verticesToWebGl(gl);   
 
     // Initialize the shaders.
     shaderProgram = GLSLUtilities.initSimpleShaderProgram(
@@ -137,20 +134,21 @@
     lightPosition = gl.getUniformLocation(shaderProgram, "lightPosition");
     lightDiffuse = gl.getUniformLocation(shaderProgram, "lightDiffuse");
     lightSpecular = gl.getUniformLocation(shaderProgram, "lightSpecular");
-    shininess = gl.getUniformLocation(shaderProgram, "shininess");    
+    shininess = gl.getUniformLocation(shaderProgram, "shininess");
+    transformNormals = gl.getUniformLocation(shaderProgram, "transformNormals");
+
+    // Set up our one light source and its colors.
+    gl.uniform4fv(lightPosition, [0.0, 0.0, -15, 1.0]);
+    gl.uniform3fv(lightDiffuse, [1.0, 1.0, 1.0]);
+    gl.uniform3fv(lightSpecular, [1.0, 1.0, 1.0]); 
 
     /*
      * Displays the scene.
      */
-    var DEGREE_TO_RADIANS = Math.PI / 180;
 
     drawScene = function () {
         // Clear the display.
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-        var rotation = Matrix.rotateAxis(currentRotation, 0, 1, 0);
-        var translation = Matrix.translateMatrix(0, 0, -15);
-        var finalTransform = translation.mult(rotation);
-
         var lookAt = Matrix.cameraMatrix(Math.sin(currentRotation * DEGREE_TO_RADIANS) * 7,
                                             0,
                                             Math.cos(currentRotation * DEGREE_TO_RADIANS) * 7,
@@ -164,7 +162,7 @@
                                             0);
         gl.uniformMatrix4fv(cameraMatrix, gl.FALSE, lookAt.formatForWebGl());
 
-        scene.draw(gl, modelViewMatrix, vertexDiffuseColor, vertexPosition);
+        scene.draw(gl, modelViewMatrix, vertexDiffuseColor, vertexPosition, transformNormals);
 
         // All done.
         gl.flush();
@@ -180,11 +178,6 @@
         1000
     ).formatForWebGl());    
 
-    // Set up our one light source and its colors.
-    gl.uniform4fv(lightPosition, [0.0, 0.0, -0.5, 1.0]);
-    gl.uniform3fv(lightDiffuse, [1.0, 1.0, 1.0]);
-    gl.uniform3fv(lightSpecular, [1.0, 1.0, 1.0]);
-
     // Draw the initial scene.
     drawScene();
 
@@ -199,9 +192,9 @@
     var rollAccel,
         yawAccel,
         pitchAccel,
-        rollVel = Math.random() * 6 - 3,
-        yawVel = Math.random() * 6 - 3,
-        pitchVel = Math.random() * 6 - 3;
+        rollVel = 0;//Math.random() * 6 - 3,
+        yawVel = 0;//Math.random() * 6 - 3,
+        pitchVel = 0;//Math.random() * 6 - 3;
 
     var updateShipStats = function () {
         var rollStat = rollVel.toFixed(2);
@@ -217,10 +210,14 @@
 
     var spinScene = function() {
         requestAnimationFrame(spinScene);
-        currentRotation += 0.1;
-        if(currentRotation >= 360) currentRotation = -360;
+        currentRotation += 1;
+        if (currentRotation >= 360) {
+            currentRotation = -360;
+        }
         rollAccel = yawAccel = pitchAccel = 0;
-        if(keyArr[A_KEY]){rollAccel += 0.01;}
+        if (keyArr[A_KEY]) {
+            rollAccel += 0.01;
+        }
         if(keyArr[Q_KEY]){rollAccel -= 0.01;}
         if(keyArr[S_KEY]){yawAccel += 0.01;}
         if(keyArr[W_KEY]){yawAccel -= 0.01;}

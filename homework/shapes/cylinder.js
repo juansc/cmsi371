@@ -33,7 +33,7 @@
         // Add both bases.
         for (i = 0; i < numOfSides - 2; i += 1) {
             myIndices.push([0, (i + 1) * 2, (i + 2) * 2]);
-            myIndices.push([1, (i + 1) * 2 + 1, (i + 2) * 2 + 1]);
+            myIndices.push([1, (i + 2) * 2 + 1, (i + 1) * 2 + 1]);
         }
 
         return new Shape({
