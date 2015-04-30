@@ -207,6 +207,7 @@ var Shape = (function() {
             currentArr[1] = currentArr[2];
             currentArr[2] = temp;
         }
+        this.normals = this.toNormalArray();
         for (ind = 0, maxInd = this.children.length; ind < maxInd; ind += 1) {
             this.children[ind].invertFaces();
         }
@@ -217,7 +218,6 @@ var Shape = (function() {
     // work on them, and return the value.
     shape.prototype.applyTransform = function(matrix) {
         this.instanceTransform = matrix.mult(this.instanceTransform);
-        this.updateNormals();
         for (var i = 0, maxi = this.children.length; i < maxi; i += 1) {
             this.children[i].applyTransform(matrix);
         }

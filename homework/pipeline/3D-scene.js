@@ -46,6 +46,8 @@
         S_KEY = 83,
         W_KEY = 87,
         DEGREE_TO_RADIANS = Math.PI / 180,
+        cameraRadius = 15,
+        spinSpeed = 0.1,
         shipStats = $("#ship-stats");
 
     if (!gl) {
@@ -72,15 +74,16 @@
 
     var star = Shape.sphere(20,20);
     star.setGLMode(gl.TRIANGLES).setRawMode("trianglearray");
-    star.setColor({r:1, g: 0.6, b: 0.2});
-    star.translate(0, 0, -15);
+    star.setColor({r:1, g: 0.8, b: 0.6});
+    star.translate(0, 0, -25);
     star.scale(2,2,2);
 
-    var space = Shape.sphere(20, 20);
+    var space = Shape.sphere(50, 50);
     space.scale(200,200,200);
     space.setGLMode(gl.TRIANGLES);
     space.setRawMode("trianglearray");
-    space.setColor({r:0.0, g: 0.0, b: 0.0});
+    space.setColor({r:0, g: 0, b: 0});
+    space.invertFaces().transformNormals(true);
 
     scene.addChild(Endurance).addChild(star).addChild(space).verticesToWebGl(gl);   
 
@@ -138,9 +141,9 @@
     transformNormals = gl.getUniformLocation(shaderProgram, "transformNormals");
 
     // Set up our one light source and its colors.
-    gl.uniform4fv(lightPosition, [0.0, 0.0, -15, 1.0]);
-    gl.uniform3fv(lightDiffuse, [1.0, 1.0, 1.0]);
-    gl.uniform3fv(lightSpecular, [1.0, 1.0, 1.0]); 
+    gl.uniform4fv(lightPosition, [0.0, 0.0, -25, 1.0]);
+    gl.uniform3fv(lightDiffuse, [1, 1, 1]);
+    gl.uniform3fv(lightSpecular, [0.5, 0.5, 0.5]); 
 
     /*
      * Displays the scene.
@@ -149,9 +152,9 @@
     drawScene = function () {
         // Clear the display.
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-        var lookAt = Matrix.cameraMatrix(Math.sin(currentRotation * DEGREE_TO_RADIANS) * 7,
+        var lookAt = Matrix.cameraMatrix(Math.sin(currentRotation * DEGREE_TO_RADIANS) * cameraRadius,
                                             0,
-                                            Math.cos(currentRotation * DEGREE_TO_RADIANS) * 7,
+                                            Math.cos(currentRotation * DEGREE_TO_RADIANS) * cameraRadius,
 
                                             0,
                                             0,
@@ -210,7 +213,7 @@
 
     var spinScene = function() {
         requestAnimationFrame(spinScene);
-        currentRotation += 1;
+        currentRotation += spinSpeed;
         if (currentRotation >= 360) {
             currentRotation = -360;
         }
@@ -218,11 +221,21 @@
         if (keyArr[A_KEY]) {
             rollAccel += 0.01;
         }
-        if(keyArr[Q_KEY]){rollAccel -= 0.01;}
-        if(keyArr[S_KEY]){yawAccel += 0.01;}
-        if(keyArr[W_KEY]){yawAccel -= 0.01;}
-        if(keyArr[D_KEY]){pitchAccel += 0.01;}
-        if(keyArr[E_KEY]){pitchAccel -= 0.01;}
+        if (keyArr[Q_KEY]) {
+            rollAccel -= 0.01;
+        }
+        if (keyArr[S_KEY]) {
+            yawAccel += 0.01;
+        }
+        if (keyArr[W_KEY]) {
+            yawAccel -= 0.01;
+        }
+        if (keyArr[D_KEY]) {
+            pitchAccel += 0.01;
+        }
+        if (keyArr[E_KEY]) {
+            pitchAccel -= 0.01;
+        }
         rollVel += rollAccel;
         yawVel += yawAccel;
         pitchVel += pitchAccel;
